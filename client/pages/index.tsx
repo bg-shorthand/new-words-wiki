@@ -1,9 +1,4 @@
 import type { NextPage } from 'next';
-import Portal from '@components/portal';
-import TestModal from '@components/modal/test';
-import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { isOpenState } from '@recoil/isOpen';
 import { useEffect } from 'react';
@@ -18,9 +13,6 @@ const Home: NextPage = () => {
   return (
     <>
       <h1 onClick={() => setIsOpen((pre) => ({ ...pre, test: !pre.test }))}>Hellow World</h1>
-      <Portal>
-        <TestModal />
-      </Portal>
     </>
   );
 };
