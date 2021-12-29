@@ -1,5 +1,9 @@
+import { isOpenState } from '@recoil/isOpen';
+import { useRecoilValue } from 'recoil';
+
 const TestModal = () => {
-  return <h2>Hello Portal</h2>;
+  const { test } = useRecoilValue(isOpenState);
+  return test ? <h2>Hello Portal</h2> : null;
 };
 
 export default TestModal;
