@@ -16,7 +16,12 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["./components/*"],
+      "@atoms/*": ["./components/atoms/*"],
+      "@molecules/*": ["./components/molecules/*"],
+      "@organisms/*": ["./components/aorganisms*"],
+      "@templates/*": ["./components/templates/*"],
+      "@components/pages/*": ["./components/pages/*"],
+      "@containers/*": ["./components/containers/*"],
       "@pages/*": ["./pages/*"],
       "@styles/*": ["./styles/*"],
       "@recoil/*": ["./recoil/*"]

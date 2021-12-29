@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1 onClick={() => setIsOpen((pre) => ({ ...pre, test: !pre.test }))}>Hellow World</h1>
+      <h1 onClick={() => setIsOpen((pre) => ({ ...pre, login: !pre.login }))}>Hellow World</h1>
     </>
   );
 };
