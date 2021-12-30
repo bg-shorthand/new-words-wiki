@@ -18,7 +18,7 @@
     "paths": {
       "@atoms/*": ["./components/atoms/*"],
       "@molecules/*": ["./components/molecules/*"],
-      "@organisms/*": ["./components/aorganisms*"],
+      "@organisms/*": ["./components/organisms/*"],
       "@templates/*": ["./components/templates/*"],
       "@components/pages/*": ["./components/pages/*"],
       "@containers/*": ["./components/containers/*"],
