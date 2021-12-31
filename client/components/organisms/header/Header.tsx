@@ -1,25 +1,19 @@
 import Button from '@atoms/button/Button';
+import Heading from '@atoms/heading/Heading';
+import Nav from '@molecules/nav/Nav';
 import useOpenModalDialog from 'hooks/useOpenModalDialog';
 import Link from 'next/link';
+import style from './Header.module.scss';
 
 const Header = () => {
-  const openLoginDialog = useOpenModalDialog('login');
-
   return (
-    <header>
-      <h1>
+    <header className={style.container}>
+      <Heading>
         <Link href="/">
           <a>New Words Wiki</a>
         </Link>
-      </h1>
-      <ul>
-        <li>
-          <Button onClick={openLoginDialog}>Sign-in</Button>
-        </li>
-        <li>
-          <Button>Sign-up</Button>
-        </li>
-      </ul>
+      </Heading>
+      <Nav />
     </header>
   );
 };

@@ -1,0 +1,8 @@
+.container {
+  display: flex;
+  flex-flow: row nowrap;
+
+  & > * {
+    margin-left: 5px;
+  }
+}
