@@ -1,18 +1,13 @@
 import type { NextPage } from 'next';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { isOpenState } from '@recoil/isOpen';
-import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { dialogsState } from '@recoil/modalDialog';
 
 const Home: NextPage = () => {
-  const [isOpen, setIsOpen] = useRecoilState(isOpenState);
-
-  useEffect(() => {
-    console.log(isOpen);
-  }, [isOpen]);
+  const setDialogs = useSetRecoilState(dialogsState);
 
   return (
     <>
-      <h1 onClick={() => setIsOpen((pre) => ({ ...pre, login: !pre.login }))}>Hellow World</h1>
+      <h1 onClick={() => setDialogs((pre) => ({ ...pre, login: !pre.login }))}>Hellow World</h1>
     </>
   );
 };
