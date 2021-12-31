@@ -1,7 +1,7 @@
 import { DefaultProps } from 'const/types';
 
-const Heading = ({ children }: DefaultProps) => {
-  return <h1>{children}</h1>;
+const Heading = ({ children, className }: DefaultProps) => {
+  return <h1 className={className}>{children}</h1>;
 };
 
 export default Heading;
