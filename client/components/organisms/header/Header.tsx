@@ -1,7 +1,10 @@
 import Button from '@atoms/button/Button';
+import useOpenModalDialog from 'hooks/useOpenModalDialog';
 import Link from 'next/link';
 
 const Header = () => {
+  const openLoginDialog = useOpenModalDialog('login');
+
   return (
     <header>
       <h1>
@@ -11,7 +14,7 @@ const Header = () => {
       </h1>
       <ul>
         <li>
-          <Button>Sign-in</Button>
+          <Button onClick={openLoginDialog}>Sign-in</Button>
         </li>
         <li>
           <Button>Sign-up</Button>
