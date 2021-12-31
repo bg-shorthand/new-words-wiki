@@ -4,13 +4,15 @@ import style from './Nav.module.scss';
 
 const Nav = () => {
   const openSigninDialog = useOpenModalDialog('signin');
+  const openSignupDialog = useOpenModalDialog('signup');
+
   return (
     <ul className={style.container}>
       <li>
         <Button onClick={openSigninDialog}>Sign-in</Button>
       </li>
       <li>
-        <Button>Sign-up</Button>
+        <Button onClick={openSignupDialog}>Sign-up</Button>
       </li>
     </ul>
   );

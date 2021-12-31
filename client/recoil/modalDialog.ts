@@ -4,6 +4,7 @@ const dialogsState = atom({
   key: 'dialogsState',
   default: {
     signin: false,
+    signup: false,
   },
 });
 
