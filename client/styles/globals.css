@@ -128,6 +128,11 @@ table {
   border-spacing: 0;
 }
 
+*,
+body,
+body * {
+  box-sizing: border-box;
+}
 a {
   text-decoration: none;
   color: inherit;
