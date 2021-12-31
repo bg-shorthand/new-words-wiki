@@ -5,8 +5,8 @@ interface InputProps extends DefaultProps {
   placeholder?: string;
 }
 
-const Input = ({ id, placeholder }: InputProps) => {
+const InputText = ({ id, placeholder }: InputProps) => {
   return <input type="text" id={id} placeholder={placeholder} />;
 };
 
-export default Input;
+export default InputText;
