@@ -3,7 +3,7 @@ import { atom, selector } from 'recoil';
 const dialogsState = atom({
   key: 'dialogsState',
   default: {
-    login: false,
+    signin: false,
   },
 });
 
