@@ -5,18 +5,15 @@ import style from '../styles/layout.module.scss';
 import ModalDialogs from '@components/pages/ModalDialogs';
 import Header from '@organisms/header/Header';
 import Footer from '@organisms/footer/Footer';
+import DefaultLayout from '@templates/defaultLayout/DefaultLayout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <div className={style.container}>
-        <Header />
-        <main>
-          <Component {...pageProps} />
-        </main>
-        <Footer />
-        <ModalDialogs />
-      </div>
+      <DefaultLayout>
+        <Component {...pageProps} />
+      </DefaultLayout>
+      <ModalDialogs />
     </RecoilRoot>
   );
 }
