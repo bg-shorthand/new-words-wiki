@@ -10,7 +10,7 @@ const LoginForm = () => {
       <Input id="loginId" />
       <Label htmlFor="loginPwd">Password</Label>
       <Input id="loginPwd" />
-      <Button>submit</Button>
+      <Button>로그인</Button>
     </form>
   );
 };

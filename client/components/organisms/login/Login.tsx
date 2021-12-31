@@ -1,10 +1,10 @@
 import Heading from '@atoms/heading/Heading';
-import LoginForm from '@molecules/LoginForm/LoginForm';
+import LoginForm from '@molecules/loginForm/LoginForm';
 
 const Login = () => {
   return (
     <>
-      <Heading>test</Heading>
+      <Heading>로그인</Heading>
       <LoginForm />
     </>
   );
