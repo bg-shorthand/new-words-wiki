@@ -3,6 +3,7 @@ import Button from '@atoms/button/Button';
 import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
+import useCheckPassword from 'hooks/useCheckPassword';
 import useValidString from 'hooks/useValidString';
 import { useState } from 'react';
 import style from './SignupForm.module.scss';
@@ -16,6 +17,7 @@ const SignupForm = () => {
     useValidString('email');
   const { isCorrect: isCorrectPwd, validStringHandler: validPwdHandler } =
     useValidString('password');
+  const { isSame, checkPasswordHandler } = useCheckPassword(pwd, checkPwd);
 
   return (
     <form className={style.container}>
@@ -47,8 +49,9 @@ const SignupForm = () => {
           value={checkPwd}
           onChange={(e) => setCheckPwd(e.currentTarget.value)}
           password
+          onBlur={checkPasswordHandler}
         />
-        <Alert>비밀번호가 다릅니다.</Alert>
+        {!isSame && <Alert>비밀번호가 다릅니다.</Alert>}
       </LabelInputBox>
       <Button>회원 가입</Button>
     </form>
