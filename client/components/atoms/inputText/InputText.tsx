@@ -1,16 +1,17 @@
 import Button from '@atoms/button/Button';
 import { DefaultProps } from 'const/types';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, FocusEventHandler } from 'react';
 
 interface InputProps extends DefaultProps {
   id: string;
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   password?: 'password';
   placeholder?: string;
 }
 
-const InputText = ({ id, password, value, onChange, placeholder }: InputProps) => {
+const InputText = ({ id, password, value, onChange, onBlur, placeholder }: InputProps) => {
   return (
     <>
       <input
@@ -19,6 +20,7 @@ const InputText = ({ id, password, value, onChange, placeholder }: InputProps) =
         onChange={onChange}
         id={id}
         placeholder={placeholder}
+        onBlur={onBlur}
       />
       {password ? <Button>비밀번호 보기</Button> : null}
     </>
