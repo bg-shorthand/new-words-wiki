@@ -1,7 +1,7 @@
 import Button from '@atoms/button/Button';
 import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
-import LabelInputBox from '@containers/labelInput/LabelInput';
+import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import style from './SigninForm.module.scss';
 
 const SigninForm = () => {
