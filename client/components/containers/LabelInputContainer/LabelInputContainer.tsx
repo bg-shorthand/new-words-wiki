@@ -1,5 +1,5 @@
 import { DefaultProps } from 'const/types';
-import style from './LabelInput.module.scss';
+import style from './LabelInputContainer.module.scss';
 
 interface LabelInputBoxProps extends DefaultProps {
   locateLabel?: 'top' | 'right' | 'bottom' | 'left';
