@@ -35,7 +35,7 @@ const SignupForm = () => {
           id="signupPwd"
           value={pwd}
           onChange={(e) => setPwd(e.currentTarget.value)}
-          password="password"
+          password
           onBlur={validPwdHandler}
         />
         {!isCorrectPwd && <Alert>비밀번호를 확인해주세요.</Alert>}
@@ -46,7 +46,7 @@ const SignupForm = () => {
           id="checkSignupPwd"
           value={checkPwd}
           onChange={(e) => setCheckPwd(e.currentTarget.value)}
-          password="password"
+          password
         />
         <Alert>비밀번호가 다릅니다.</Alert>
       </LabelInputBox>
