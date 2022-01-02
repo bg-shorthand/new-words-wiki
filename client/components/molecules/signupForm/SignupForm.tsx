@@ -3,13 +3,16 @@ import Button from '@atoms/button/Button';
 import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
+import userApi from 'api/userApi';
+import { NewUser } from 'const/types';
 import useCheckPassword from 'hooks/useCheckPassword';
 import useValidString from 'hooks/useValidString';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import style from './SignupForm.module.scss';
 
 const SignupForm = () => {
   const [id, setId] = useState('');
+  const [nickname, setNickname] = useState('');
   const [pwd, setPwd] = useState('');
   const [checkPwd, setCheckPwd] = useState('');
 
@@ -19,9 +22,18 @@ const SignupForm = () => {
     useValidString('password');
   const { isSame, checkPasswordHandler } = useCheckPassword(pwd, checkPwd);
 
+  const signupHandler: MouseEventHandler = async (e) => {
+    e.preventDefault();
+
+    const newUser: NewUser = { email: id, nickname: nickname, password: pwd };
+    const res = await userApi.post(newUser);
+
+    console.log(res);
+  };
+
   return (
     <form className={style.container}>
-      <LabelInputBox locateLabel="top">
+      <LabelInputBox>
         <Label htmlFor="signupId">ID</Label>
         <InputText
           id="signupId"
@@ -30,6 +42,14 @@ const SignupForm = () => {
           onBlur={validEmailHandler}
         />
         {!isCorrectEmail && <Alert>email을 확인해주세요.</Alert>}
+      </LabelInputBox>
+      <LabelInputBox>
+        <Label htmlFor="signupNickname">Nickname</Label>
+        <InputText
+          id="signupNickname"
+          value={nickname}
+          onChange={(e) => setNickname(e.currentTarget.value)}
+        />
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupPwd">Password</Label>
@@ -53,7 +73,9 @@ const SignupForm = () => {
         />
         {!isSame && <Alert>비밀번호가 다릅니다.</Alert>}
       </LabelInputBox>
-      <Button>회원 가입</Button>
+      <Button type="submit" onClick={signupHandler}>
+        회원 가입
+      </Button>
     </form>
   );
 };
