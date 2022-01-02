@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
         key === "email"
           ? "이미 등록된 이메일입니다."
           : "이미 등록된 닉네임입니다";
-      res.status(500).send({ key, value, msg });
+      res.send({ key, value, msg });
     } else res.status(500).send(e);
   }
 });
