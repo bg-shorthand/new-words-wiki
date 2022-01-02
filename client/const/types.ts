@@ -5,4 +5,9 @@ interface DefaultProps {
   className?: string;
 }
 
-export type { DefaultProps };
+interface User {
+  email: string;
+  nickname: string;
+}
+
+export type { DefaultProps, User };
