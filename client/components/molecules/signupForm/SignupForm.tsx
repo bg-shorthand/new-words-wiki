@@ -3,11 +3,10 @@ import Button from '@atoms/button/Button';
 import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
-import userApi from 'api/userApi';
-import { NewUser } from 'const/types';
 import useCheckPassword from 'hooks/useCheckPassword';
+import useSignup from 'hooks/useSignup';
 import useValidString from 'hooks/useValidString';
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import style from './SignupForm.module.scss';
 
 const SignupForm = () => {
@@ -21,15 +20,11 @@ const SignupForm = () => {
   const { isCorrect: isCorrectPwd, validStringHandler: validPwdHandler } =
     useValidString('password');
   const { isSame, checkPasswordHandler } = useCheckPassword(pwd, checkPwd);
-
-  const signupHandler: MouseEventHandler = async (e) => {
-    e.preventDefault();
-
-    const newUser: NewUser = { email: id, nickname: nickname, password: pwd };
-    const res = await userApi.post(newUser);
-
-    console.log(res);
-  };
+  const { isUniqueEmail, isUniqueNickname, signupHandler } = useSignup({
+    email: id,
+    nickname: nickname,
+    password: pwd,
+  });
 
   return (
     <form className={style.container}>
@@ -42,6 +37,7 @@ const SignupForm = () => {
           onBlur={validEmailHandler}
         />
         {!isCorrectEmail && <Alert>email을 확인해주세요.</Alert>}
+        {!isUniqueEmail && <Alert>이미 등록된 이메일입니다.</Alert>}
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupNickname">Nickname</Label>
@@ -50,6 +46,7 @@ const SignupForm = () => {
           value={nickname}
           onChange={(e) => setNickname(e.currentTarget.value)}
         />
+        {!isUniqueNickname && <Alert>이미 등록된 닉네임입니다.</Alert>}
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupPwd">Password</Label>
