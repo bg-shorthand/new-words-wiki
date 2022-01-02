@@ -10,4 +10,8 @@ interface User {
   nickname: string;
 }
 
-export type { DefaultProps, User };
+interface NewUser extends User {
+  password: string;
+}
+
+export type { DefaultProps, User, NewUser };
