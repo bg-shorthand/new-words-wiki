@@ -32,11 +32,20 @@ router.get("/:nickname", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   try {
-    const user = req.body;
-    await User.create(user);
+    const newUser = req.body;
+    await User.create(newUser);
+    const user = await User.findOneByEmail(newUser.email);
     res.send(user);
   } catch (e) {
-    res.status(500).send(e);
+    if (e.code === 11000) {
+      const key = Object.keys(e.keyValue)[0];
+      const value = Object.values(e.keyValue)[0];
+      const msg =
+        key === "email"
+          ? "이미 등록된 이메일입니다."
+          : "이미 등록된 닉네임입니다";
+      res.status(500).send({ key, value, msg });
+    } else res.status(500).send(e);
   }
 });
 
