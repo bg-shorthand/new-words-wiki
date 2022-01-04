@@ -3,41 +3,40 @@ import Button from '@atoms/button/Button';
 import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
+import { DefaultProps } from 'const/types';
 import useCheckPassword from 'hooks/useCheckPassword';
-import useSignup from 'hooks/useSignup';
 import useValidString from 'hooks/useValidString';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import style from './SignupForm.module.scss';
 
-const SignupForm = () => {
-  const [id, setId] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [pwd, setPwd] = useState('');
-  const [checkPwd, setCheckPwd] = useState('');
+interface SignupFormProps extends DefaultProps {
+  email: string;
+  nickname: string;
+  setNickname: Dispatch<SetStateAction<string>>;
+  password: string;
+  setPassword: Dispatch<SetStateAction<string>>;
+  samePassword: string;
+  setSamePassword: Dispatch<SetStateAction<string>>;
+}
 
-  const { isCorrect: isCorrectEmail, validStringHandler: validEmailHandler } =
-    useValidString('email');
+const SignupForm = ({
+  email,
+  nickname,
+  setNickname,
+  password,
+  setPassword,
+  samePassword,
+  setSamePassword,
+}: SignupFormProps) => {
   const { isCorrect: isCorrectPwd, validStringHandler: validPwdHandler } =
     useValidString('password');
-  const { isSame, checkPasswordHandler } = useCheckPassword(pwd, checkPwd);
-  const { isUniqueEmail, isUniqueNickname, signupHandler } = useSignup({
-    email: id,
-    nickname: nickname,
-    password: pwd,
-  });
+  const { isSame, checkPasswordHandler } = useCheckPassword(password, samePassword);
 
   return (
     <form className={style.container}>
       <LabelInputBox>
-        <Label htmlFor="signupId">ID</Label>
-        <InputText
-          id="signupId"
-          value={id}
-          onChange={(e) => setId(e.currentTarget.value)}
-          onBlur={validEmailHandler}
-        />
-        {!isCorrectEmail && <Alert>email을 확인해주세요.</Alert>}
-        {!isUniqueEmail && <Alert>이미 등록된 이메일입니다.</Alert>}
+        <Label htmlFor="signupEmail">Email</Label>
+        <InputText id="signupEmail" value={email} disabled />
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupNickname">Nickname</Label>
@@ -46,14 +45,14 @@ const SignupForm = () => {
           value={nickname}
           onChange={(e) => setNickname(e.currentTarget.value)}
         />
-        {!isUniqueNickname && <Alert>이미 등록된 닉네임입니다.</Alert>}
+        <Alert>이미 등록된 닉네임입니다.</Alert>
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupPwd">Password</Label>
         <InputText
           id="signupPwd"
-          value={pwd}
-          onChange={(e) => setPwd(e.currentTarget.value)}
+          value={password}
+          onChange={(e) => setPassword(e.currentTarget.value)}
           password
           onBlur={validPwdHandler}
         />
@@ -63,16 +62,14 @@ const SignupForm = () => {
         <Label htmlFor="checkSignupPwd">Check Password</Label>
         <InputText
           id="checkSignupPwd"
-          value={checkPwd}
-          onChange={(e) => setCheckPwd(e.currentTarget.value)}
+          value={samePassword}
+          onChange={(e) => setSamePassword(e.currentTarget.value)}
           password
           onBlur={checkPasswordHandler}
         />
         {!isSame && <Alert>비밀번호가 다릅니다.</Alert>}
       </LabelInputBox>
-      <Button type="submit" onClick={signupHandler}>
-        회원 가입
-      </Button>
+      <Button>다음</Button>
     </form>
   );
 };
