@@ -34,3 +34,4 @@ mongoose
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
 app.use("/user", require("./routes/user"));
+app.use("/emailAuth", require("./routes/emailAuth"));

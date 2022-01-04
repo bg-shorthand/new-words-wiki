@@ -5,7 +5,7 @@ dotenv.config();
 
 const { USER, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
 
-async function main(receiverEmail) {
+async function sendMail(receiverEmail, subject, content) {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.google.com",
@@ -23,10 +23,8 @@ async function main(receiverEmail) {
   const message = {
     from: USER,
     to: receiverEmail,
-    subject: "Nodemailer X Gmail OAuth 2.0 테스트",
-    html: `
-        Nodemailer X Gmail OAuth 2.0 테스트 메일
-    `,
+    subject,
+    html: content,
   };
 
   try {
@@ -37,4 +35,4 @@ async function main(receiverEmail) {
   }
 }
 
-main("bg_shorthand@naver.com");
+module.exports = sendMail;
