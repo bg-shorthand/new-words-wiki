@@ -10,7 +10,7 @@ router.get("/", async (_, res) => {
     res.status(500).send(e);
   }
 });
-router.get("/:email", async (req, res) => {
+router.get("/email/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await User.findOneByEmail(email);
@@ -20,7 +20,7 @@ router.get("/:email", async (req, res) => {
     res.status(500).send(e);
   }
 });
-router.get("/:nickname", async (req, res) => {
+router.get("/nickname/:nickname", async (req, res) => {
   try {
     const nickname = req.params.nickname;
     const user = await User.findOneByNickname(nickname);
