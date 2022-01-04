@@ -6,13 +6,22 @@ import { ChangeEventHandler, FocusEventHandler } from 'react';
 interface InputProps extends DefaultProps {
   id: string;
   value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   password?: boolean;
   placeholder?: string;
+  disabled?: boolean;
 }
 
-const InputText = ({ id, password, value, onChange, onBlur, placeholder }: InputProps) => {
+const InputText = ({
+  id,
+  password,
+  value,
+  onChange,
+  onBlur,
+  placeholder,
+  disabled,
+}: InputProps) => {
   const { isPassword, showPasswordHandler } = useShowPassword(password);
 
   return (
@@ -25,6 +34,7 @@ const InputText = ({ id, password, value, onChange, onBlur, placeholder }: Input
         placeholder={placeholder}
         onBlur={onBlur}
         autoComplete="off"
+        disabled={disabled}
       />
       {password ? <Button onClick={showPasswordHandler}>비밀번호 보기</Button> : null}
     </>
