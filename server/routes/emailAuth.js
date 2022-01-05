@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
     }
 
     const auth = await EmailAuth.create(email, authKey);
-    res.send({ auth, liveTime });
+    res.send({ liveTime });
     sendMail(email, "인증번호", `인증번호: ${authKey}`);
 
     setTimeout(async () => {
