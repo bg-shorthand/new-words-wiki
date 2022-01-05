@@ -8,6 +8,7 @@ import { DefaultProps } from 'const/types';
 import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
 import useValidString from 'hooks/useValidString';
 import { Dispatch, SetStateAction, useState } from 'react';
+import useCheckAuthKey from 'hooks/useCheckAuthKey';
 
 interface EmailAuthFormProps extends DefaultProps {
   email: string;
@@ -17,9 +18,9 @@ interface EmailAuthFormProps extends DefaultProps {
 const EmailAuthForm = ({ email, setEmail }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
 
-  const { isCorrect: isCorrectEmail, validStringHandler: validEmailHandler } =
-    useValidString('email');
+  const { isCorrect, validStringHandler } = useValidString('email');
   const { isUniqueEmail, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
+  const { isAuth, checkAuthKey } = useCheckAuthKey();
 
   return (
     <form>
@@ -29,9 +30,9 @@ const EmailAuthForm = ({ email, setEmail }: EmailAuthFormProps) => {
           id="signupId"
           value={email}
           onChange={(e) => setEmail(e.currentTarget.value)}
-          onBlur={validEmailHandler}
+          onBlur={validStringHandler}
         />
-        {!isCorrectEmail && <Alert>이메일 형식을 확인해주세요.</Alert>}
+        {!isCorrect && <Alert>이메일 형식을 확인해주세요.</Alert>}
         {!isUniqueEmail && <Alert>이미 등록된 이메일입니다.</Alert>}
       </LabelInputBox>
       <Button onClick={() => setEmailAuthKey(email)}>인증 번호 받기</Button>
@@ -48,7 +49,7 @@ const EmailAuthForm = ({ email, setEmail }: EmailAuthFormProps) => {
           onChange={(e) => setAuthKey(e.currentTarget.value)}
         />
       </LabelInputBox>
-      <Button>인증</Button>
+      <Button onClick={() => checkAuthKey(email, authKey)}>인증</Button>
     </form>
   );
 };
