@@ -16,11 +16,10 @@ interface EmailAuthFormProps extends DefaultProps {
 
 const EmailAuthForm = ({ email, setEmail }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
-  const [isUniqueEmail, setisUniqueEmail] = useState(true);
 
   const { isCorrect: isCorrectEmail, validStringHandler: validEmailHandler } =
     useValidString('email');
-  const { liveTime, setEmailAuthKey } = useSetEmailAuthKey();
+  const { isUniqueEmail, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
 
   return (
     <form>
