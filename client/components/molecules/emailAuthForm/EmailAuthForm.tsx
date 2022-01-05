@@ -4,26 +4,27 @@ import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
+import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
 import useValidString from 'hooks/useValidString';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 interface EmailAuthFormProps extends DefaultProps {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
-  setStage?: Dispatch<SetStateAction<number>>;
 }
 
-const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
+const EmailAuthForm = ({ email, setEmail }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
   const [isUniqueEmail, setisUniqueEmail] = useState(true);
 
   const { isCorrect: isCorrectEmail, validStringHandler: validEmailHandler } =
     useValidString('email');
+  const { liveTime, setEmailAuthKey } = useSetEmailAuthKey();
 
   return (
     <form>
       <LabelInputBox>
-        <Label htmlFor="signupId">ID</Label>
+        <Label htmlFor="signupId">이메일</Label>
         <InputText
           id="signupId"
           value={email}
@@ -33,8 +34,7 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
         {!isCorrectEmail && <Alert>이메일 형식을 확인해주세요.</Alert>}
         {!isUniqueEmail && <Alert>이미 등록된 이메일입니다.</Alert>}
       </LabelInputBox>
-      <Button>인증 번호 받기</Button>
-      <Alert>{email} 주소로 인증 번호가 발송되었습니다.</Alert>
+      <Button onClick={() => setEmailAuthKey(email)}>인증 번호 받기</Button>
       <LabelInputBox>
         <Label htmlFor="authKey">인증 번호</Label>
         <InputText
@@ -43,8 +43,7 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
           onChange={(e) => setAuthKey(e.currentTarget.value)}
         />
       </LabelInputBox>
-      <Button>이메일 인증</Button>
-      {setStage && <Button onClick={() => setStage((pre) => (pre += 1))}>다음</Button>}
+      <Button>인증</Button>
     </form>
   );
 };
