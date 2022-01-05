@@ -4,33 +4,20 @@ import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
-import useCheckPassword from 'hooks/useCheckPassword';
 import useValidString from 'hooks/useValidString';
-import { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import style from './SignupForm.module.scss';
 
 interface SignupFormProps extends DefaultProps {
   email: string;
-  nickname: string;
-  setNickname: Dispatch<SetStateAction<string>>;
-  password: string;
-  setPassword: Dispatch<SetStateAction<string>>;
-  samePassword: string;
-  setSamePassword: Dispatch<SetStateAction<string>>;
 }
 
-const SignupForm = ({
-  email,
-  nickname,
-  setNickname,
-  password,
-  setPassword,
-  samePassword,
-  setSamePassword,
-}: SignupFormProps) => {
-  const { isCorrect: isCorrectPwd, validStringHandler: validPwdHandler } =
-    useValidString('password');
-  const { isSame, checkPasswordHandler } = useCheckPassword(password, samePassword);
+const SignupForm = ({ email }: SignupFormProps) => {
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [samePassword, setSamePassword] = useState('');
+  const [isSamePassword, setIsSamePassword] = useState(false);
+  const { isCorrect, validStringHandler } = useValidString('password');
 
   return (
     <form className={style.container}>
@@ -54,9 +41,9 @@ const SignupForm = ({
           value={password}
           onChange={(e) => setPassword(e.currentTarget.value)}
           password
-          onBlur={validPwdHandler}
+          onBlur={validStringHandler}
         />
-        {!isCorrectPwd && <Alert>비밀번호를 확인해주세요.</Alert>}
+        {!isCorrect && <Alert>비밀번호를 확인해주세요.</Alert>}
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="checkSignupPwd">Check Password</Label>
@@ -65,11 +52,11 @@ const SignupForm = ({
           value={samePassword}
           onChange={(e) => setSamePassword(e.currentTarget.value)}
           password
-          onBlur={checkPasswordHandler}
+          onBlur={() => setIsSamePassword(password === samePassword)}
         />
-        {!isSame && <Alert>비밀번호가 다릅니다.</Alert>}
+        {!isSamePassword && <Alert>비밀번호가 다릅니다.</Alert>}
       </LabelInputBox>
-      <Button>다음</Button>
+      <Button>가입</Button>
     </form>
   );
 };
