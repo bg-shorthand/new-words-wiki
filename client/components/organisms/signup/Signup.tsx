@@ -1,3 +1,4 @@
+import Button from '@atoms/button/Button';
 import Heading from '@atoms/heading/Heading';
 import EmailAuthForm from '@molecules/emailAuthForm/EmailAuthForm';
 import SignupForm from '@molecules/signupForm/SignupForm';
@@ -11,14 +12,10 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [samePassword, setSamePassword] = useState('');
 
-  useEffect(() => {
-    return () => setStage(0);
-  });
-
   return (
     <>
       <Heading className={style.heading}>회원 가입</Heading>
-      {stage === 0 && <EmailAuthForm email={email} setEmail={setEmail} setStage={setStage} />}
+      {stage === 0 && <EmailAuthForm email={email} setEmail={setEmail} />}
       {stage === 1 && (
         <SignupForm
           email={email}
@@ -30,6 +27,8 @@ const Signup = () => {
           setSamePassword={setSamePassword}
         />
       )}
+      {stage !== 0 && <Button onClick={() => setStage((pre) => (pre -= 1))}>이전</Button>}
+      {stage !== 1 && <Button onClick={() => setStage((pre) => (pre += 1))}>다음</Button>}
     </>
   );
 };
