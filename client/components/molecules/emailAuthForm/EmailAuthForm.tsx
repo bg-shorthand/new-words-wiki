@@ -18,6 +18,7 @@ interface EmailAuthFormProps extends DefaultProps {
 
 const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
+  const [isTimeout, setIsTimeout] = useState(false);
 
   const { isCorrect, validStringHandler } = useValidString('email');
   const { isUniqueEmail, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
@@ -40,21 +41,39 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
         {!isCorrect && <Alert>이메일 형식을 확인해주세요.</Alert>}
         {!isUniqueEmail && <Alert>이미 등록된 이메일입니다.</Alert>}
       </LabelInputBox>
-      <Button onClick={() => setEmailAuthKey(email)}>인증 번호 받기</Button>
-      {liveTime ? (
+      <Button
+        onClick={() => {
+          setEmailAuthKey(email);
+          setIsTimeout(false);
+        }}
+      >
+        인증 번호 받기
+      </Button>
+      {liveTime && !isTimeout ? (
         <Alert>
-          {email}로 인증 번호가 발송되었습니다. 유효 시간: {<Timer time={liveTime} />}
+          {email}로 인증 번호가 발송되었습니다. 유효 시간:{' '}
+          {<Timer time={liveTime} callback={() => setIsTimeout(true)} />}
         </Alert>
       ) : null}
+      {isTimeout && <Alert>유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.</Alert>}
       <LabelInputBox>
         <Label htmlFor="authKey">인증 번호</Label>
         <InputText
           id="authKey"
           value={authKey}
           onChange={(e) => setAuthKey(e.currentTarget.value)}
+          disabled={isTimeout}
         />
       </LabelInputBox>
-      <Button onClick={() => checkAuthKey(email, authKey)}>인증</Button>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+          checkAuthKey(email, authKey);
+        }}
+      >
+        인증
+      </Button>
+      {isAuth && <Alert>인증 되었습니다.</Alert>}
     </form>
   );
 };
