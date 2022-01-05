@@ -7,20 +7,25 @@ import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
 import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
 import useValidString from 'hooks/useValidString';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useCheckAuthKey from 'hooks/useCheckAuthKey';
 
 interface EmailAuthFormProps extends DefaultProps {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
+  setIsComplete?: Dispatch<SetStateAction<boolean>>;
 }
 
-const EmailAuthForm = ({ email, setEmail }: EmailAuthFormProps) => {
+const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
 
   const { isCorrect, validStringHandler } = useValidString('email');
   const { isUniqueEmail, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
   const { isAuth, checkAuthKey } = useCheckAuthKey();
+
+  useEffect(() => {
+    if (setIsComplete) setIsComplete(isAuth);
+  }, [isAuth]);
 
   return (
     <form>
