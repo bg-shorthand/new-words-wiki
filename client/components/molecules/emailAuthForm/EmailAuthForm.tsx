@@ -2,6 +2,7 @@ import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
+import Timer from '@molecules/timer/Timer';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
 import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
@@ -35,6 +36,11 @@ const EmailAuthForm = ({ email, setEmail }: EmailAuthFormProps) => {
         {!isUniqueEmail && <Alert>이미 등록된 이메일입니다.</Alert>}
       </LabelInputBox>
       <Button onClick={() => setEmailAuthKey(email)}>인증 번호 받기</Button>
+      {liveTime ? (
+        <Alert>
+          {email}로 인증 번호가 발송되었습니다. 유효 시간: {<Timer time={liveTime} />}
+        </Alert>
+      ) : null}
       <LabelInputBox>
         <Label htmlFor="authKey">인증 번호</Label>
         <InputText
