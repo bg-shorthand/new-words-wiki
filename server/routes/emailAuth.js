@@ -8,8 +8,10 @@ router.get("/", async (req, res) => {
   try {
     const { email, authKey } = req.query;
     const auth = await EmailAuth.findOneByEmail(email);
-    if (auth && authKey === auth.authKey) res.send({ auth: true });
-    else res.send({ auth: false });
+    if (auth && authKey === auth.authKey) {
+      await EmailAuth.deleteByEmail(email);
+      res.send({ auth: true });
+    } else res.send({ auth: false });
   } catch (e) {
     res.status(500).send(e);
   }
