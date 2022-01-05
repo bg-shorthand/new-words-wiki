@@ -17,10 +17,9 @@ const Signup = () => {
       {stage === 0 && (
         <EmailAuthForm email={email} setEmail={setEmail} setIsComplete={setIsComplete} />
       )}
-      {stage === 1 && <SignupForm email={email} />}
+      {stage === 1 && <SignupForm email={email} setStage={setStage} />}
       {stage === 2 && <Alert>완료</Alert>}
-      {stage !== 0 && <Button onClick={() => setStage((pre) => (pre -= 1))}>이전</Button>}
-      {stage !== 2 && (
+      {stage === 0 && (
         <Button onClick={() => setStage((pre) => (pre += 1))} disabled={!isComplete}>
           다음
         </Button>

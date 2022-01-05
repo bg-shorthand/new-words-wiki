@@ -5,6 +5,7 @@ import { MouseEventHandler, useState } from 'react';
 const useSignup = (newUser: NewUser) => {
   const [isUniqueEmail, setIsUniqueEmail] = useState(true);
   const [isUniqueNickname, setIsUniqueNickname] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const signupHandler: MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -15,9 +16,11 @@ const useSignup = (newUser: NewUser) => {
     } else if (data.key === 'nickname') {
       setIsUniqueNickname(false);
       setTimeout(() => setIsUniqueNickname(true), 3000);
-    } else console.log(data);
+    } else if (data.success) {
+      setIsSuccess(true);
+    }
   };
-  return { isUniqueEmail, isUniqueNickname, signupHandler };
+  return { isUniqueEmail, isUniqueNickname, isSuccess, signupHandler };
 };
 
 export default useSignup;

@@ -4,20 +4,28 @@ import InputText from '@atoms/inputText/InputText';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
+import useSignup from 'hooks/useSignup';
 import useValidString from 'hooks/useValidString';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './SignupForm.module.scss';
 
 interface SignupFormProps extends DefaultProps {
   email: string;
+  setStage?: Dispatch<SetStateAction<number>>;
 }
 
-const SignupForm = ({ email }: SignupFormProps) => {
+const SignupForm = ({ email, setStage }: SignupFormProps) => {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [samePassword, setSamePassword] = useState('');
   const [isSamePassword, setIsSamePassword] = useState(false);
+
   const { isCorrect, validStringHandler } = useValidString('password');
+  const { isUniqueNickname, isSuccess, signupHandler } = useSignup({ email, nickname, password });
+
+  useEffect(() => {
+    if (isSuccess && setStage) setStage((pre) => (pre += 1));
+  }, [isSuccess]);
 
   return (
     <form className={style.container}>
@@ -32,7 +40,7 @@ const SignupForm = ({ email }: SignupFormProps) => {
           value={nickname}
           onChange={(e) => setNickname(e.currentTarget.value)}
         />
-        <Alert>이미 등록된 닉네임입니다.</Alert>
+        {!isUniqueNickname && <Alert>이미 등록된 닉네임입니다.</Alert>}
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupPwd">Password</Label>
@@ -56,7 +64,7 @@ const SignupForm = ({ email }: SignupFormProps) => {
         />
         {!isSamePassword && <Alert>비밀번호가 다릅니다.</Alert>}
       </LabelInputBox>
-      <Button>가입</Button>
+      <Button onClick={signupHandler}>가입</Button>
     </form>
   );
 };
