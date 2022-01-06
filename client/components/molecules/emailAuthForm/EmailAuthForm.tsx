@@ -37,6 +37,7 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
           value={email}
           onChange={(e) => setEmail(e.currentTarget.value)}
           onBlur={validStringHandler}
+          disabled={!!liveTime && !isTimeout}
         />
         {!isCorrect && <Alert>이메일 형식을 확인해주세요.</Alert>}
         {!isUniqueEmail && <Alert>이미 등록된 이메일입니다.</Alert>}
@@ -46,6 +47,7 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
           setEmailAuthKey(email);
           setIsTimeout(false);
         }}
+        disabled={!!liveTime && !isTimeout}
       >
         인증 번호 받기
       </Button>
