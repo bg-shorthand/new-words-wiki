@@ -6,13 +6,14 @@ import { InputHTMLAttributes } from 'react';
 
 interface LabelInputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
+  label: string;
   validations?: { isAlert: boolean; alert: string }[];
 }
 
-const LabelInput = ({ id, validations, ...props }: LabelInputProps) => {
+const LabelInput = ({ id, label, validations, ...props }: LabelInputProps) => {
   return (
     <LabelInputContainer>
-      <Label htmlFor={id}>이메일</Label>
+      <Label htmlFor={id}>{label}</Label>
       <Input id={id} {...props} />
       {validations?.map(({ isAlert, alert }) => {
         return isAlert && <Alert>{alert}</Alert>;

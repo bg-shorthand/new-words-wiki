@@ -1,14 +1,13 @@
 import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import Timer from '@molecules/timer/Timer';
-import EmailInput from '@molecules/emailInput/EmailInput';
-import { DefaultProps } from 'const/types';
+import LabelInput from '@molecules/labelInput/LabelInput';
 import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import useCheckAuthKey from 'hooks/useCheckAuthKey';
-import LabelInputText from '@molecules/labelInputText/LabelInputText';
+import useValidString from 'hooks/useValidString';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-interface EmailAuthFormProps extends DefaultProps {
+interface EmailAuthFormProps {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
   setIsComplete?: Dispatch<SetStateAction<boolean>>;
@@ -19,6 +18,7 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
   const [isTimeout, setIsTimeout] = useState(false);
   const [isAfterSetAuthKeyBeforeTimeout, setIsAfterSetAuthKeyBeforeTimeout] = useState(false);
 
+  const { isCorrect, validStringHandler } = useValidString('email');
   const { isUniqueEmail, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
   const { isAuth, checkAuthKey } = useCheckAuthKey();
 
@@ -31,11 +31,17 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
 
   return (
     <form>
-      <EmailInput
-        email={email}
-        setEmail={setEmail}
+      <LabelInput
+        id="email"
+        label="이메일"
+        value={email}
+        onChange={(e) => setEmail(e.currentTarget.value)}
+        onBlur={validStringHandler}
         disabled={isAfterSetAuthKeyBeforeTimeout}
-        isUnique={isUniqueEmail}
+        validations={[
+          { isAlert: !isUniqueEmail, alert: '이미 등록된 이메일입니다.' },
+          { isAlert: !isCorrect, alert: '이메일 형식을 확인해주세요.' },
+        ]}
       />
       <Button
         onClick={() => {
@@ -52,13 +58,15 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
           {<Timer time={liveTime} callback={() => setIsTimeout(true)} />}
         </Alert>
       )}
-      {isTimeout && <Alert>유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.</Alert>}
-      <LabelInputText
+      <LabelInput
         id="authKey"
         label="인증 번호"
         value={authKey}
         onChange={(e) => setAuthKey(e.currentTarget.value)}
         disabled={isTimeout}
+        validations={[
+          { isAlert: isTimeout, alert: '유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.' },
+        ]}
       />
       <Button onClick={(e) => checkAuthKey(email, authKey)}>인증</Button>
       {isAuth && <Alert>인증 되었습니다.</Alert>}

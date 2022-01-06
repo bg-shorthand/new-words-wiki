@@ -1,15 +1,11 @@
-import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
-import Input from '@atoms/input/Input';
-import Label from '@atoms/label/Label';
-import LabelInputContainer from '@containers/labelInputContainer/LabelInputContainer';
-import { DefaultProps } from 'const/types';
+import LabelInput from '@molecules/labelInput/LabelInput';
 import useSignup from 'hooks/useSignup';
 import useValidString from 'hooks/useValidString';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './SignupForm.module.scss';
 
-interface SignupFormProps extends DefaultProps {
+interface SignupFormProps {
   email: string;
   setStage?: Dispatch<SetStateAction<number>>;
 }
@@ -29,41 +25,37 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
 
   return (
     <form className={style.container}>
-      <LabelInputContainer>
-        <Label htmlFor="signupEmail">Email</Label>
-        <Input id="signupEmail" value={email} disabled />
-      </LabelInputContainer>
-      <LabelInputContainer>
-        <Label htmlFor="signupNickname">Nickname</Label>
-        <Input
-          id="signupNickname"
-          value={nickname}
-          onChange={(e) => setNickname(e.currentTarget.value)}
-        />
-        {!isUniqueNickname && <Alert>이미 등록된 닉네임입니다.</Alert>}
-      </LabelInputContainer>
-      <LabelInputContainer>
-        <Label htmlFor="signupPwd">Password</Label>
-        <Input
-          id="signupPwd"
-          value={password}
-          onChange={(e) => setPassword(e.currentTarget.value)}
-          password
-          onBlur={validStringHandler}
-        />
-        {!isCorrect && <Alert>비밀번호를 확인해주세요.</Alert>}
-      </LabelInputContainer>
-      <LabelInputContainer>
-        <Label htmlFor="checkSignupPwd">Check Password</Label>
-        <Input
-          id="checkSignupPwd"
-          value={samePassword}
-          onChange={(e) => setSamePassword(e.currentTarget.value)}
-          password
-          onBlur={() => setIsSamePassword(password === samePassword)}
-        />
-        {!isSamePassword && <Alert>비밀번호가 다릅니다.</Alert>}
-      </LabelInputContainer>
+      <LabelInput id="signupEmail" label="이메일" value={email} disabled />
+      <LabelInput
+        id="signupNickname"
+        label="닉네임"
+        value={nickname}
+        onChange={(e) => setNickname(e.currentTarget.value)}
+        validations={[{ isAlert: !isUniqueNickname, alert: '이미 등록된 닉네임입니다.' }]}
+      />
+      <LabelInput
+        id="signupPassword"
+        label="비밀번호"
+        value={password}
+        onChange={(e) => setPassword(e.currentTarget.value)}
+        type="password"
+        onBlur={validStringHandler}
+        validations={[
+          {
+            isAlert: !isCorrect,
+            alert: '비밀번호는 영문, 숫자, 특수문자를 포함해 8자리 이상이어야 합니다.',
+          },
+        ]}
+      />
+      <LabelInput
+        id="checkSignupPassword"
+        label="이메일 확인"
+        value={samePassword}
+        onChange={(e) => setSamePassword(e.currentTarget.value)}
+        type="password"
+        onBlur={() => setIsSamePassword(password === samePassword)}
+        validations={[{ isAlert: !isSamePassword, alert: '비밀번호가 다릅니다.' }]}
+      />
       <Button onClick={signupHandler}>가입</Button>
     </form>
   );
