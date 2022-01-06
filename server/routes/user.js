@@ -35,7 +35,8 @@ router.post("/", async (req, res) => {
     const newUser = req.body;
     await User.create(newUser);
     const user = await User.findOneByEmail(newUser.email);
-    res.send(user);
+    if (user) res.send({ success: true });
+    else res.send({ success: false });
   } catch (e) {
     if (e.code === 11000) {
       const key = Object.keys(e.keyValue)[0];
