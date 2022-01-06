@@ -1,7 +1,7 @@
 import Alert from '@atoms/alert/Alert';
 import Input from '@atoms/input/Input';
 import Label from '@atoms/label/Label';
-import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
+import LabelInputContainer from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
 import useValidString from 'hooks/useValidString';
 import { Dispatch, SetStateAction } from 'react';
@@ -18,7 +18,7 @@ const EmailInput = ({ email, setEmail, disabled, isUnique }: InputEmailProps) =>
 
   return (
     <>
-      <LabelInputBox>
+      <LabelInputContainer>
         <Label htmlFor="inputEmail">이메일</Label>
         <Input
           id="inputEmail"
@@ -29,7 +29,7 @@ const EmailInput = ({ email, setEmail, disabled, isUnique }: InputEmailProps) =>
         />
         {!isCorrect && <Alert>이메일 형식을 확인해주세요.</Alert>}
         {!isUnique && <Alert>이미 등록된 이메일입니다.</Alert>}
-      </LabelInputBox>
+      </LabelInputContainer>
     </>
   );
 };

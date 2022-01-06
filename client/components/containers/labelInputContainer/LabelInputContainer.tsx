@@ -1,16 +1,16 @@
 import { DefaultProps } from 'const/types';
 import style from './LabelInputContainer.module.scss';
 
-interface LabelInputBoxProps extends DefaultProps {
+interface LabelInputContainerProps extends DefaultProps {
   locateLabel?: 'top' | 'right' | 'bottom' | 'left';
   locateValidAlert?: 'top' | 'right' | 'bottom' | 'left';
 }
 
-const LabelInputBox = ({
+const LabelInputContainer = ({
   locateLabel = 'top',
   locateValidAlert = 'bottom',
   children,
-}: LabelInputBoxProps) => {
+}: LabelInputContainerProps) => {
   return (
     <div
       className={
@@ -26,4 +26,4 @@ const LabelInputBox = ({
   );
 };
 
-export default LabelInputBox;
+export default LabelInputContainer;

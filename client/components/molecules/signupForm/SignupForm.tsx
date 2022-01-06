@@ -2,7 +2,7 @@ import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import Input from '@atoms/input/Input';
 import Label from '@atoms/label/Label';
-import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
+import LabelInputContainer from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
 import useSignup from 'hooks/useSignup';
 import useValidString from 'hooks/useValidString';
@@ -29,11 +29,11 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
 
   return (
     <form className={style.container}>
-      <LabelInputBox>
+      <LabelInputContainer>
         <Label htmlFor="signupEmail">Email</Label>
         <Input id="signupEmail" value={email} disabled />
-      </LabelInputBox>
-      <LabelInputBox>
+      </LabelInputContainer>
+      <LabelInputContainer>
         <Label htmlFor="signupNickname">Nickname</Label>
         <Input
           id="signupNickname"
@@ -41,8 +41,8 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
           onChange={(e) => setNickname(e.currentTarget.value)}
         />
         {!isUniqueNickname && <Alert>이미 등록된 닉네임입니다.</Alert>}
-      </LabelInputBox>
-      <LabelInputBox>
+      </LabelInputContainer>
+      <LabelInputContainer>
         <Label htmlFor="signupPwd">Password</Label>
         <Input
           id="signupPwd"
@@ -52,8 +52,8 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
           onBlur={validStringHandler}
         />
         {!isCorrect && <Alert>비밀번호를 확인해주세요.</Alert>}
-      </LabelInputBox>
-      <LabelInputBox>
+      </LabelInputContainer>
+      <LabelInputContainer>
         <Label htmlFor="checkSignupPwd">Check Password</Label>
         <Input
           id="checkSignupPwd"
@@ -63,7 +63,7 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
           onBlur={() => setIsSamePassword(password === samePassword)}
         />
         {!isSamePassword && <Alert>비밀번호가 다릅니다.</Alert>}
-      </LabelInputBox>
+      </LabelInputContainer>
       <Button onClick={signupHandler}>가입</Button>
     </form>
   );
