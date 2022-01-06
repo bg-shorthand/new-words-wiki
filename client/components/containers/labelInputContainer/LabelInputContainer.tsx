@@ -1,7 +1,7 @@
-import { DefaultProps } from 'const/types';
+import { HTMLAttributes } from 'react';
 import style from './LabelInputContainer.module.scss';
 
-interface LabelInputContainerProps extends DefaultProps {
+interface LabelInputContainerProps extends HTMLAttributes<HTMLDivElement> {
   locateLabel?: 'top' | 'right' | 'bottom' | 'left';
   locateValidAlert?: 'top' | 'right' | 'bottom' | 'left';
 }
@@ -9,7 +9,7 @@ interface LabelInputContainerProps extends DefaultProps {
 const LabelInputContainer = ({
   locateLabel = 'top',
   locateValidAlert = 'bottom',
-  children,
+  ...props
 }: LabelInputContainerProps) => {
   return (
     <div
@@ -20,9 +20,8 @@ const LabelInputContainer = ({
         ' ' +
         style['locateValidAlert-' + locateValidAlert]
       }
-    >
-      {children}
-    </div>
+      {...props}
+    />
   );
 };
 
