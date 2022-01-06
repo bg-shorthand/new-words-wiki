@@ -2,10 +2,10 @@ import Dialog from '@containers/dialog/Dialog';
 import Modal from '@containers/modal/Modal';
 import Portal from '@containers/portal/portal';
 import { isOpenModalState } from '@recoil/modalDialog';
-import { DefaultProps } from 'const/types';
+import { HTMLAttributes } from 'react';
 import { useRecoilValue } from 'recoil';
 
-const ModalDialog = ({ children }: DefaultProps) => {
+const ModalDialog = ({ children }: HTMLAttributes<HTMLElement>) => {
   const isOpenModal = useRecoilValue(isOpenModalState);
 
   return (

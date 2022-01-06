@@ -1,6 +1,6 @@
 import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
-import InputText from '@atoms/inputText/InputText';
+import Input from '@atoms/input/Input';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
@@ -31,11 +31,11 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
     <form className={style.container}>
       <LabelInputBox>
         <Label htmlFor="signupEmail">Email</Label>
-        <InputText id="signupEmail" value={email} disabled />
+        <Input id="signupEmail" value={email} disabled />
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupNickname">Nickname</Label>
-        <InputText
+        <Input
           id="signupNickname"
           value={nickname}
           onChange={(e) => setNickname(e.currentTarget.value)}
@@ -44,7 +44,7 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="signupPwd">Password</Label>
-        <InputText
+        <Input
           id="signupPwd"
           value={password}
           onChange={(e) => setPassword(e.currentTarget.value)}
@@ -55,7 +55,7 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
       </LabelInputBox>
       <LabelInputBox>
         <Label htmlFor="checkSignupPwd">Check Password</Label>
-        <InputText
+        <Input
           id="checkSignupPwd"
           value={samePassword}
           onChange={(e) => setSamePassword(e.currentTarget.value)}

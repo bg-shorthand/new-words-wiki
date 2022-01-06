@@ -1,7 +1,7 @@
-import { DefaultProps } from 'const/types';
+import { HTMLAttributes } from 'react';
 
-const Alert = ({ children }: DefaultProps) => {
-  return <p>{children}</p>;
+const Alert = (props: HTMLAttributes<HTMLParagraphElement>) => {
+  return <p {...props} />;
 };
 
 export default Alert;

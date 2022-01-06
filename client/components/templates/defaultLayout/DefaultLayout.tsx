@@ -1,9 +1,9 @@
 import Footer from '@organisms/footer/Footer';
 import Header from '@organisms/header/Header';
-import { DefaultProps } from 'const/types';
+import { HTMLAttributes } from 'react';
 import style from './defaultLayout.module.scss';
 
-const DefaultLayout = ({ children }: DefaultProps) => {
+const DefaultLayout = ({ children }: HTMLAttributes<HTMLElement>) => {
   return (
     <div className={style.container}>
       <Header />

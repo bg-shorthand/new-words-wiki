@@ -1,4 +1,4 @@
-import InputText from '@atoms/inputText/InputText';
+import Input from '@atoms/input/Input';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
@@ -16,7 +16,7 @@ const LabelInputText = ({ id, label, value, onChange, disabled }: LabelInputText
   return (
     <LabelInputBox>
       <Label htmlFor={id}>{label}</Label>
-      <InputText id={id} value={value} onChange={onChange} disabled={disabled} />
+      <Input id={id} value={value} onChange={onChange} disabled={disabled} />
     </LabelInputBox>
   );
 };

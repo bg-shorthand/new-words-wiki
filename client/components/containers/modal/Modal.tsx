@@ -1,8 +1,8 @@
-import { DefaultProps } from 'const/types';
 import useCloseModalDialog from 'hooks/useCloseModalDialog';
+import { HTMLAttributes } from 'react';
 import style from './Modal.module.scss';
 
-const Modal = ({ children }: DefaultProps) => {
+const Modal = ({ children }: HTMLAttributes<HTMLDivElement>) => {
   const closeDialog = useCloseModalDialog();
 
   return (

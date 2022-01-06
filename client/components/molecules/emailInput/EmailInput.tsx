@@ -1,5 +1,5 @@
 import Alert from '@atoms/alert/Alert';
-import InputText from '@atoms/inputText/InputText';
+import Input from '@atoms/input/Input';
 import Label from '@atoms/label/Label';
 import LabelInputBox from '@containers/labelInputContainer/LabelInputContainer';
 import { DefaultProps } from 'const/types';
@@ -20,7 +20,7 @@ const EmailInput = ({ email, setEmail, disabled, isUnique }: InputEmailProps) =>
     <>
       <LabelInputBox>
         <Label htmlFor="inputEmail">이메일</Label>
-        <InputText
+        <Input
           id="inputEmail"
           value={email}
           onChange={(e) => setEmail && setEmail(e.currentTarget.value)}

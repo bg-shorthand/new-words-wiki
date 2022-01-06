@@ -1,9 +1,8 @@
-import { DefaultProps } from 'const/types';
 import useGenerateTimerByMs from 'hooks/useGenerateTimerByMs';
 import addPrefix0 from 'modules/addPrefix0';
 import { useEffect, useState } from 'react';
 
-interface TimerProps extends DefaultProps {
+interface TimerProps {
   time: number;
   callback?: () => void;
 }

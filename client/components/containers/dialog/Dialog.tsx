@@ -1,14 +1,15 @@
-import { DefaultProps } from 'const/types';
+import Button from '@atoms/button/Button';
 import useCloseModalDialog from 'hooks/useCloseModalDialog';
+import { HTMLAttributes } from 'react';
 import style from './Dialog.module.scss';
 
-const Dialog = ({ children }: DefaultProps) => {
+const Dialog = ({ children }: HTMLAttributes<HTMLElement>) => {
   const closeDialog = useCloseModalDialog();
 
   return (
     <section className={style.container}>
       {children}
-      <button onClick={closeDialog}>X</button>
+      <Button onClick={closeDialog}>X</Button>
     </section>
   );
 };
