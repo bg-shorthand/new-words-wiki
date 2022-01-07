@@ -16,7 +16,7 @@ const LabelInput = ({ id, label, validations, ...props }: LabelInputProps) => {
       <Label htmlFor={id}>{label}</Label>
       <Input id={id} {...props} />
       {validations?.map(({ isAlert, alert }) => {
-        return isAlert && <Alert>{alert}</Alert>;
+        return isAlert && <Alert key={alert}>{alert}</Alert>;
       })}
     </LabelInputContainer>
   );
