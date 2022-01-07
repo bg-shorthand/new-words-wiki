@@ -3,7 +3,7 @@ import Button from '@atoms/button/Button';
 import Heading from '@atoms/heading/Heading';
 import EmailAuthForm from '@molecules/emailAuthForm/EmailAuthForm';
 import SignupForm from '@molecules/signupForm/SignupForm';
-import useCloseModalDialog from 'hooks/useCloseModalDialog';
+import useControlDialog from 'hooks/useControlDialog';
 import { useState } from 'react';
 import style from './Signup.module.scss';
 
@@ -12,7 +12,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [isComplete, setIsComplete] = useState(false);
 
-  const closeDialogHandler = useCloseModalDialog();
+  const { closeDialogAllHandler } = useControlDialog();
 
   return (
     <>
@@ -34,7 +34,7 @@ const Signup = () => {
       {stage === 2 && (
         <>
           <Alert>환영합니다. 로그인 해주세요.</Alert>
-          <Button onClick={closeDialogHandler}>완료</Button>
+          <Button onClick={closeDialogAllHandler}>완료</Button>
         </>
       )}
       {stage === 0 && (

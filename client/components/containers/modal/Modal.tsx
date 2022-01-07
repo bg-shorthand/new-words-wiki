@@ -6,7 +6,7 @@ const Modal = ({ children }: HTMLAttributes<HTMLDivElement>) => {
   const { closeDialogAllHandler } = useControlDialog();
 
   return (
-    <div className={style.container} onClick={closeDialogAllHandler}>
+    <div className={style.container} onMouseDown={closeDialogAllHandler}>
       {children}
     </div>
   );
