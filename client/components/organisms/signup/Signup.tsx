@@ -16,7 +16,9 @@ const Signup = () => {
 
   return (
     <>
-      <Heading className={style.heading}>회원 가입</Heading>
+      <Heading level={1} className={style.heading}>
+        회원 가입
+      </Heading>
       {stage === 0 && (
         <>
           <Alert>인증된 이메일은 ID로 사용됩니다.</Alert>

@@ -8,7 +8,7 @@ import style from './Header.module.scss';
 const Header = () => {
   return (
     <header className={style.container}>
-      <Heading>
+      <Heading level={1}>
         <Link href="/">
           <a>New Words Wiki</a>
         </Link>

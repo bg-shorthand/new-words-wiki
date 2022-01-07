@@ -19,7 +19,7 @@ const Heading = ({ level = 1, ...props }: HeadingProps) => {
     case 6:
       return <h6 {...props} />;
     default:
-      break;
+      return null;
   }
 };
 
