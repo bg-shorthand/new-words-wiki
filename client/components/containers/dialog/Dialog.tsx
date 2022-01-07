@@ -1,15 +1,15 @@
 import Button from '@atoms/button/Button';
-import useCloseModalDialog from 'hooks/useCloseModalDialog';
+import useControlDialog from 'hooks/useControlDialog';
 import { HTMLAttributes } from 'react';
 import style from './Dialog.module.scss';
 
 const Dialog = ({ children }: HTMLAttributes<HTMLElement>) => {
-  const closeDialog = useCloseModalDialog();
+  const { closeDialogAllHandler } = useControlDialog();
 
   return (
     <section className={style.container}>
       {children}
-      <Button onClick={closeDialog}>X</Button>
+      <Button onClick={closeDialogAllHandler}>X</Button>
     </section>
   );
 };

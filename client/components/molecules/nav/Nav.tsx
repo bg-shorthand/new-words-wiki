@@ -1,10 +1,10 @@
 import Button from '@atoms/button/Button';
-import useOpenModalDialog from 'hooks/useOpenModalDialog';
+import useControlDialog from 'hooks/useControlDialog';
 import style from './Nav.module.scss';
 
 const Nav = () => {
-  const openSigninDialog = useOpenModalDialog('signin');
-  const openSignupDialog = useOpenModalDialog('signup');
+  const { openDialogHandler: openSigninDialog } = useControlDialog('signin');
+  const { openDialogHandler: openSignupDialog } = useControlDialog('signup');
 
   return (
     <ul className={style.container}>

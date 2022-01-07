@@ -1,12 +1,12 @@
-import useCloseModalDialog from 'hooks/useCloseModalDialog';
+import useControlDialog from 'hooks/useControlDialog';
 import { HTMLAttributes } from 'react';
 import style from './Modal.module.scss';
 
 const Modal = ({ children }: HTMLAttributes<HTMLDivElement>) => {
-  const closeDialog = useCloseModalDialog();
+  const { closeDialogAllHandler } = useControlDialog();
 
   return (
-    <div className={style.container} onClick={closeDialog}>
+    <div className={style.container} onClick={closeDialogAllHandler}>
       {children}
     </div>
   );
