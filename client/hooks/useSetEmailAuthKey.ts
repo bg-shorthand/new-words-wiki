@@ -9,11 +9,11 @@ const useSetEmailAuthKey = () => {
   const setEmailAuthKey = async (email: string) => {
     const { data } = await userApi.get(email);
 
-    if (data.msg) {
+    if (data.isUser) {
+      setIsUniqueEmail(false);
+    } else {
       const { data } = await emailAuthApi.post(email);
       setLiveTime(data.liveTime);
-    } else {
-      setIsUniqueEmail(false);
     }
   };
 
