@@ -1,17 +1,22 @@
+import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import LabelInput from '@molecules/labelInput/LabelInput';
+import useControlDialog from 'hooks/useControlDialog';
+import useSignin from 'hooks/useSignin';
 import useValidString from 'hooks/useValidString';
 import { useState } from 'react';
 import style from './SigninForm.module.scss';
 
 const SigninForm = () => {
   const [email, setEmail] = useState('');
-  const [passwrod, setPassword] = useState('');
+  const [password, setPassword] = useState('');
 
   const { isCorrect: isCorrectEmail, validStringHandler: validEmailHandler } =
     useValidString('email');
   const { isCorrect: isCorrectPassword, validStringHandler: validPasswordhandler } =
     useValidString('password');
+  const { err, signin } = useSignin(email, password);
+  const { closeDialogHandler } = useControlDialog('signin');
 
   return (
     <form className={style.container}>
@@ -26,7 +31,8 @@ const SigninForm = () => {
       <LabelInput
         id="signinPassword"
         label="비밀번호"
-        value={passwrod}
+        type="password"
+        value={password}
         onChange={(e) => setPassword(e.currentTarget.value)}
         onBlur={validPasswordhandler}
         validations={[
@@ -36,7 +42,15 @@ const SigninForm = () => {
           },
         ]}
       />
-      <Button>로그인</Button>
+      <Button
+        onClick={(e) => {
+          signin();
+          closeDialogHandler && closeDialogHandler(e);
+        }}
+      >
+        로그인
+      </Button>
+      {err && <Alert>{err}</Alert>}
     </form>
   );
 };
