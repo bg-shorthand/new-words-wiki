@@ -1,18 +1,28 @@
 const router = require('express').Router();
 const User = require('../models/user');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-router.get();
-
-router.get('/', async (_, res) => {
+router.get('/login', async (req, res) => {
   try {
-    const users = await User.findAll();
-    if (!users.length) res.status(404).send({ err: 'User not found' });
-    else res.send(users);
+    const { email, password } = req.query;
+
+    const user = await User.findOneByEmail(email);
+    if (!user) return res.send({ msg: '가입되지 않은 이메일입니다.' });
+
+    const key = await crypto
+      .pbkdf2Sync(password, user.salt, 104183, 64, 'sha512')
+      .toString('base64');
+    if (key !== user.password) return res.send({ msg: '비밀번호가 다릅니다' });
+
+    const token = jwt.sign({ email: user._id.toString('base64') }, process.env.JWT_SECRET);
+
+    res.send(token);
   } catch (e) {
     res.status(500).send(e);
   }
 });
-router.get('/email/:email', async (req, res) => {
+router.get('/email', async (req, res) => {
   try {
     const email = req.params.email;
     const user = await User.findOneByEmail(email);
