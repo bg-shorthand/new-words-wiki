@@ -3,7 +3,7 @@ const User = require('../models/user');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-router.get('/login', async (req, res) => {
+router.get('/signin', async (req, res) => {
   try {
     const { email, password } = req.query;
 

@@ -9,7 +9,7 @@ const useSignup = (newUser: NewUser) => {
 
   const signupHandler: MouseEventHandler = async (e) => {
     e.preventDefault();
-    const { data } = await userApi.post(newUser);
+    const { data } = await userApi.signup(newUser);
     if (data.key === 'email') {
       setIsUniqueEmail(false);
       setTimeout(() => setIsUniqueEmail(true), 3000);
