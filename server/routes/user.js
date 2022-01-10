@@ -27,8 +27,9 @@ router.get('/signin', async (req, res) => {
     if (key !== user.password) return res.send({ msg: '비밀번호가 다릅니다' });
 
     const payload = {};
-    const userInfo = Object.keys(user).filter((item) => item !== 'password' || item !== 'salt');
-    userInfo.forEach((key) => (payload[key] = user[key]));
+    Object.keys(user._doc)
+      .filter((item) => item !== 'password' && item !== 'salt' && item !== 'refreshToken')
+      .forEach((key) => (payload[key] = user[key]));
 
     const accessToken = jwt.sign({ ...payload }, process.env.JWT_SECRET, { expiresIn: '1m' });
     const refreshToken = jwt.sign({}, process.env.JWT_SECRET);
