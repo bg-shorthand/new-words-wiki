@@ -11,7 +11,9 @@ const verifyToken = async (req, res, next) => {
     if (e.name === 'JsonWebTokenError') {
       res.send({ err: 'invalid token' });
     } else if (e.name === 'TokenExpiredError') {
-      jwt.verify(refresh, process.env.JWT_SECRET);
+      jwt.verify(refresh, process.env.JWT_SECRET, (err) => {
+        return res.status(500).send({ err: 'need signin' });
+      });
 
       const user = await User.findOneByRefreshToken(refresh);
 
@@ -24,8 +26,7 @@ const verifyToken = async (req, res, next) => {
 
       res.send({ newAccess });
     } else {
-      console.log(e);
-      res.status(500).send({ err: 'need signin2' });
+      res.status(500).send({ err: 'need signin' });
     }
   }
 };

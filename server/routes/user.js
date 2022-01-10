@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const verifyToken = require('../middleware/verifyToken');
 
-router.get('/isSignin', verifyToken, async (req, res) => {
+router.get('/myInfo', verifyToken, async (req, res) => {
   const email = jwt.decode(req.headers.access).email;
   const user = await User.findOneByEmail(email);
   const payload = {};
@@ -13,6 +13,7 @@ router.get('/isSignin', verifyToken, async (req, res) => {
     .forEach((key) => (payload[key] = user[key]));
   res.send({ ...payload });
 });
+
 router.get('/signin', async (req, res) => {
   try {
     const { email, password } = req.query;
@@ -41,6 +42,7 @@ router.get('/signin', async (req, res) => {
     res.status(500).send(e);
   }
 });
+
 router.get('/email/:email', async (req, res) => {
   try {
     const email = req.params.email;
@@ -51,6 +53,7 @@ router.get('/email/:email', async (req, res) => {
     res.status(500).send(e);
   }
 });
+
 router.get('/nickname/:nickname', async (req, res) => {
   try {
     const nickname = req.params.nickname;
@@ -61,6 +64,7 @@ router.get('/nickname/:nickname', async (req, res) => {
     res.status(500).send(e);
   }
 });
+
 router.post('/', async (req, res) => {
   try {
     const newUser = req.body;
