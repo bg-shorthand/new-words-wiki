@@ -9,8 +9,8 @@ const useSignin = (email: string, password: string) => {
     if (data.msg) setErr(data.msg);
     else {
       const { accessToken, refreshToken } = data;
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('access', accessToken);
+      localStorage.setItem('refresh', refreshToken);
     }
   };
 
