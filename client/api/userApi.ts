@@ -10,12 +10,22 @@ const userApi = {
   async signin(email: string, password: string) {
     return await axios.get(url + '/signin/?email=' + email + '&password=' + password);
   },
-  async isSignin(token: string) {
-    return await axios.get(url + '/me', {
+  async getMyInfo(access: string, refresh: string) {
+    const res = await axios.get(url + '/myInfo', {
       headers: {
-        token: token,
+        access,
+        refresh,
       },
     });
+
+    if (res.data.newAccess) {
+      return await axios.get(url + '/myInfo', {
+        headers: {
+          access: res.data.newAccess,
+          refresh,
+        },
+      });
+    } else return res;
   },
   async get(email: String) {
     return await axios.get(url + '/email/' + email);
