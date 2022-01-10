@@ -3,6 +3,17 @@ const User = require('../models/user');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
+router.get('/me', async (req, res) => {
+  try {
+    const token = req.headers.token;
+    if (jwt.verify(token, process.env.JWT_SECRET)) {
+      const { email, nickname } = await User.findOneByEmail(jwt.decode(token).email);
+      res.send({ email, nickname });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+});
 router.get('/signin', async (req, res) => {
   try {
     const { email, password } = req.query;
@@ -15,14 +26,17 @@ router.get('/signin', async (req, res) => {
       .toString('base64');
     if (key !== user.password) return res.send({ msg: '비밀번호가 다릅니다' });
 
-    const token = jwt.sign({ email: user._id.toString('base64') }, process.env.JWT_SECRET);
+    const token = jwt.sign({ email }, process.env.JWT_SECRET);
+
+    await User.updateTokenById(user._id, token);
 
     res.send(token);
   } catch (e) {
+    console.log('err', e);
     res.status(500).send(e);
   }
 });
-router.get('/email', async (req, res) => {
+router.get('/email/:email', async (req, res) => {
   try {
     const email = req.params.email;
     const user = await User.findOneByEmail(email);
