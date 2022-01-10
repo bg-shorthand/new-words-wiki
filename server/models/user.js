@@ -7,7 +7,7 @@ const schema = new mongoose.Schema(
     nickname: { type: String, required: true, unique: true },
     password: { type: String },
     salt: { type: String },
-    token: { type: String },
+    refreshToken: { type: String },
   },
   {
     versionKey: false,
@@ -34,8 +34,8 @@ schema.statics.create = async function (payload) {
 schema.statics.deleteByEmail = function (email) {
   return this.remove({ email });
 };
-schema.statics.updateTokenById = function (id, token) {
-  return this.updateOne({ _id: id }, { token });
+schema.statics.updateTokenById = function (id, refreshToken) {
+  return this.updateOne({ _id: id }, { refreshToken });
 };
 
 module.exports = mongoose.model('User', schema);
