@@ -2,17 +2,16 @@ const router = require('express').Router();
 const User = require('../models/user');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../middleware/verifyToken');
 
-router.get('/me', async (req, res) => {
-  try {
-    const token = req.headers.token;
-    if (jwt.verify(token, process.env.JWT_SECRET)) {
-      const { email, nickname } = await User.findOneByEmail(jwt.decode(token).email);
-      res.send({ email, nickname });
-    }
-  } catch (e) {
-    console.log(e);
-  }
+router.get('/isSignin', verifyToken, async (req, res) => {
+  const email = jwt.decode(req.headers.access).email;
+  const user = await User.findOneByEmail(email);
+  const payload = {};
+  Object.keys(user._doc)
+    .filter((item) => item !== 'password' && item !== 'salt' && item !== 'refreshToken')
+    .forEach((key) => (payload[key] = user[key]));
+  res.send({ ...payload });
 });
 router.get('/signin', async (req, res) => {
   try {
@@ -31,7 +30,7 @@ router.get('/signin', async (req, res) => {
       .filter((item) => item !== 'password' && item !== 'salt' && item !== 'refreshToken')
       .forEach((key) => (payload[key] = user[key]));
 
-    const accessToken = jwt.sign({ ...payload }, process.env.JWT_SECRET, { expiresIn: '1m' });
+    const accessToken = jwt.sign({ ...payload }, process.env.JWT_SECRET, { expiresIn: '60s' });
     const refreshToken = jwt.sign({}, process.env.JWT_SECRET);
 
     await User.updateTokenById(user._id, refreshToken);

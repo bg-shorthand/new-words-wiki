@@ -23,6 +23,9 @@ schema.statics.findOneByEmail = function (email) {
 schema.statics.findOneByNickname = function (nickname) {
   return this.findOne({ nickname });
 };
+schema.statics.findOneByRefreshToken = function (refreshToken) {
+  return this.findOne({ refreshToken });
+};
 schema.statics.create = async function (payload) {
   const salt = crypto.randomBytes(64).toString('base64');
   const { password } = payload;
