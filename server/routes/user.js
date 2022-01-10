@@ -26,11 +26,12 @@ router.get('/signin', async (req, res) => {
       .toString('base64');
     if (key !== user.password) return res.send({ msg: '비밀번호가 다릅니다' });
 
-    const token = jwt.sign({ email }, process.env.JWT_SECRET);
+    const accessToken = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: '30s' });
+    const refreshToken = jwt.sign({ email }, process.env.JWT_SECRET);
 
-    await User.updateTokenById(user._id, token);
+    await User.updateTokenById(user._id, refreshToken);
 
-    res.send(token);
+    res.send({ accessToken, refreshToken });
   } catch (e) {
     console.log('err', e);
     res.status(500).send(e);

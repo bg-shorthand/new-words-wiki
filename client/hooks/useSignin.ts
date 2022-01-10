@@ -8,7 +8,9 @@ const useSignin = (email: string, password: string) => {
     const { data } = await userApi.signin(email, password);
     if (data.msg) setErr(data.msg);
     else {
-      sessionStorage.setItem('user', data);
+      const { accessToken, refreshToken } = data;
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
     }
   };
 
