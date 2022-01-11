@@ -2,4 +2,10 @@
   padding: 5px;
   background-color: transparent;
   border: none;
+  transition: all 500ms;
+
+  &:focus,
+  &:hover {
+    transform: scale(1.4);
+  }
 }

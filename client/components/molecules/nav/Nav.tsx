@@ -24,16 +24,22 @@ const Nav = () => {
         <>
           <li>{myInfo.nickname}</li>
           <li>
-            <Button onClick={() => signout()}>로그아웃</Button>
+            <Button size="s" onClick={() => signout()}>
+              로그아웃
+            </Button>
           </li>
         </>
       ) : (
         <>
           <li>
-            <Button onClick={openSigninDialog}>로그인</Button>
+            <Button size="s" onClick={openSigninDialog}>
+              로그인
+            </Button>
           </li>
           <li>
-            <Button onClick={openSignupDialog}>회원가입</Button>
+            <Button size="s" onClick={openSignupDialog}>
+              회원가입
+            </Button>
           </li>
         </>
       )}
