@@ -1,26 +1,24 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import style from './LabelInputContainer.module.scss';
 
-interface LabelInputContainerProps extends HTMLAttributes<HTMLDivElement> {
-  locateLabel?: 'top' | 'right' | 'bottom' | 'left';
-  locateValidAlert?: 'top' | 'right' | 'bottom' | 'left';
-}
+const LabelInputContainer = ({ ...props }: HTMLAttributes<HTMLDivElement>) => {
+  const [isfocus, setIsFocus] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
-const LabelInputContainer = ({
-  locateLabel = 'top',
-  locateValidAlert = 'bottom',
-  ...props
-}: LabelInputContainerProps) => {
+  useEffect(() => {
+    const $container = ref.current;
+    const $input = $container?.querySelector('input');
+    $input?.addEventListener('focus', () => setIsFocus(true));
+    $input?.addEventListener('blur', () => setIsFocus(false));
+    $input?.addEventListener('change', () => setHasValue(!!$input?.value));
+  }, []);
+
   return (
     <div
-      className={
-        style.container +
-        ' ' +
-        style['locateLabel-' + locateLabel] +
-        ' ' +
-        style['locateValidAlert-' + locateValidAlert]
-      }
+      className={style.container + (isfocus || hasValue ? ' ' + style.isActive : '')}
       {...props}
+      ref={ref}
     />
   );
 };

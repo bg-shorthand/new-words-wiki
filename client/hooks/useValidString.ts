@@ -10,7 +10,6 @@ const useValidString = (type: 'email' | 'password') => {
 
     if (!regex.test(value)) {
       setisCorrect(false);
-      e.currentTarget.focus();
     } else setisCorrect(true);
   };
 

@@ -9,6 +9,7 @@ export default class MyDocument extends Document {
           <Main />
           <div id="portal" />
           <NextScript />
+          <script src="https://kit.fontawesome.com/1d6203395d.js" crossOrigin="anonymous"></script>
         </body>
       </Html>
     );

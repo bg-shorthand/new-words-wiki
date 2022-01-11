@@ -2,64 +2,30 @@
   width: 100%;
   display: flex;
   position: relative;
-}
-
-// label
-.locateLabel-top {
-  flex-flow: column nowrap;
+  padding: 1em;
+  border: 1px solid black;
+  border-radius: 5px;
 
   & > label {
-    margin-bottom: 5px;
+    position: absolute;
+    top: 1em;
+    background-color: white;
+    transition: all 500ms;
+  }
+
+  & > p {
+    position: absolute;
+    left: 0.5em;
+    top: calc(100% - 0.5em);
+    background-color: white;
+    font-size: 0.8em;
+    color: red;
   }
 }
-.locateLabel-right {
-  flex-flow: row nowrap;
-  align-items: center;
 
+.isActive {
   & > label {
-    order: 1;
-    margin-left: 5px;
-  }
-}
-.locateLabel-bottom {
-  flex-flow: column nowrap;
-
-  & > label {
-    order: 1;
-    margin-top: 5px;
-  }
-}
-.locateLabel-left {
-  flex-flow: row nowrap;
-  align-items: center;
-
-  & > label {
-    margin-right: 5px;
-  }
-}
-
-// valid
-.locateValidAlert-top {
-  & > p {
-    position: absolute;
-    bottom: calc(100% + 5px);
-  }
-}
-.locateValidAlert-right {
-  & > p {
-    position: absolute;
-    left: calc(100% + 5px);
-  }
-}
-.locateValidAlert-bottom {
-  & > p {
-    position: absolute;
-    top: calc(100% + 5px);
-  }
-}
-.locateValidAlert-left {
-  & > p {
-    position: absolute;
-    right: calc(100% + 5px);
+    font-size: 0.9em;
+    transform: translate3d(-0.5em, -1.5em, 0);
   }
 }

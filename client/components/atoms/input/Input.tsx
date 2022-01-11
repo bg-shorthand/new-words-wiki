@@ -1,22 +1,24 @@
 import Button from '@atoms/button/Button';
+import IconButton from '@atoms/iconButton/IconButton';
 import { InputHTMLAttributes, useState } from 'react';
+import style from './Input.module.scss';
 
 const Input = ({ autoComplete = 'off', type, ...props }: InputHTMLAttributes<HTMLInputElement>) => {
   const [textType, setTextType] = useState('password');
 
   return (
-    <>
+    <div className={style.container}>
       <input autoComplete={autoComplete} type={type === 'password' ? textType : type} {...props} />
       {type === 'password' ? (
-        <Button
+        <IconButton
           onClick={() => {
             setTextType((pre) => (pre === 'password' ? 'text' : 'password'));
           }}
-        >
-          비밀번호 보기
-        </Button>
+          title="비밀번호 보기"
+          icon={textType === 'password' ? 'far fa-eye' : 'far fa-eye-slash'}
+        />
       ) : null}
-    </>
+    </div>
   );
 };
 

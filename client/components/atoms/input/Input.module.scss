@@ -1,0 +1,22 @@
+.container {
+  position: relative;
+  background-color: transparent;
+  width: 100%;
+
+  & > input {
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    padding: 0;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  & > button {
+    position: absolute;
+    top: -0.3em;
+    right: -0.5em;
+  }
+}

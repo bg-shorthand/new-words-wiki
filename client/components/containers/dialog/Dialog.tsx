@@ -1,4 +1,4 @@
-import Button from '@atoms/button/Button';
+import IconButton from '@atoms/iconButton/IconButton';
 import useControlDialog from 'hooks/useControlDialog';
 import useControlDialogTab from 'hooks/useControlDialogTab';
 import { HTMLAttributes } from 'react';
@@ -11,9 +11,11 @@ const Dialog = ({ children }: HTMLAttributes<HTMLElement>) => {
   return (
     <section className={style.container} ref={dialogRef}>
       {children}
-      <Button onClick={closeDialogAllHandler} onKeyDown={focusFirstWhenKeyUpTab}>
-        X
-      </Button>
+      <IconButton
+        onClick={closeDialogAllHandler}
+        onKeyDown={focusFirstWhenKeyUpTab}
+        icon="fas fa-times"
+      />
     </section>
   );
 };
