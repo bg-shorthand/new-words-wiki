@@ -11,9 +11,7 @@ const verifyToken = async (req, res, next) => {
     if (e.name === 'JsonWebTokenError') {
       res.send({ err: 'invalid token' });
     } else if (e.name === 'TokenExpiredError') {
-      jwt.verify(refresh, process.env.JWT_SECRET, (err) => {
-        return res.status(500).send({ err: 'need signin' });
-      });
+      jwt.verify(refresh, process.env.JWT_SECRET);
 
       const user = await User.findOneByRefreshToken(refresh);
 
