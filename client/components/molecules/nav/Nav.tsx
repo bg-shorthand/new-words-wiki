@@ -2,13 +2,18 @@ import Button from '@atoms/button/Button';
 import useControlDialog from 'hooks/useControlDialog';
 import useIsSignin from 'hooks/useIsSignin';
 import useSignout from 'hooks/useSignout';
+import { useEffect } from 'react';
 import style from './Nav.module.scss';
 
 const Nav = () => {
   const { openDialogHandler: openSigninDialog } = useControlDialog('signin');
   const { openDialogHandler: openSignupDialog } = useControlDialog('signup');
-  const { isSignin } = useIsSignin();
+  const { isSignin, setIsSigninAsync } = useIsSignin();
   const { signout } = useSignout();
+
+  useEffect(() => {
+    setIsSigninAsync();
+  }, []);
 
   return (
     <ul className={style.container}>
