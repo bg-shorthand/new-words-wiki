@@ -5,7 +5,6 @@ import EmailAuthForm from '@molecules/emailAuthForm/EmailAuthForm';
 import SignupForm from '@molecules/signupForm/SignupForm';
 import useControlDialog from 'hooks/useControlDialog';
 import { useState } from 'react';
-import style from './Signup.module.scss';
 
 const Signup = () => {
   const [stage, setStage] = useState(0);
@@ -16,12 +15,13 @@ const Signup = () => {
 
   return (
     <>
-      <Heading level={1} className={style.heading}>
-        회원 가입
-      </Heading>
+      <Heading level={1}>회원 가입</Heading>
       {stage === 0 && (
         <>
-          <Alert>인증된 이메일은 ID로 사용됩니다.</Alert>
+          <Alert>
+            <i className="fas fa-flag-checkered"></i> 이메일을 인증해주세요. 인증된 이메일은 ID로
+            사용됩니다.
+          </Alert>
           <EmailAuthForm email={email} setEmail={setEmail} setIsComplete={setIsComplete} />
         </>
       )}

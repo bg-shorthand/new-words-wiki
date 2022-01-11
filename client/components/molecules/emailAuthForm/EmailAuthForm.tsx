@@ -6,6 +6,7 @@ import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
 import useCheckAuthKey from 'hooks/useCheckAuthKey';
 import useValidString from 'hooks/useValidString';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import style from './EmailAuthForm.module.scss';
 
 interface EmailAuthFormProps {
   email: string;
@@ -30,7 +31,7 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
   }, [liveTime, isTimeout]);
 
   return (
-    <form>
+    <form className={style.container}>
       <LabelInput
         id="email"
         label="이메일"
@@ -49,6 +50,7 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
           setIsTimeout(false);
         }}
         disabled={isAfterSetAuthKeyBeforeTimeout}
+        size="content"
       >
         인증 번호 받기
       </Button>
@@ -68,7 +70,9 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
           { isAlert: isTimeout, alert: '유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.' },
         ]}
       />
-      <Button onClick={(e) => checkAuthKey(email, authKey)}>인증</Button>
+      <Button onClick={(e) => checkAuthKey(email, authKey)} size="s">
+        인증
+      </Button>
       {isAuth && <Alert>인증 되었습니다.</Alert>}
     </form>
   );

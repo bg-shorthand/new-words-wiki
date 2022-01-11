@@ -5,13 +5,12 @@
   color: black;
   transition: all 500ms;
 
+  &:focus,
   &:hover {
     transform: scale(1.05);
   }
 
   &:active {
-    // background-color: red;
-    border: none;
     box-shadow: none;
     transform: translateY(5px);
   }
@@ -31,6 +30,19 @@
 
 .l {
   width: 400px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.content {
+  width: fit-content;
+  height: 30px;
+  border-radius: 3px;
+  padding: 0 1em;
+}
+
+.full {
+  width: 100%;
   height: 40px;
   border-radius: 5px;
 }
