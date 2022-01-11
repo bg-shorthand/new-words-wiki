@@ -1,24 +1,35 @@
 import userApi from 'api/userApi';
-import { useEffect, useState } from 'react';
-import { User } from 'const/types';
+import { useEffect } from 'react';
+import jwt from 'jsonwebtoken';
+import { useRecoilState } from 'recoil';
+import { isSigninState } from '@recoil/isSignin';
 
 const useIsSignin = () => {
-  const [isSignin, setIsSignin] = useState(false);
-  const [user, setUser] = useState<User>();
+  const [isSignin, setIsSignin] = useRecoilState(isSigninState);
 
   useEffect(() => {
     const isSignin = async () => {
-      const token = sessionStorage.getItem('user');
-      if (token) {
-        const { data } = await userApi.isSignin(token);
+      const access = localStorage.getItem('access');
+      const refresh = localStorage.getItem('refresh');
+
+      if (!access || !refresh) return setIsSignin(false);
+
+      const accessPayload = jwt.decode(access) as jwt.JwtPayload;
+      if (accessPayload.exp! * 1000 > new Date().valueOf()) return setIsSignin(true);
+
+      const { data } = await userApi.getMyInfo(access, refresh);
+
+      if (data.newAccess) {
+        localStorage.setItem('access', data.newAccess);
         setIsSignin(true);
-        setUser(data);
+      } else {
+        data.email ? setIsSignin(true) : setIsSignin(false);
       }
     };
     isSignin();
   }, []);
 
-  return { isSignin, user };
+  return { isSignin };
 };
 
 export default useIsSignin;
