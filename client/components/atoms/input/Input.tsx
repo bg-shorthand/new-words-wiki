@@ -1,14 +1,20 @@
 import Button from '@atoms/button/Button';
 import { InputHTMLAttributes, useState } from 'react';
 
-const Input = ({ autoComplete = 'off', ...props }: InputHTMLAttributes<HTMLInputElement>) => {
-  const [isPassword, setIsPassword] = useState(props.type === 'password');
+const Input = ({ autoComplete = 'off', type, ...props }: InputHTMLAttributes<HTMLInputElement>) => {
+  const [textType, setTextType] = useState('password');
 
   return (
     <>
-      <input autoComplete={autoComplete} {...props} />
-      {isPassword ? (
-        <Button onClick={() => setIsPassword((pre) => !pre)}>비밀번호 보기</Button>
+      <input autoComplete={autoComplete} type={type === 'password' ? textType : type} {...props} />
+      {type === 'password' ? (
+        <Button
+          onClick={() => {
+            setTextType((pre) => (pre === 'password' ? 'text' : 'password'));
+          }}
+        >
+          비밀번호 보기
+        </Button>
       ) : null}
     </>
   );
