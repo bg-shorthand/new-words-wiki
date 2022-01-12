@@ -4,12 +4,13 @@ import LabelInput from '@molecules/labelInput/LabelInput';
 import useControlDialog from 'hooks/useControlDialog';
 import useSignin from 'hooks/useSignin';
 import useValidString from 'hooks/useValidString';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './SigninForm.module.scss';
 
 const SigninForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [canSignin, setCanSignin] = useState(false);
 
   const { isCorrect: isCorrectEmail, validStringHandler: validEmailHandler } =
     useValidString('email');
@@ -17,6 +18,10 @@ const SigninForm = () => {
     useValidString('password');
   const { err, signin } = useSignin(email, password);
   const { closeDialogHandler } = useControlDialog('signin');
+
+  useEffect(() => {
+    setCanSignin(!!email && !!password && isCorrectEmail && isCorrectPassword);
+  }, [email, password, isCorrectEmail, isCorrectPassword]);
 
   return (
     <form className={style.container}>
@@ -47,6 +52,7 @@ const SigninForm = () => {
           signin();
           closeDialogHandler && closeDialogHandler(e);
         }}
+        disabled={!canSignin}
       >
         로그인
       </Button>
