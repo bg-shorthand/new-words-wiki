@@ -3,28 +3,24 @@ import Button from '@atoms/button/Button';
 import Timer from '@molecules/timer/Timer';
 import LabelInput from '@molecules/labelInput/LabelInput';
 import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
-import useCheckAuthKey from 'hooks/useCheckAuthKey';
-import useValidString from 'hooks/useValidString';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './EmailAuthForm.module.scss';
+import checkAuthKey from 'modules/checkAuthKey';
 
 interface EmailAuthFormProps {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
-  setIsComplete?: Dispatch<SetStateAction<boolean>>;
+  setStage: Dispatch<SetStateAction<number>>;
 }
 
-const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) => {
+const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
+  const [wrongAuthKey, setWrongAuthKey] = useState(false);
   const [isTimeout, setIsTimeout] = useState(false);
   const [isAfterSetAuthKeyBeforeTimeout, setIsAfterSetAuthKeyBeforeTimeout] = useState(false);
 
   const { isUniqueEmail, isCorrect, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
-  const { isAuth, checkAuthKey } = useCheckAuthKey();
 
-  useEffect(() => {
-    if (setIsComplete) setIsComplete(isAuth);
-  }, [isAuth]);
   useEffect(() => {
     setIsAfterSetAuthKeyBeforeTimeout(!!liveTime && !isTimeout);
   }, [liveTime, isTimeout]);
@@ -66,16 +62,20 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
         disabled={!isAfterSetAuthKeyBeforeTimeout}
         validations={[
           { isAlert: isTimeout, alert: '유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.' },
+          { isAlert: wrongAuthKey, alert: '인증 번호가 다릅니다.' },
         ]}
       />
       <Button
-        onClick={(e) => checkAuthKey(email, authKey)}
+        onClick={async () => {
+          const res = await checkAuthKey(email, authKey);
+          if (res) setStage((pre) => (pre += 1));
+          else setWrongAuthKey(true);
+        }}
         size="s"
         disabled={!isAfterSetAuthKeyBeforeTimeout}
       >
         인증
       </Button>
-      {isAuth && <Alert>인증 되었습니다.</Alert>}
     </form>
   );
 };

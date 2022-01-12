@@ -9,7 +9,6 @@ import { useState } from 'react';
 const Signup = () => {
   const [stage, setStage] = useState(0);
   const [email, setEmail] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
 
   const { closeDialogAllHandler } = useControlDialog();
 
@@ -22,7 +21,7 @@ const Signup = () => {
             <i className="fas fa-flag-checkered"></i> 이메일을 인증해주세요. 인증된 이메일은 ID로
             사용됩니다.
           </Alert>
-          <EmailAuthForm email={email} setEmail={setEmail} setIsComplete={setIsComplete} />
+          <EmailAuthForm email={email} setEmail={setEmail} setStage={setStage} />
         </>
       )}
       {stage === 1 && (
@@ -36,11 +35,6 @@ const Signup = () => {
           <Alert>환영합니다. 로그인 해주세요.</Alert>
           <Button onClick={closeDialogAllHandler}>완료</Button>
         </>
-      )}
-      {stage === 0 && (
-        <Button onClick={() => setStage((pre) => (pre += 1))} disabled={!isComplete}>
-          다음
-        </Button>
       )}
     </>
   );
