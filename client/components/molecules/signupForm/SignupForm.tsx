@@ -14,14 +14,15 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [samePassword, setSamePassword] = useState('');
-  const [isSamePassword, setIsSamePassword] = useState(false);
+  const [isSamePassword, setIsSamePassword] = useState(true);
+  const [canSignup, setCanSignup] = useState(false);
 
-  const { isCorrect, validStringHandler } = useValidString('password');
-  const { isUniqueNickname, isSuccess, signupHandler } = useSignup({ email, nickname, password });
+  const { isCorrect, validString } = useValidString('password');
+  const { isUniqueNickname, signup } = useSignup({ email, nickname, password });
 
   useEffect(() => {
-    if (isSuccess && setStage) setStage((pre) => (pre += 1));
-  }, [isSuccess]);
+    setCanSignup(!!nickname && !!password && !!samePassword && isCorrect && isSamePassword);
+  }, [nickname, password, samePassword, isCorrect, isSamePassword]);
 
   return (
     <form className={style.container}>
@@ -37,9 +38,11 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
         id="signupPassword"
         label="비밀번호"
         value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
+        onChange={(e) => {
+          validString(e.currentTarget.value);
+          setPassword(e.currentTarget.value);
+        }}
         type="password"
-        onBlur={validStringHandler}
         validations={[
           {
             isAlert: !isCorrect,
@@ -51,12 +54,23 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
         id="checkSignupPassword"
         label="이메일 확인"
         value={samePassword}
-        onChange={(e) => setSamePassword(e.currentTarget.value)}
+        onChange={(e) => {
+          setSamePassword(e.currentTarget.value);
+          setIsSamePassword(password === e.currentTarget.value);
+        }}
         type="password"
-        onBlur={() => setIsSamePassword(password === samePassword)}
         validations={[{ isAlert: !isSamePassword, alert: '비밀번호가 다릅니다.' }]}
       />
-      <Button onClick={signupHandler}>가입</Button>
+      <Button
+        onClick={async (e) => {
+          e.preventDefault();
+          const res = await signup();
+          if (res && setStage) setStage((pre) => (pre += 1));
+        }}
+        disabled={!canSignup}
+      >
+        가입
+      </Button>
     </form>
   );
 };
