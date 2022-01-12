@@ -9,7 +9,11 @@ const useValidString = (type: 'email' | 'password') => {
 
     if (!regex.test(value)) {
       setisCorrect(false);
-    } else setisCorrect(true);
+      return false;
+    } else {
+      setisCorrect(true);
+      return true;
+    }
   };
 
   return { isCorrect, validString };
