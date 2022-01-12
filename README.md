@@ -5,4 +5,6 @@
 3. SIGNUP / SIGNIN
 
 - User DB
-- Email Authentication -in progress
+- Email Authentication (nodemailer with gmail)
+- access/refresh token (jsonwebtoken)
+- crypto (hash, salt)
