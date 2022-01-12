@@ -1,4 +1,5 @@
 import IconButton from '@atoms/iconButton/IconButton';
+import SlideIn from '@templates/slidein/SlideIn';
 import useControlDialog from 'hooks/useControlDialog';
 import useControlDialogTab from 'hooks/useControlDialogTab';
 import { HTMLAttributes } from 'react';
@@ -16,6 +17,7 @@ const Dialog = ({ children }: HTMLAttributes<HTMLElement>) => {
         onKeyDown={focusFirstWhenKeyUpTab}
         icon="fas fa-times"
       />
+      <SlideIn />
     </section>
   );
 };
