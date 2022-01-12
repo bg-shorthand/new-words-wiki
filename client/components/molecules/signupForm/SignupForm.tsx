@@ -62,6 +62,7 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
         validations={[{ isAlert: !isSamePassword, alert: '비밀번호가 다릅니다.' }]}
       />
       <Button
+        type="submit"
         onClick={async (e) => {
           e.preventDefault();
           const res = await signup();
