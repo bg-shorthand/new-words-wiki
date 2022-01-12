@@ -6,15 +6,15 @@ const SlideIn = () => {
   const [isSlide, setIsSlide] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setIsSlide(false), 1000);
+    setTimeout(() => setIsSlide(false), 500);
   }, []);
 
-  return is ? (
+  return (
     <>
       <div className={style.common + ' ' + style.fadeout}></div>
       {isSlide && <div className={style.common + ' ' + style.slide}></div>}
     </>
-  ) : null;
+  );
 };
 
 export default SlideIn;
