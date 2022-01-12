@@ -1,8 +1,9 @@
 import Button from '@atoms/button/Button';
 import LabelInput from '@molecules/labelInput/LabelInput';
-import useControlDialog from 'hooks/useControlDialog';
+import { dialogsState } from '@recoil/modalDialog';
 import useSignin from 'hooks/useSignin';
 import { useEffect, useState } from 'react';
+import { useResetRecoilState } from 'recoil';
 import style from './SigninForm.module.scss';
 
 const SigninForm = () => {
@@ -10,11 +11,12 @@ const SigninForm = () => {
   const [password, setPassword] = useState('');
   const [canSignin, setCanSignin] = useState(false);
 
+  const resetDialog = useResetRecoilState(dialogsState);
+
   const { err, isCorrectEmail, isCorrectPassword, wrongEmail, wrongPassword, signin } = useSignin(
     email,
     password,
   );
-  const { closeDialogHandler } = useControlDialog('signin');
 
   useEffect(() => {
     setCanSignin(!!email && !!password);
@@ -51,7 +53,7 @@ const SigninForm = () => {
         onClick={async (e) => {
           e.preventDefault();
           const success = await signin();
-          if (success && closeDialogHandler) closeDialogHandler(e);
+          if (success) resetDialog();
         }}
         disabled={!canSignin}
       >

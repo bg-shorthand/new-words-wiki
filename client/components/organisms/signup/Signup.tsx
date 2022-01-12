@@ -3,14 +3,15 @@ import Button from '@atoms/button/Button';
 import Heading from '@atoms/heading/Heading';
 import EmailAuthForm from '@molecules/emailAuthForm/EmailAuthForm';
 import SignupForm from '@molecules/signupForm/SignupForm';
-import useControlDialog from 'hooks/useControlDialog';
+import { dialogsState } from '@recoil/modalDialog';
 import { useState } from 'react';
+import { useResetRecoilState } from 'recoil';
 
 const Signup = () => {
   const [stage, setStage] = useState(0);
   const [email, setEmail] = useState('');
 
-  const { closeDialogAllHandler } = useControlDialog();
+  const resetDialogs = useResetRecoilState(dialogsState);
 
   return (
     <>
@@ -35,7 +36,7 @@ const Signup = () => {
       {stage === 2 && (
         <>
           <Alert>환영합니다. 로그인 해주세요.</Alert>
-          <Button onClick={closeDialogAllHandler}>완료</Button>
+          <Button onClick={resetDialogs}>완료</Button>
         </>
       )}
     </>
