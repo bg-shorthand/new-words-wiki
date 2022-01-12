@@ -29,3 +29,13 @@
     transform: translate3d(-0.5em, -1.5em, 0);
   }
 }
+
+.disabled {
+  border: 1px solid gray;
+  color: gray;
+
+  & > label {
+    font-size: 0.9em;
+    transform: translate3d(-0.5em, -1.5em, 0);
+  }
+}

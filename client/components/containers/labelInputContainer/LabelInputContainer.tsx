@@ -1,7 +1,11 @@
 import { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import style from './LabelInputContainer.module.scss';
 
-const LabelInputContainer = ({ ...props }: HTMLAttributes<HTMLDivElement>) => {
+interface LabelInputContainerProps extends HTMLAttributes<HTMLDivElement> {
+  disabled?: boolean;
+}
+
+const LabelInputContainer = ({ disabled, ...props }: LabelInputContainerProps) => {
   const [isfocus, setIsFocus] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -16,7 +20,11 @@ const LabelInputContainer = ({ ...props }: HTMLAttributes<HTMLDivElement>) => {
 
   return (
     <div
-      className={style.container + (isfocus || hasValue ? ' ' + style.isActive : '')}
+      className={
+        style.container +
+        (isfocus || hasValue ? ' ' + style.isActive : '') +
+        (disabled ? ' ' + style.disabled : '')
+      }
       {...props}
       ref={ref}
     />
