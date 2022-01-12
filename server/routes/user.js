@@ -22,7 +22,7 @@ router.get('/signin', async (req, res) => {
     if (!user) return res.send({ msg: '가입되지 않은 이메일입니다.' });
 
     const key = await crypto
-      .pbkdf2Sync(password, user.salt, 104183, 64, 'sha512')
+      .pbkdf2Sync(password, user.salt, constants.cryptoRepeat, 64, 'sha512')
       .toString('base64');
     if (key !== user.password) return res.send({ msg: '비밀번호가 다릅니다' });
 
@@ -31,7 +31,9 @@ router.get('/signin', async (req, res) => {
       .filter((item) => item !== 'password' && item !== 'salt' && item !== 'refreshToken')
       .forEach((key) => (payload[key] = user[key]));
 
-    const accessToken = jwt.sign({ ...payload }, process.env.JWT_SECRET, { expiresIn: '60s' });
+    const accessToken = jwt.sign({ ...payload }, process.env.JWT_SECRET, {
+      expiresIn: constants.accessTokenExpiresIn,
+    });
     const refreshToken = jwt.sign({}, process.env.JWT_SECRET);
 
     await User.updateTokenById(user._id, refreshToken);

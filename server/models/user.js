@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
+const constants = require('../const/const');
 
 const schema = new mongoose.Schema(
   {
@@ -29,7 +30,9 @@ schema.statics.findOneByRefreshToken = function (refreshToken) {
 schema.statics.create = async function (payload) {
   const salt = crypto.randomBytes(64).toString('base64');
   const { password } = payload;
-  const key = await crypto.pbkdf2Sync(password, salt, 104183, 64, 'sha512').toString('base64');
+  const key = await crypto
+    .pbkdf2Sync(password, salt, constants.cryptoRepeat, 64, 'sha512')
+    .toString('base64');
   const newUser = { ...payload, password: key, salt };
   const user = new this(newUser);
   return user.save();
