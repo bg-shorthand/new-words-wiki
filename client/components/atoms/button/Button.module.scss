@@ -14,6 +14,12 @@
     box-shadow: none;
     transform: translateY(5px);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: gray;
+    border: 1px solid lightgray;
+  }
 }
 
 .s {
