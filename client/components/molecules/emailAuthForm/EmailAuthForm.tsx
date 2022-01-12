@@ -19,8 +19,7 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
   const [isTimeout, setIsTimeout] = useState(false);
   const [isAfterSetAuthKeyBeforeTimeout, setIsAfterSetAuthKeyBeforeTimeout] = useState(false);
 
-  const { isCorrect, validStringHandler } = useValidString('email');
-  const { isUniqueEmail, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
+  const { isUniqueEmail, isCorrect, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
   const { isAuth, checkAuthKey } = useCheckAuthKey();
 
   useEffect(() => {
@@ -37,7 +36,6 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
         label="이메일"
         value={email}
         onChange={(e) => setEmail(e.currentTarget.value)}
-        onBlur={validStringHandler}
         disabled={isAfterSetAuthKeyBeforeTimeout}
         validations={[
           { isAlert: !isUniqueEmail, alert: '이미 등록된 이메일입니다.' },
@@ -45,9 +43,9 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
         ]}
       />
       <Button
-        onClick={() => {
-          setEmailAuthKey(email);
-          setIsTimeout(false);
+        onClick={async () => {
+          const res = await setEmailAuthKey(email);
+          if (res) setIsTimeout(false);
         }}
         disabled={isAfterSetAuthKeyBeforeTimeout}
         size="content"
@@ -56,7 +54,7 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
       </Button>
       {isAfterSetAuthKeyBeforeTimeout && (
         <Alert>
-          {email}로 인증 번호가 발송되었습니다. 유효 시간:{' '}
+          위 메일로 인증 번호가 발송되었습니다. 유효 시간:{' '}
           {<Timer time={liveTime} callback={() => setIsTimeout(true)} />}
         </Alert>
       )}
@@ -65,12 +63,16 @@ const EmailAuthForm = ({ email, setEmail, setIsComplete }: EmailAuthFormProps) =
         label="인증 번호"
         value={authKey}
         onChange={(e) => setAuthKey(e.currentTarget.value)}
-        disabled={isTimeout}
+        disabled={!isAfterSetAuthKeyBeforeTimeout}
         validations={[
           { isAlert: isTimeout, alert: '유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.' },
         ]}
       />
-      <Button onClick={(e) => checkAuthKey(email, authKey)} size="s">
+      <Button
+        onClick={(e) => checkAuthKey(email, authKey)}
+        size="s"
+        disabled={!isAfterSetAuthKeyBeforeTimeout}
+      >
         인증
       </Button>
       {isAuth && <Alert>인증 되었습니다.</Alert>}
