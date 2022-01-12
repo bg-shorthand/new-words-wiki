@@ -26,7 +26,9 @@ const Signup = () => {
       )}
       {stage === 1 && (
         <>
-          <Alert>인증된 이메일은 ID로 사용됩니다.</Alert>
+          <Alert>
+            <i className="fas fa-flag-checkered"></i> 앞서 인증된 이메일은 ID로 사용됩니다.
+          </Alert>
           <SignupForm email={email} setStage={setStage} />
         </>
       )}
