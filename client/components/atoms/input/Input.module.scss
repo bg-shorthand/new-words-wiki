@@ -12,6 +12,10 @@
     &:focus {
       outline: none;
     }
+    &:disabled {
+      color: lightgray;
+      cursor: not-allowed;
+    }
   }
 
   & > button {
