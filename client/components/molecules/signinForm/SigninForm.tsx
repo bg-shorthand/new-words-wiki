@@ -9,6 +9,7 @@ import style from './SigninForm.module.scss';
 const SigninForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [keepSignin, setKeepSignin] = useState(false);
   const [canSignin, setCanSignin] = useState(false);
 
   const resetDialog = useResetRecoilState(dialogsState);
@@ -16,6 +17,7 @@ const SigninForm = () => {
   const { err, isCorrectEmail, isCorrectPassword, wrongEmail, wrongPassword, signin } = useSignin(
     email,
     password,
+    keepSignin,
   );
 
   useEffect(() => {
@@ -47,6 +49,13 @@ const SigninForm = () => {
           },
           { isAlert: wrongPassword, alert: err },
         ]}
+      />
+      <LabelInput
+        id="keepSignin"
+        label="로그인 유지"
+        type="checkbox"
+        checked={keepSignin}
+        onChange={() => setKeepSignin((pre) => !pre)}
       />
       <Button
         type="submit"

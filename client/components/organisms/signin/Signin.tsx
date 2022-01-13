@@ -8,9 +8,7 @@ const Signin = () => {
     <>
       <Heading level={1}>로그인</Heading>
       <SigninForm />
-      <div className={style.footer}>
-        <LabelInput id="keepSignin" label="로그인 유지" type="checkbox" />
-      </div>
+      <div className={style.footer}></div>
     </>
   );
 };

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import useValidString from './useValidString';
 
-const useSignin = (email: string, password: string) => {
+const useSignin = (email: string, password: string, keepSignin: boolean) => {
   const [err, setErr] = useState('');
   const [wrongEmail, setWrongEmail] = useState(false);
   const [wrongPassword, setWrongPassword] = useState(false);
@@ -28,8 +28,9 @@ const useSignin = (email: string, password: string) => {
       return false;
     } else {
       const { accessToken, refreshToken } = data;
-      localStorage.setItem('access', accessToken);
-      localStorage.setItem('refresh', refreshToken);
+      const store = keepSignin ? localStorage : sessionStorage;
+      store.setItem('access', accessToken);
+      store.setItem('refresh', refreshToken);
       setIsSignin(true);
       return true;
     }
