@@ -1,12 +1,13 @@
 import { myInfoState } from '@recoil/myInfo';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import jwt from 'jsonwebtoken';
+import setToken from 'modules/setToken';
 
 const useGetMyInfo = () => {
   const [myInfo, setMyInfo] = useRecoilState(myInfoState);
 
   const getMyInfo = () => {
-    const access = localStorage.getItem('access');
+    const { access } = setToken.get();
 
     if (!access) return;
 

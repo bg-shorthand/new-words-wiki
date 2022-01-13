@@ -2,13 +2,13 @@ import userApi from 'api/userApi';
 import jwt from 'jsonwebtoken';
 import { useRecoilState } from 'recoil';
 import { isSigninState } from '@recoil/isSignin';
+import setToken from 'modules/setToken';
 
 const useIsSignin = () => {
   const [isSignin, setIsSignin] = useRecoilState(isSigninState);
 
   const setIsSigninAsync = async () => {
-    const access = localStorage.getItem('access');
-    const refresh = localStorage.getItem('refresh');
+    const { access, refresh, keepSignin } = setToken.get();
 
     if (!access || !refresh) return setIsSignin(false);
 
@@ -18,7 +18,7 @@ const useIsSignin = () => {
     const { data } = await userApi.getMyInfo(access, refresh);
 
     if (data.newAccess) {
-      localStorage.setItem('access', data.newAccess);
+      setToken.set(data.newAccess, refresh, keepSignin);
       setIsSignin(true);
     } else {
       data.email ? setIsSignin(true) : setIsSignin(false);

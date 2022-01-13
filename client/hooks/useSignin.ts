@@ -1,5 +1,6 @@
 import { isSigninState } from '@recoil/isSignin';
 import userApi from 'api/userApi';
+import setToken from 'modules/setToken';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import useValidString from './useValidString';
@@ -28,9 +29,7 @@ const useSignin = (email: string, password: string, keepSignin: boolean) => {
       return false;
     } else {
       const { accessToken, refreshToken } = data;
-      const store = keepSignin ? localStorage : sessionStorage;
-      store.setItem('access', accessToken);
-      store.setItem('refresh', refreshToken);
+      setToken.set(accessToken, refreshToken, keepSignin);
       setIsSignin(true);
       return true;
     }
