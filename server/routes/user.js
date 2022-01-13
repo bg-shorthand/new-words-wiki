@@ -3,6 +3,7 @@ const User = require('../models/user');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const verifyToken = require('../middleware/verifyToken');
+const constants = require('../const/const');
 
 router.get('/myInfo', verifyToken, async (req, res) => {
   const email = jwt.decode(req.headers.access).email;
