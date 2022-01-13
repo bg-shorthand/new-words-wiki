@@ -3,9 +3,10 @@ import style from './LabelInputContainer.module.scss';
 
 interface LabelInputContainerProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
+  type?: string;
 }
 
-const LabelInputContainer = ({ disabled, ...props }: LabelInputContainerProps) => {
+const LabelInputContainer = ({ disabled, type, ...props }: LabelInputContainerProps) => {
   const [isfocus, setIsFocus] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -23,7 +24,8 @@ const LabelInputContainer = ({ disabled, ...props }: LabelInputContainerProps) =
       className={
         style.container +
         (isfocus || hasValue ? ' ' + style.isActive : '') +
-        (disabled ? ' ' + style.disabled : '')
+        (disabled ? ' ' + style.disabled : '') +
+        (type === 'checkbox' ? ' ' + style.checkbox : '')
       }
       {...props}
       ref={ref}

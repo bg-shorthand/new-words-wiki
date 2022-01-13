@@ -39,3 +39,17 @@
     transform: translate3d(-0.5em, -1.5em, 0);
   }
 }
+
+.checkbox {
+  border: none;
+  padding: 0;
+  width: fit-content;
+
+  & > label {
+    white-space: nowrap;
+    top: -1px;
+    left: 2em;
+    transform: none;
+    font-size: inherit;
+  }
+}

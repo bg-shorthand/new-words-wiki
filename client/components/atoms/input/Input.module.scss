@@ -20,3 +20,50 @@
     right: -0.5em;
   }
 }
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  position: relative;
+
+  & > input {
+    margin: 0;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 14px;
+      box-sizing: border-box;
+      border: 1px solid black;
+      border-radius: 50px;
+      position: absolute;
+      top: 1px;
+      background-color: white;
+      transition: all 300ms;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border: 1px solid black;
+      border-radius: 100%;
+      position: absolute;
+      top: 3px;
+      left: 2px;
+      background-color: white;
+      transition: all 300ms;
+    }
+
+    &:checked {
+      &::before {
+        background-color: gray;
+      }
+      &::after {
+        transform: translate(10px);
+      }
+    }
+  }
+}

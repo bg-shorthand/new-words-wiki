@@ -1,4 +1,3 @@
-import Button from '@atoms/button/Button';
 import IconButton from '@atoms/iconButton/IconButton';
 import { InputHTMLAttributes, useState } from 'react';
 import style from './Input.module.scss';
@@ -7,7 +6,7 @@ const Input = ({ autoComplete = 'off', type, ...props }: InputHTMLAttributes<HTM
   const [textType, setTextType] = useState('password');
 
   return (
-    <div className={style.container}>
+    <div className={style.container + (type === 'checkbox' ? ' ' + style.checkbox : '')}>
       <input autoComplete={autoComplete} type={type === 'password' ? textType : type} {...props} />
       {type === 'password' ? (
         <IconButton
