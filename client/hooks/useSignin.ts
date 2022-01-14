@@ -25,13 +25,13 @@ const useSignin = (email: string, password: string, keepSignin: boolean) => {
 
     const { data } = await userApi.signin(email, password);
 
-    if (data.msg) {
-      setErr(data.msg);
-      if (data.msg.indexOf('이메일') !== -1) setWrongEmail(true);
-      else if (data.msg.indexOf('비밀번호') !== -1) setWrongPassword(true);
+    if (!data.success) {
+      setErr(data.errMsg);
+      if (data.errMsg.indexOf('이메일') !== -1) setWrongEmail(true);
+      else if (data.errMsg.indexOf('비밀번호') !== -1) setWrongPassword(true);
       return false;
     } else {
-      const { accessToken, refreshToken } = data;
+      const { accessToken, refreshToken } = data.data;
       setToken.set(accessToken, refreshToken, keepSignin);
 
       setIsSignin(true);

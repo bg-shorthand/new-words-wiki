@@ -8,16 +8,17 @@ const useSignup = (newUser: NewUser) => {
 
   const signup = async () => {
     const { data } = await userApi.signup(newUser);
-    if (data.key === 'email') {
+    if (data.success) {
+      return true;
+    } else if (data.errMsg.indexOf('이메일')) {
       setIsUniqueEmail(false);
       return false;
-    } else if (data.key === 'nickname') {
+    } else if (data.errMsg.indexOf('닉네임')) {
       setIsUniqueNickname(false);
       return false;
-    } else if (data.success) {
-      return true;
     } else return false;
   };
+
   return { isUniqueEmail, isUniqueNickname, signup };
 };
 

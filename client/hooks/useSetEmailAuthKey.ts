@@ -15,15 +15,15 @@ const useSetEmailAuthKey = () => {
 
     if (!validString(email)) return false;
 
-    const { data } = await userApi.get(email);
+    const { data } = await userApi.findUserByEmail(email);
 
-    if (data.isUser) {
+    if (!data.success) {
+      const { data } = await emailAuthApi.post(email);
+      setLiveTime(data.data.liveTime);
+      return true;
+    } else {
       setIsUniqueEmail(false);
       return false;
-    } else {
-      const { data } = await emailAuthApi.post(email);
-      setLiveTime(data.liveTime);
-      return true;
     }
   };
 
