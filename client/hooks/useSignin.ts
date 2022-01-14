@@ -1,9 +1,11 @@
 import { isSigninState } from '@recoil/isSignin';
+import { myInfoState } from '@recoil/myInfo';
 import userApi from 'api/userApi';
 import setToken from 'modules/setToken';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import useValidString from './useValidString';
+import jwt from 'jsonwebtoken';
 
 const useSignin = (email: string, password: string, keepSignin: boolean) => {
   const [err, setErr] = useState('');
@@ -11,6 +13,7 @@ const useSignin = (email: string, password: string, keepSignin: boolean) => {
   const [wrongPassword, setWrongPassword] = useState(false);
 
   const setIsSignin = useSetRecoilState(isSigninState);
+  const setMyInfo = useSetRecoilState(myInfoState);
 
   const { isCorrect: isCorrectEmail, validString: validEmail } = useValidString('email');
   const { isCorrect: isCorrectPassword, validString: validPassword } = useValidString('password');
@@ -30,7 +33,13 @@ const useSignin = (email: string, password: string, keepSignin: boolean) => {
     } else {
       const { accessToken, refreshToken } = data;
       setToken.set(accessToken, refreshToken, keepSignin);
+
       setIsSignin(true);
+
+      const payload = jwt.decode(accessToken) as jwt.JwtPayload;
+      const { email, nickname } = payload;
+
+      setMyInfo({ email, nickname });
       return true;
     }
   };

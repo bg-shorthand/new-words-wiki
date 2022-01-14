@@ -1,22 +1,16 @@
 import Button from '@atoms/button/Button';
+import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
-import useGetMyInfo from 'hooks/useGetMyInfo';
-import useIsSignin from 'hooks/useIsSignin';
+import { myInfoState } from '@recoil/myInfo';
 import useSignout from 'hooks/useSignout';
-import { useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Nav.module.scss';
 
 const Nav = () => {
+  const isSignin = useRecoilValue(isSigninState);
+  const myInfo = useRecoilValue(myInfoState);
   const setDialogs = useSetRecoilState(dialogsState);
-  const { isSignin, setIsSigninAsync } = useIsSignin();
   const { signout } = useSignout();
-  const { myInfo, getMyInfo } = useGetMyInfo();
-
-  useEffect(() => {
-    setIsSigninAsync();
-    getMyInfo();
-  }, []);
 
   return (
     <ul className={style.container}>

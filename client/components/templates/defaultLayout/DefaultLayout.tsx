@@ -2,8 +2,11 @@ import Footer from '@organisms/footer/Footer';
 import Header from '@organisms/header/Header';
 import { HTMLAttributes } from 'react';
 import style from './defaultLayout.module.scss';
+import useInitSigninState from 'hooks/useInitSigninState';
 
 const DefaultLayout = ({ children }: HTMLAttributes<HTMLElement>) => {
+  useInitSigninState();
+
   return (
     <div className={style.container}>
       <Header />
