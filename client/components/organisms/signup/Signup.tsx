@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 
 const Signup = () => {
-  const [stage, setStage] = useState(2);
+  const [stage, setStage] = useState(0);
   const [email, setEmail] = useState('');
 
   const resetDialogs = useResetRecoilState(dialogsState);
