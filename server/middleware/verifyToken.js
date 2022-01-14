@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const constants = require('../const/const');
+const generateResponse = require('../module/generateResponse');
 
 const verifyToken = async (req, res, next) => {
   const { access, refresh } = req.headers;
@@ -10,7 +11,7 @@ const verifyToken = async (req, res, next) => {
     next();
   } catch (e) {
     if (e.name === 'JsonWebTokenError') {
-      res.send({ err: 'invalid token' });
+      res.send(generateResponse.fail('로그인이 필요합니다.'));
     } else if (e.name === 'TokenExpiredError') {
       jwt.verify(refresh, process.env.JWT_SECRET);
 
@@ -25,9 +26,9 @@ const verifyToken = async (req, res, next) => {
         expiresIn: constants.accessTokenExpiresIn,
       });
 
-      res.send({ newAccess });
+      res.send(generateResponse.fail('', newAccess));
     } else {
-      res.status(500).send({ err: 'need signin' });
+      res.send(generateResponse.fail('로그인이 필요합니다.'));
     }
   }
 };
