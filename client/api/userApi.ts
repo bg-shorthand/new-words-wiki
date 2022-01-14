@@ -27,7 +27,7 @@ const userApi = {
       });
     } else return res;
   },
-  async get(email: String) {
+  async findUserByEmail(email: String) {
     return await axios.get(url + '/email/' + email);
   },
 };
