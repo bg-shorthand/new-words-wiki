@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 
 const Signup = () => {
-  const [stage, setStage] = useState(0);
+  const [stage, setStage] = useState(2);
   const [email, setEmail] = useState('');
 
   const resetDialogs = useResetRecoilState(dialogsState);
@@ -36,7 +36,9 @@ const Signup = () => {
       {stage === 2 && (
         <>
           <Alert>환영합니다. 로그인 해주세요.</Alert>
-          <Button onClick={resetDialogs}>완료</Button>
+          <Button size="s" onClick={resetDialogs}>
+            완료
+          </Button>
         </>
       )}
     </>
