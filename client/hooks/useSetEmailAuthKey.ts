@@ -6,13 +6,13 @@ import useValidString from './useValidString';
 const useSetEmailAuthKey = () => {
   const [errMsg, setErrMsg] = useState('');
   const [liveTime, setLiveTime] = useState(0);
-  const [isUniqueEmail, setIsUniqueEmail] = useState(true);
+  const [isUnique, setIsUnique] = useState(true);
 
   const { isCorrect, validString } = useValidString('email');
 
   const setEmailAuthKey = async (email: string) => {
     setLiveTime(0);
-    setIsUniqueEmail(true);
+    setIsUnique(true);
 
     if (!validString(email)) return false;
 
@@ -23,13 +23,13 @@ const useSetEmailAuthKey = () => {
       setLiveTime(data.data.liveTime);
       return true;
     } else {
-      setIsUniqueEmail(false);
+      setIsUnique(false);
       setErrMsg(data.errMsg);
       return false;
     }
   };
 
-  return { errMsg, isUniqueEmail, isCorrect, liveTime, setEmailAuthKey };
+  return { errMsg, isUnique, isCorrect, liveTime, setEmailAuthKey };
 };
 
 export default useSetEmailAuthKey;

@@ -5,7 +5,7 @@ import LabelInput from '@molecules/labelInput/LabelInput';
 import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './EmailAuthForm.module.scss';
-import checkAuthKey from 'modules/checkAuthKey';
+import useConfirmAuthKey from 'hooks/useConfirmAuthKey';
 
 interface EmailAuthFormProps {
   email: string;
@@ -15,11 +15,17 @@ interface EmailAuthFormProps {
 
 const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
-  const [wrongAuthKey, setWrongAuthKey] = useState(false);
   const [isTimeout, setIsTimeout] = useState(false);
   const [isAfterSetAuthKeyBeforeTimeout, setIsAfterSetAuthKeyBeforeTimeout] = useState(false);
 
-  const { errMsg, isUniqueEmail, isCorrect, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
+  const {
+    errMsg: errMsgToSetAuthKey,
+    isUnique,
+    isCorrect,
+    liveTime,
+    setEmailAuthKey,
+  } = useSetEmailAuthKey();
+  const { errMsg: errMsgToConfirmAuthKey, wrongAuthKey, confirmAuthKey } = useConfirmAuthKey();
 
   useEffect(() => {
     setIsAfterSetAuthKeyBeforeTimeout(!!liveTime && !isTimeout);
@@ -35,7 +41,7 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
           onChange={(e) => setEmail(e.currentTarget.value)}
           disabled={isAfterSetAuthKeyBeforeTimeout}
           validations={[
-            { isAlert: !isUniqueEmail, alert: errMsg },
+            { isAlert: !isUnique, alert: errMsgToSetAuthKey },
             { isAlert: !isCorrect, alert: '이메일 형식을 확인해주세요.' },
           ]}
         />
@@ -70,16 +76,15 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
               isAlert: isTimeout,
               alert: '유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.',
             },
-            { isAlert: wrongAuthKey, alert: '인증 번호가 다릅니다.' },
+            { isAlert: wrongAuthKey, alert: errMsgToConfirmAuthKey },
           ]}
         />
         <Button
           type="submit"
           onClick={async (e) => {
             e.preventDefault();
-            const res = await checkAuthKey(email, authKey);
+            const res = await confirmAuthKey(email, authKey);
             if (res) setStage((pre) => (pre += 1));
-            else setWrongAuthKey(true);
           }}
           size="s"
           disabled={!isAfterSetAuthKeyBeforeTimeout}
