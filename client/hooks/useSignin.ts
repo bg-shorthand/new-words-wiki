@@ -8,7 +8,7 @@ import useValidString from './useValidString';
 import jwt from 'jsonwebtoken';
 
 const useSignin = (email: string, password: string, keepSignin: boolean) => {
-  const [err, setErr] = useState('');
+  const [errMsg, setErrMsg] = useState('');
   const [wrongEmail, setWrongEmail] = useState(false);
   const [wrongPassword, setWrongPassword] = useState(false);
 
@@ -26,7 +26,7 @@ const useSignin = (email: string, password: string, keepSignin: boolean) => {
     const { data } = await userApi.signin(email, password);
 
     if (!data.success) {
-      setErr(data.errMsg);
+      setErrMsg(data.errMsg);
       if (data.errMsg.indexOf('이메일') !== -1) setWrongEmail(true);
       else if (data.errMsg.indexOf('비밀번호') !== -1) setWrongPassword(true);
       return false;
@@ -44,7 +44,7 @@ const useSignin = (email: string, password: string, keepSignin: boolean) => {
     }
   };
 
-  return { err, isCorrectEmail, isCorrectPassword, wrongEmail, wrongPassword, signin };
+  return { errMsg, isCorrectEmail, isCorrectPassword, wrongEmail, wrongPassword, signin };
 };
 
 export default useSignin;

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import useValidString from './useValidString';
 
 const useSetEmailAuthKey = () => {
+  const [errMsg, setErrMsg] = useState('');
   const [liveTime, setLiveTime] = useState(0);
   const [isUniqueEmail, setIsUniqueEmail] = useState(true);
 
@@ -23,11 +24,12 @@ const useSetEmailAuthKey = () => {
       return true;
     } else {
       setIsUniqueEmail(false);
+      setErrMsg(data.errMsg);
       return false;
     }
   };
 
-  return { isUniqueEmail, isCorrect, liveTime, setEmailAuthKey };
+  return { errMsg, isUniqueEmail, isCorrect, liveTime, setEmailAuthKey };
 };
 
 export default useSetEmailAuthKey;

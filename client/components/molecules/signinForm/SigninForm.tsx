@@ -14,11 +14,8 @@ const SigninForm = () => {
 
   const resetDialog = useResetRecoilState(dialogsState);
 
-  const { err, isCorrectEmail, isCorrectPassword, wrongEmail, wrongPassword, signin } = useSignin(
-    email,
-    password,
-    keepSignin,
-  );
+  const { errMsg, isCorrectEmail, isCorrectPassword, wrongEmail, wrongPassword, signin } =
+    useSignin(email, password, keepSignin);
 
   useEffect(() => {
     setCanSignin(!!email && !!password);
@@ -33,7 +30,7 @@ const SigninForm = () => {
         onChange={(e) => setEmail(e.currentTarget.value)}
         validations={[
           { isAlert: !isCorrectEmail, alert: '이메일 형식을 확인해주세요.' },
-          { isAlert: wrongEmail, alert: err },
+          { isAlert: wrongEmail, alert: errMsg },
         ]}
       />
       <LabelInput
@@ -47,7 +44,7 @@ const SigninForm = () => {
             isAlert: !isCorrectPassword,
             alert: '비밀번호는 영문, 숫자, 특수문자를 포함해 8자리 이상이어야 합니다.',
           },
-          { isAlert: wrongPassword, alert: err },
+          { isAlert: wrongPassword, alert: errMsg },
         ]}
       />
       <LabelInput

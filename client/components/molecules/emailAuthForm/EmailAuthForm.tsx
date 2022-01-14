@@ -19,7 +19,7 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
   const [isTimeout, setIsTimeout] = useState(false);
   const [isAfterSetAuthKeyBeforeTimeout, setIsAfterSetAuthKeyBeforeTimeout] = useState(false);
 
-  const { isUniqueEmail, isCorrect, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
+  const { errMsg, isUniqueEmail, isCorrect, liveTime, setEmailAuthKey } = useSetEmailAuthKey();
 
   useEffect(() => {
     setIsAfterSetAuthKeyBeforeTimeout(!!liveTime && !isTimeout);
@@ -35,7 +35,7 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
           onChange={(e) => setEmail(e.currentTarget.value)}
           disabled={isAfterSetAuthKeyBeforeTimeout}
           validations={[
-            { isAlert: !isUniqueEmail, alert: '이미 등록된 이메일입니다.' },
+            { isAlert: !isUniqueEmail, alert: errMsg },
             { isAlert: !isCorrect, alert: '이메일 형식을 확인해주세요.' },
           ]}
         />
