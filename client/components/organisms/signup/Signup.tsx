@@ -18,7 +18,7 @@ const Signup = () => {
       <Heading level={1}>회원 가입</Heading>
       {stage === 0 && (
         <>
-          <Alert>
+          <Alert textAlign="left">
             <i className="fas fa-flag-checkered"></i> 이메일을 인증해주세요. 인증된 이메일은 ID로
             사용됩니다.
           </Alert>
@@ -27,7 +27,7 @@ const Signup = () => {
       )}
       {stage === 1 && (
         <>
-          <Alert>
+          <Alert textAlign="left">
             <i className="fas fa-flag-checkered"></i> 앞서 인증된 이메일은 ID로 사용됩니다.
           </Alert>
           <SignupForm email={email} setStage={setStage} />

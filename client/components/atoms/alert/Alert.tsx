@@ -1,7 +1,12 @@
 import { HTMLAttributes } from 'react';
+import style from './Alert.module.scss';
 
-const Alert = (props: HTMLAttributes<HTMLParagraphElement>) => {
-  return <p {...props} />;
+interface AlertProps extends HTMLAttributes<HTMLParagraphElement> {
+  textAlign?: 'center' | 'left' | 'right';
+}
+
+const Alert = ({ textAlign = 'center', ...props }: AlertProps) => {
+  return <p className={style[textAlign]} {...props} />;
 };
 
 export default Alert;
