@@ -1,3 +1,4 @@
+import FindPassword from '@organisms/findPassword/FindPassword';
 import Signin from '@organisms/signin/Signin';
 import Signup from '@organisms/signup/Signup';
 import { dialogsState } from '@recoil/modalDialog';
@@ -11,6 +12,7 @@ const ModalDialogs = () => {
     <ModalDialog>
       {dialogs.signin && <Signin />}
       {dialogs.signup && <Signup />}
+      {dialogs.findPassword && <FindPassword />}
     </ModalDialog>
   );
 };

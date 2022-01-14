@@ -19,7 +19,12 @@ const Signin = () => {
         >
           회원가입
         </Button>
-        <Button size="content">비밀번호 찾기</Button>
+        <Button
+          size="content"
+          onClick={() => setDialogs((pre) => ({ ...pre, signin: false, findPassword: true }))}
+        >
+          비밀번호 찾기
+        </Button>
       </div>
     </>
   );

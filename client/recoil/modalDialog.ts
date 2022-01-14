@@ -5,6 +5,7 @@ const dialogsState = atom({
   default: {
     signin: false,
     signup: false,
+    findPassword: false,
   },
 });
 
