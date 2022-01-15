@@ -43,5 +43,8 @@ schema.statics.deleteByEmail = function (email) {
 schema.statics.updateTokenById = function (id, refreshToken) {
   return this.updateOne({ _id: id }, { refreshToken });
 };
+schema.statics.updatePassword = function (email, password) {
+  return this.updateOne({ email }, { password });
+};
 
 module.exports = mongoose.model('User', schema);

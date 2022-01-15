@@ -71,4 +71,24 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put('/updatePassword', async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    console.log(email, newPassword);
+
+    const user = await User.findOneByEmail(email);
+    const key = await crypto
+      .pbkdf2Sync(newPassword, user.salt, constants.cryptoRepeat, 64, 'sha512')
+      .toString('base64');
+
+    console.log(key);
+
+    await User.updatePassword(email, key);
+    res.send(generateResponse.success());
+  } catch (e) {
+    res.send(generateResponse.fail('비밀번호를 변경하지 못 했습니다.'));
+  }
+});
+
 module.exports = router;
