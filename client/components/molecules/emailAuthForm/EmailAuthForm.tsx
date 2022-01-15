@@ -66,12 +66,6 @@ const EmailAuthForm = ({ email, setEmail, setStage, mustRegist }: EmailAuthFormP
         </Button>
       </form>
       <form className={style.container}>
-        {isAfterSetAuthKeyBeforeTimeout && (
-          <Alert>
-            <i className="fas fa-flag-checkered"></i> 인증 번호가 발송되었습니다. 유효 시간:{' '}
-            {<Timer time={liveTime} callback={() => setIsTimeout(true)} />}
-          </Alert>
-        )}
         <LabelInput
           id="authKey"
           label="인증 번호"
@@ -84,8 +78,15 @@ const EmailAuthForm = ({ email, setEmail, setStage, mustRegist }: EmailAuthFormP
               alert: '유효 시간이 만료되었습니다. 인증 번호를 다시 받아주세요.',
             },
             { isAlert: wrongAuthKey, alert: errMsgToConfirmAuthKey },
+            {
+              isAlert: isAfterSetAuthKeyBeforeTimeout,
+              alert: '인증 번호가 발송되었습니다. 메일을 확인해주세요.',
+            },
           ]}
         />
+        {isAfterSetAuthKeyBeforeTimeout && (
+          <Timer className={style.timer} time={liveTime} callback={() => setIsTimeout(true)} />
+        )}
         <Button
           type="submit"
           onClick={async (e) => {

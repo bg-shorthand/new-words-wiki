@@ -3,6 +3,7 @@
   flex-flow: column nowrap;
   align-items: flex-end;
   margin-bottom: 20px;
+  position: relative;
 
   & > * {
     margin-bottom: 10px;
@@ -11,4 +12,10 @@
   & > p {
     align-self: flex-start;
   }
+}
+
+.timer {
+  position: absolute;
+  top: 1em;
+  right: 1em;
 }
