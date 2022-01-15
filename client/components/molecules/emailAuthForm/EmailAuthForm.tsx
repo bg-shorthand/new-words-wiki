@@ -6,25 +6,24 @@ import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './EmailAuthForm.module.scss';
 import useConfirmAuthKey from 'hooks/useConfirmAuthKey';
+import useValidString from 'hooks/useValidString';
+import useFindUser from 'hooks/useFindUser';
 
 interface EmailAuthFormProps {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
   setStage: Dispatch<SetStateAction<number>>;
+  mustRegist: boolean;
 }
 
-const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
+const EmailAuthForm = ({ email, setEmail, setStage, mustRegist }: EmailAuthFormProps) => {
   const [authKey, setAuthKey] = useState('');
   const [isTimeout, setIsTimeout] = useState(false);
   const [isAfterSetAuthKeyBeforeTimeout, setIsAfterSetAuthKeyBeforeTimeout] = useState(false);
 
-  const {
-    errMsg: errMsgToSetAuthKey,
-    isUnique,
-    isCorrect,
-    liveTime,
-    setEmailAuthKey,
-  } = useSetEmailAuthKey();
+  const { isCorrect, validString } = useValidString('email');
+  const { errMsg: errMsgToSetAuthKey, isUnique, findUser } = useFindUser();
+  const { liveTime, setEmailAuthKey } = useSetEmailAuthKey();
   const { errMsg: errMsgToConfirmAuthKey, wrongAuthKey, confirmAuthKey } = useConfirmAuthKey();
 
   useEffect(() => {
@@ -41,7 +40,10 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
           onChange={(e) => setEmail(e.currentTarget.value)}
           disabled={isAfterSetAuthKeyBeforeTimeout}
           validations={[
-            { isAlert: !isUnique, alert: errMsgToSetAuthKey },
+            {
+              isAlert: mustRegist ? isUnique : !isUnique,
+              alert: mustRegist ? errMsgToSetAuthKey : '이미 등록된 이메일입니다.',
+            },
             { isAlert: !isCorrect, alert: '이메일 형식을 확인해주세요.' },
           ]}
         />
@@ -49,7 +51,12 @@ const EmailAuthForm = ({ email, setEmail, setStage }: EmailAuthFormProps) => {
           type="submit"
           onClick={async (e) => {
             e.preventDefault();
+            const valid = validString(email);
+            if (!valid) return;
+            const isAlready = await findUser(email);
+            if (mustRegist ? !isAlready : isAlready) return;
             const res = await setEmailAuthKey(email);
+            console.log(res);
             if (res) setIsTimeout(false);
           }}
           disabled={isAfterSetAuthKeyBeforeTimeout}
