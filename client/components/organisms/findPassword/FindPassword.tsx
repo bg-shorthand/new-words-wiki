@@ -21,7 +21,7 @@ const FindPassword = () => {
           <Alert>
             <i className="fas fa-flag-checkered"></i> 가입하신 이메일을 인증해주세요.
           </Alert>
-          <EmailAuthForm email={email} setEmail={setEmail} setStage={setStage} />
+          <EmailAuthForm email={email} setEmail={setEmail} mustRegist={true} setStage={setStage} />
         </>
       )}
       {stage === 1 && (

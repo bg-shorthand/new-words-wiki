@@ -22,7 +22,7 @@ const Signup = () => {
             <i className="fas fa-flag-checkered"></i> 이메일을 인증해주세요. 인증된 이메일은 ID로
             사용됩니다.
           </Alert>
-          <EmailAuthForm email={email} setEmail={setEmail} setStage={setStage} />
+          <EmailAuthForm email={email} setEmail={setEmail} mustRegist={false} setStage={setStage} />
         </>
       )}
       {stage === 1 && (
