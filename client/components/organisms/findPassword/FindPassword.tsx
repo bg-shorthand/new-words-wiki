@@ -2,7 +2,7 @@ import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import Heading from '@atoms/heading/Heading';
 import EmailAuthForm from '@molecules/emailAuthForm/EmailAuthForm';
-import LabelInput from '@molecules/labelInput/LabelInput';
+import FindPasswordForm from '@molecules/findPasswordForm/FindPasswrdForm';
 import { dialogsState } from '@recoil/modalDialog';
 import { useState } from 'react';
 import { useResetRecoilState } from 'recoil';
@@ -26,14 +26,13 @@ const FindPassword = () => {
       )}
       {stage === 1 && (
         <>
-          <Alert>
+          <Alert textAlign="left">
             <i className="fas fa-flag-checkered"></i> 새로운 비밀번호를 등록해주세요.
           </Alert>
-          <LabelInput id="newPassword" label="새 비밀번호" />
-          <Button>등록</Button>
+          <FindPasswordForm email={email} setStage={setStage} />
         </>
       )}
-      {stage === 1 && (
+      {stage === 2 && (
         <>
           <Alert>비밀번호가 수정되었습니다. 로그인 해주세요.</Alert>
           <Button size="s" onClick={resetDialogs}>
