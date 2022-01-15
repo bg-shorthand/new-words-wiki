@@ -24,7 +24,8 @@
       "@containers/*": ["./components/containers/*"],
       "@pages/*": ["./pages/*"],
       "@styles/*": ["./styles/*"],
-      "@recoil/*": ["./recoil/*"]
+      "@recoil/*": ["./recoil/*"],
+      "@hooks/*": ["./hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

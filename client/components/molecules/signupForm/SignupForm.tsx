@@ -1,7 +1,7 @@
 import Button from '@atoms/button/Button';
 import LabelInput from '@molecules/labelInput/LabelInput';
-import useSignup from 'hooks/useSignup';
-import useValidString from 'hooks/useValidString';
+import useSignup from '@hooks/useSignup';
+import useValidString from '@hooks/useValidString';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './SignupForm.module.scss';
 

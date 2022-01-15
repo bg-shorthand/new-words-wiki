@@ -2,12 +2,12 @@ import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import Timer from '@molecules/timer/Timer';
 import LabelInput from '@molecules/labelInput/LabelInput';
-import useSetEmailAuthKey from 'hooks/useSetEmailAuthKey';
+import useSetEmailAuthKey from '@hooks/useSetEmailAuthKey';
+import useConfirmAuthKey from '@hooks/useConfirmAuthKey';
+import useValidString from '@hooks/useValidString';
+import useFindUser from '@hooks/useFindUser';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './EmailAuthForm.module.scss';
-import useConfirmAuthKey from 'hooks/useConfirmAuthKey';
-import useValidString from 'hooks/useValidString';
-import useFindUser from 'hooks/useFindUser';
 
 interface EmailAuthFormProps {
   email: string;

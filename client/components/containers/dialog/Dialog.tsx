@@ -1,7 +1,7 @@
 import IconButton from '@atoms/iconButton/IconButton';
 import { dialogsState } from '@recoil/modalDialog';
 import SlideIn from '@templates/slidein/SlideIn';
-import useControlDialogTab from 'hooks/useControlDialogTab';
+import useControlDialogTab from '@hooks/useControlDialogTab';
 import { HTMLAttributes } from 'react';
 import { useResetRecoilState } from 'recoil';
 import style from './Dialog.module.scss';

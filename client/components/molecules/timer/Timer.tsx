@@ -1,4 +1,4 @@
-import useGenerateTimerByMs from 'hooks/useGenerateTimerByMs';
+import useGenerateTimerByMs from '@hooks/useGenerateTimerByMs';
 import addPrefix0 from 'modules/addPrefix0';
 import { useEffect, useState } from 'react';
 

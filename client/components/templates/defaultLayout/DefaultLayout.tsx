@@ -1,8 +1,8 @@
 import Footer from '@organisms/footer/Footer';
 import Header from '@organisms/header/Header';
+import useInitSigninState from '@hooks/useInitSigninState';
 import { HTMLAttributes } from 'react';
 import style from './defaultLayout.module.scss';
-import useInitSigninState from 'hooks/useInitSigninState';
 
 const DefaultLayout = ({ children }: HTMLAttributes<HTMLElement>) => {
   useInitSigninState();

@@ -2,7 +2,7 @@ import Button from '@atoms/button/Button';
 import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
 import { myInfoState } from '@recoil/myInfo';
-import useSignout from 'hooks/useSignout';
+import useSignout from '@hooks/useSignout';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Nav.module.scss';
 

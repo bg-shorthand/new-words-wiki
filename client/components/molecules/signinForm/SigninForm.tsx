@@ -1,7 +1,7 @@
 import Button from '@atoms/button/Button';
 import LabelInput from '@molecules/labelInput/LabelInput';
 import { dialogsState } from '@recoil/modalDialog';
-import useSignin from 'hooks/useSignin';
+import useSignin from '@hooks/useSignin';
 import { useEffect, useState } from 'react';
 import { useResetRecoilState } from 'recoil';
 import style from './SigninForm.module.scss';
