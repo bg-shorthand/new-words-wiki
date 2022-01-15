@@ -5,16 +5,7 @@ const jwt = require('jsonwebtoken');
 const verifyToken = require('../middleware/verifyToken');
 const constants = require('../const/const');
 const generateResponse = require('../module/generateResponse');
-
-// router.get('/myInfo', verifyToken, async (req, res) => {
-//   const email = jwt.decode(req.headers.access).email;
-//   const user = await User.findOneByEmail(email);
-//   const payload = {};
-//   Object.keys(user._doc)
-//     .filter((item) => item !== 'password' && item !== 'salt' && item !== 'refreshToken')
-//     .forEach((key) => (payload[key] = user[key]));
-//   res.send({ ...payload });
-// });
+const filterUserInfo = require('../module/filterUserInfo');
 
 router.get('/signin', async (req, res) => {
   try {
@@ -28,10 +19,7 @@ router.get('/signin', async (req, res) => {
       .toString('base64');
     if (key !== user.password) return res.send(generateResponse.fail('비밀번호가 다릅니다.'));
 
-    const payload = {};
-    Object.keys(user._doc)
-      .filter((item) => item !== 'password' && item !== 'salt' && item !== 'refreshToken')
-      .forEach((key) => (payload[key] = user[key]));
+    const payload = filterUserInfo(user._doc);
 
     const accessToken = jwt.sign({ ...payload }, process.env.JWT_SECRET, {
       expiresIn: constants.accessTokenExpiresIn,
@@ -50,8 +38,9 @@ router.get('/email/:email', async (req, res) => {
   try {
     const email = req.params.email;
     const user = await User.findOneByEmail(email);
+    const payload = filterUserInfo(user._doc);
     if (!user) return res.send(generateResponse.fail('등록되지 않은 이메일니다.'));
-    else res.send(generateResponse.success({ isUser: true }));
+    else res.send(generateResponse.success({ ...payload }));
   } catch (e) {
     res.send(generateResponse.fail(e));
   }
