@@ -1,4 +1,3 @@
-import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import Timer from '@molecules/timer/Timer';
 import LabelInput from '@molecules/labelInput/LabelInput';
