@@ -3,6 +3,7 @@ import useValidString from '@hooks/useValidString';
 import LabelInput from '@molecules/labelInput/LabelInput';
 import userApi from 'api/userApi';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import style from './FindPassword.module.scss';
 
 interface FindPasswordFormProps {
   email: string;
@@ -22,7 +23,7 @@ const FindPasswordForm = ({ email, setStage }: FindPasswordFormProps) => {
   }, [newPassword, samePassword, isSamePassword, isCorrect]);
 
   return (
-    <form>
+    <form className={style.container}>
       <LabelInput id="signupEmail" label="이메일" value={email} disabled />
       <LabelInput
         id="newPassword"

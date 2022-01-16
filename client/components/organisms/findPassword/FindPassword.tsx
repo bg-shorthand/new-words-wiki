@@ -18,7 +18,7 @@ const FindPassword = () => {
       <Heading level={1}>비밀번호 찾기</Heading>
       {stage === 0 && (
         <>
-          <Alert>
+          <Alert textAlign="left">
             <i className="fas fa-flag-checkered"></i> 가입하신 이메일을 인증해주세요.
           </Alert>
           <EmailAuthForm email={email} setEmail={setEmail} mustRegist={true} setStage={setStage} />
