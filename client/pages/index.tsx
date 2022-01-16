@@ -1,7 +1,8 @@
+import Main from '@components/pages/Main';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
-  return <h1>Hellow World</h1>;
+  return <Main />;
 };
 
 export default Home;
