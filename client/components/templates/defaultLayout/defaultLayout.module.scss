@@ -5,5 +5,12 @@
 
   & > main {
     flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+      url('../../../public/from-opened-books.jpg');
+    background-attachment: fixed;
+    background-size: cover;
   }
 }
