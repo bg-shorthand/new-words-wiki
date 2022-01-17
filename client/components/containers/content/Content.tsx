@@ -8,7 +8,7 @@ interface ContentProps extends HTMLAttributes<HTMLDivElement> {
 
 const Content = ({ children, fitContent }: ContentProps) => {
   return (
-    <div className={style.container + ' ' + (fitContent ? style.full : style.fitContent)}>
+    <div className={style.container + ' ' + (fitContent ? style.fitContent : style.full)}>
       {children}
       <SlideIn />
     </div>
