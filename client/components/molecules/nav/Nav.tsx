@@ -5,6 +5,7 @@ import { myInfoState } from '@recoil/myInfo';
 import useSignout from '@hooks/useSignout';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Nav.module.scss';
+import Link from 'next/link';
 
 const Nav = () => {
   const isSignin = useRecoilValue(isSigninState);
@@ -14,6 +15,9 @@ const Nav = () => {
 
   return (
     <ul className={style.container}>
+      <li>
+        <Link href="/write">신조어 등록</Link>
+      </li>
       {isSignin ? (
         <>
           <li>{myInfo.nickname}</li>
