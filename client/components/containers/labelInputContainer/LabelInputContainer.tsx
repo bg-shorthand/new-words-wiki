@@ -17,6 +17,10 @@ const LabelInputContainer = ({ disabled, type, ...props }: LabelInputContainerPr
     $input?.addEventListener('focus', () => setIsFocus(true));
     $input?.addEventListener('blur', () => setIsFocus(false));
     $input?.addEventListener('change', () => setHasValue(!!$input?.value));
+    const $textArea = $container?.querySelector('textarea');
+    $textArea?.addEventListener('focus', () => setIsFocus(true));
+    $textArea?.addEventListener('blur', () => setIsFocus(false));
+    $textArea?.addEventListener('change', () => setHasValue(!!$textArea?.value));
   }, []);
 
   return (
