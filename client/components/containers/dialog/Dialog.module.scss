@@ -1,9 +1,10 @@
+@import '@styles/var.scss';
+
 .container {
-  position: relative;
+  @include slideInBox(relative);
   width: 600px;
   background-color: white;
   padding: 50px;
-  border-radius: 10px;
   transition: all 500ms;
   text-align: center;
 

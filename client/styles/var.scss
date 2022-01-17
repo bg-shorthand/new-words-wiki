@@ -1,0 +1,4 @@
+@mixin slideInBox($position) {
+  position: $position;
+  border-radius: 10px;
+}
