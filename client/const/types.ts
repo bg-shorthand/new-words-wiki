@@ -9,4 +9,11 @@ interface NewUser extends User {
   password: string;
 }
 
-export type { Dialogs, User, NewUser };
+interface Word {
+  title: string;
+  definition: string;
+  history: string;
+  images?: string[];
+}
+
+export type { Dialogs, User, NewUser, Word };
