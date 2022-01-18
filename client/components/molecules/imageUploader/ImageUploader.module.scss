@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  & > ul {
+    align-self: flex-start;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-top: 20px;
+
+    & > li {
+      display: block;
+      width: 200px;
+      height: 200px;
+      background-position: center;
+      background-size: cover;
+      border: 1px solid black;
+      border-radius: 5px;
+      margin: 10px;
+      position: relative;
+
+      & > button {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+}
