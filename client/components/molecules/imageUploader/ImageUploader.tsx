@@ -18,7 +18,7 @@ const ImageUploader = ({ images, setImages }: ImageUploaderProps) => {
         id="image"
         onInput={async (e) => {
           const images = e.currentTarget.files;
-          if (!images) return;
+          if (!images || !images[0]) return;
           const reader = new FileReader();
           reader.onloadend = () => {
             const image = new Image();
