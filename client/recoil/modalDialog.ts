@@ -6,6 +6,7 @@ const dialogsState = atom({
     signin: false,
     signup: false,
     findPassword: false,
+    alert: false,
   },
 });
 
@@ -18,4 +19,9 @@ const isOpenModalState = selector({
   },
 });
 
-export { dialogsState, isOpenModalState };
+const alertMessageState = atom({
+  key: 'alertMessageState',
+  default: '',
+});
+
+export { dialogsState, isOpenModalState, alertMessageState };
