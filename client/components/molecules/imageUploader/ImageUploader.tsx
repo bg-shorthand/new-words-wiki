@@ -18,7 +18,13 @@ const ImageUploader = ({ images, setImages }: ImageUploaderProps) => {
           if (!images) return;
           const reader = new FileReader();
           reader.onloadend = () => {
-            setImages((pre) => [reader.result as string, ...pre]);
+            const image = new Image();
+            image.src = reader.result as string;
+            image.onload = () => {
+              const { width, height } = image;
+              if (width > 500 || height > 500) return console.log('이미지가 너무 큽니다');
+              setImages((pre) => [reader.result as string, ...pre]);
+            };
           };
           reader.readAsDataURL(images[0]);
         }}
