@@ -1,0 +1,28 @@
+.label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid black;
+  box-shadow: 0px 5px 3px gray;
+  color: black;
+  transition: all 100ms;
+  width: 200px;
+  height: 40px;
+  border-radius: 4px;
+
+  &:focus,
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(5px);
+  }
+}
+
+.input {
+  display: none;
+}
