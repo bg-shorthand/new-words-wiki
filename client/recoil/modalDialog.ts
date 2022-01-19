@@ -7,6 +7,7 @@ const dialogsState = atom({
     signup: false,
     findPassword: false,
     alert: false,
+    image: false,
   },
 });
 
@@ -24,4 +25,13 @@ const alertMessageState = atom({
   default: '',
 });
 
-export { dialogsState, isOpenModalState, alertMessageState };
+const imageState = atom({
+  key: 'imageState',
+  default: {
+    src: '',
+    width: 0,
+    height: 0,
+  },
+});
+
+export { dialogsState, isOpenModalState, alertMessageState, imageState };
