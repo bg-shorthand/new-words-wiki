@@ -1,6 +1,7 @@
 import IconButton from '@atoms/iconButton/IconButton';
 import InputFile from '@atoms/inputFile/InputFile';
 import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
+import Images from '@molecules/images/Images';
 import { Dispatch, SetStateAction } from 'react';
 import style from './ImageUploader.module.scss';
 
@@ -33,21 +34,7 @@ const ImageUploader = ({ images, setImages }: ImageUploaderProps) => {
           reader.readAsDataURL(images[0]);
         }}
       />
-      {images.length ? (
-        <ul>
-          {images.map((image) => (
-            <li id={image} key={image} style={{ backgroundImage: `url(${image})` }}>
-              <IconButton
-                icon="fas fa-minus-circle"
-                onClick={(e) => {
-                  const $li = e.currentTarget.parentNode as HTMLLIElement;
-                  setImages((pre) => pre.filter((image) => image !== $li.id));
-                }}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <Images images={images} setImages={setImages} canDelete />
     </div>
   );
 };
