@@ -25,8 +25,8 @@ const ImageUploader = ({ images, setImages }: ImageUploaderProps) => {
             image.src = reader.result as string;
             image.onload = () => {
               const { width, height } = image;
-              if (width > 500 || height > 500)
-                return openAlertDialog('이미지의 크기는 가로 500px, 세로 500px 이하여야 합니다.');
+              if (width > 1000 || height > 1000)
+                return openAlertDialog('이미지의 크기는 가로 1000px, 세로 1000px 이하여야 합니다.');
               setImages((pre) => [reader.result as string, ...pre]);
             };
           };
