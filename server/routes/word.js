@@ -7,8 +7,8 @@ router.get('/', async (req, res) => {
   try {
     const { title } = req.query;
 
-    const word = await Word.findOne(title);
-    res.send(generateResponse.success({ ...word }));
+    const word = await Word.findOneByTitle(title);
+    res.send(generateResponse.success(word));
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));

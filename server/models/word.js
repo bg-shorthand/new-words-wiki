@@ -15,7 +15,7 @@ const schema = new mongoose.Schema(
 schema.statics.findAll = function () {
   return this.find({});
 };
-schema.statics.findOne = function (title) {
+schema.statics.findOneByTitle = function (title) {
   return this.findOne({ title });
 };
 schema.statics.create = async function (payload) {
