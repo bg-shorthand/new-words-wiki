@@ -19,7 +19,7 @@ const FindPassword = () => {
       {stage === 0 && (
         <>
           <Alert textAlign="left">
-            <i className="fas fa-flag-checkered"></i> 가입하신 이메일을 인증해주세요.
+            <i aria-hidden className="fas fa-flag-checkered"></i> 가입하신 이메일을 인증해주세요.
           </Alert>
           <EmailAuthForm email={email} setEmail={setEmail} mustRegist={true} setStage={setStage} />
         </>
@@ -27,7 +27,7 @@ const FindPassword = () => {
       {stage === 1 && (
         <>
           <Alert textAlign="left">
-            <i className="fas fa-flag-checkered"></i> 새로운 비밀번호를 등록해주세요.
+            <i aria-hidden className="fas fa-flag-checkered"></i> 새로운 비밀번호를 등록해주세요.
           </Alert>
           <FindPasswordForm email={email} setStage={setStage} />
         </>

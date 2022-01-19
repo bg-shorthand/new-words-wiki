@@ -28,14 +28,14 @@ const Nav = () => {
               }
             }}
           >
-            <i className="far fa-edit"></i> 신조어 등록
+            <i aria-hidden className="far fa-edit"></i> 신조어 등록
           </a>
         </Link>
       </li>
       {isSignin ? (
         <>
           <li>
-            <i className="far fa-user"></i> {myInfo.nickname}
+            <i aria-hidden className="far fa-user"></i> {myInfo.nickname}
           </li>
           <li>
             <Button size="s" onClick={() => signout()}>

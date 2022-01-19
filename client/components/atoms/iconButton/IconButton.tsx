@@ -8,7 +8,7 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const IconButton = ({ type = 'button', icon, ...props }: IconButtonProps) => {
   return (
     <button className={style.IconButton} type={type} {...props}>
-      <i className={icon}></i>
+      <i aria-hidden className={icon}></i>
     </button>
   );
 };

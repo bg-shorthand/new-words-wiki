@@ -6,7 +6,7 @@ const InputFile = ({ id, accept = 'image/*', ...props }: InputHTMLAttributes<HTM
   return (
     <>
       <Label htmlFor={id} className={style.label}>
-        <i className="fas fa-upload"></i> 이미지 업로드
+        <i aria-hidden className="fas fa-upload"></i> 이미지 업로드
       </Label>
       <input type="file" className={style.input} id={id} accept={accept} {...props} />
     </>
