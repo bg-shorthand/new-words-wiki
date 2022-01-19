@@ -55,7 +55,6 @@ const EmailAuthForm = ({ email, setEmail, setStage, mustRegist }: EmailAuthFormP
             const isAlready = await findUser(email);
             if (mustRegist ? !isAlready : isAlready) return;
             const res = await setEmailAuthKey(email);
-            console.log(res);
             if (res) setIsTimeout(false);
           }}
           disabled={isAfterSetAuthKeyBeforeTimeout}
