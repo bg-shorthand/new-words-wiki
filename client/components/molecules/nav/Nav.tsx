@@ -2,11 +2,11 @@ import Button from '@atoms/button/Button';
 import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
 import { myInfoState } from '@recoil/myInfo';
+import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
 import useSignout from '@hooks/useSignout';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Nav.module.scss';
 import Link from 'next/link';
-import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
 
 const Nav = () => {
   const isSignin = useRecoilValue(isSigninState);
@@ -28,13 +28,15 @@ const Nav = () => {
               }
             }}
           >
-            신조어 등록
+            <i className="far fa-edit"></i> 신조어 등록
           </a>
         </Link>
       </li>
       {isSignin ? (
         <>
-          <li>{myInfo.nickname}</li>
+          <li>
+            <i className="far fa-user"></i> {myInfo.nickname}
+          </li>
           <li>
             <Button size="s" onClick={() => signout()}>
               로그아웃
