@@ -1,4 +1,5 @@
 import Heading from '@atoms/heading/Heading';
+import Paragraph from '@atoms/paragraph/Paragraph';
 import Content from '@containers/content/Content';
 import MainLayout from '@templates/mainLayout/MainLayout';
 
@@ -9,7 +10,7 @@ const Main = () => {
         <Heading level={2}>Hello! Here is Main</Heading>
       </Content>
       <Content>
-        <p>
+        <Paragraph>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste aliquam odio
           quasi minima repellendus veritatis dolores, maxime modi recusandae qui omnis dignissimos
           et perferendis suscipit nemo, aut porro facere. Lorem ipsum dolor sit amet consectetur
@@ -31,7 +32,7 @@ const Main = () => {
           consectetur adipisicing elit. Ex voluptatibus tempore doloremque, porro, deserunt
           consectetur possimus dignissimos commodi ratione esse reprehenderit voluptate repellat
           ipsum distinctio ea quas, assumenda perferendis aliquid!
-        </p>
+        </Paragraph>
       </Content>
     </MainLayout>
   );
