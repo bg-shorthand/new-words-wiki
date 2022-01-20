@@ -13,7 +13,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } else {
-    return { props: {} };
+    return {
+      redirect: {
+        destination: '/words/notFound',
+        permanent: false,
+      },
+    };
   }
 };
 

@@ -8,7 +8,8 @@ router.get('/', async (req, res) => {
     const { title } = req.query;
 
     const word = await Word.findOneByTitle(title);
-    res.send(generateResponse.success(word));
+    if (word) res.send(generateResponse.success(word));
+    else res.send(generateResponse.fail('검색 결과가 없습니다.'));
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));
@@ -19,7 +20,6 @@ router.get('/all', async (req, res) => {
   try {
     const words = await Word.findAll();
     const titles = words.map((word) => word.title);
-    console.log(titles);
     res.send(generateResponse.success(titles));
   } catch (e) {
     res.send(generateResponse.fail(e));
