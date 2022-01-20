@@ -8,6 +8,7 @@ const dialogsState = atom({
     findPassword: false,
     alert: false,
     image: false,
+    needSignin: false,
   },
 });
 

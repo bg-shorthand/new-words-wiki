@@ -2,7 +2,6 @@ import Button from '@atoms/button/Button';
 import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
 import { myInfoState } from '@recoil/myInfo';
-import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
 import useSignout from '@hooks/useSignout';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Nav.module.scss';
@@ -13,7 +12,6 @@ const Nav = () => {
   const myInfo = useRecoilValue(myInfoState);
   const setDialogs = useSetRecoilState(dialogsState);
 
-  const openAlertDialog = useOpenAlertDialog();
   const { signout } = useSignout();
 
   return (
@@ -24,7 +22,7 @@ const Nav = () => {
             onClick={(e) => {
               if (!isSignin) {
                 e.preventDefault();
-                openAlertDialog('로그인이 필요합니다.');
+                setDialogs((pre) => ({ ...pre, needSignin: true }));
               }
             }}
           >

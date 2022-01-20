@@ -4,10 +4,12 @@ import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
 import ImageUploader from '@molecules/imageUploader/ImageUploader';
 import LabelInput from '@molecules/labelInput/LabelInput';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
+import { dialogsState } from '@recoil/modalDialog';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import { wordApi } from 'api/word';
 import setToken from 'modules/setToken';
 import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 const Write = () => {
   const [title, setTitle] = useState('');
@@ -16,6 +18,7 @@ const Write = () => {
   const [images, setImages] = useState<string[]>([]);
 
   const openAlertDialog = useOpenAlertDialog();
+  const setDialogs = useSetRecoilState(dialogsState);
 
   return (
     <MainLayout>
@@ -58,7 +61,7 @@ const Write = () => {
           onClick={async (e) => {
             const payload = { title, definition, history, images };
             const { access, refresh } = setToken.get();
-            if (!access || !refresh) return openAlertDialog('로그인이 필요합니다.');
+            if (!access || !refresh) return setDialogs((pre) => ({ ...pre, needSignin: true }));
             const { data } = await wordApi.post(payload, access, refresh);
             if (!data.success) {
               if (data.errMsg) return openAlertDialog(data.errMsg);

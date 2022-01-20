@@ -5,13 +5,13 @@ import EmailAuthForm from '@molecules/emailAuthForm/EmailAuthForm';
 import SignupForm from '@molecules/signupForm/SignupForm';
 import { dialogsState } from '@recoil/modalDialog';
 import { useState } from 'react';
-import { useResetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 const Signup = () => {
   const [stage, setStage] = useState(0);
   const [email, setEmail] = useState('');
 
-  const resetDialogs = useResetRecoilState(dialogsState);
+  const setDialogs = useSetRecoilState(dialogsState);
 
   return (
     <>
@@ -37,8 +37,11 @@ const Signup = () => {
       {stage === 2 && (
         <>
           <Alert>환영합니다. 로그인 해주세요.</Alert>
-          <Button size="s" onClick={resetDialogs}>
-            완료
+          <Button
+            size="s"
+            onClick={() => setDialogs((pre) => ({ ...pre, signup: false, signin: true }))}
+          >
+            로그인
           </Button>
         </>
       )}
