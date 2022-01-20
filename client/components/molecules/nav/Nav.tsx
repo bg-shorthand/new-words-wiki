@@ -17,6 +17,20 @@ const Nav = () => {
   return (
     <ul className={style.container}>
       <li>
+        <Link href="/guide">
+          <a>
+            <i className="far fa-file-alt"></i> 가이드
+          </a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/community">
+          <a>
+            <i className="far fa-comments"></i> 커뮤니티
+          </a>
+        </Link>
+      </li>
+      <li>
         <Link href="/write">
           <a
             onClick={(e) => {
