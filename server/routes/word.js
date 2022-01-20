@@ -15,6 +15,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/all', async (req, res) => {
+  try {
+    const words = await Word.findAll();
+    const titles = words.map((word) => word.title);
+    console.log(titles);
+    res.send(generateResponse.success(titles));
+  } catch (e) {
+    res.send(generateResponse.fail(e));
+  }
+});
+
 router.post('/', verifyToken, async (req, res) => {
   try {
     const word = req.body;
