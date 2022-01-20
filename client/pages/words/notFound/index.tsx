@@ -9,7 +9,7 @@ const NotFoundPage = () => {
     <MainLayout>
       <Content>
         <Heading level={2} textAlign="center">
-          등록된 신조어가 없습니다.
+          <i className="far fa-sad-tear"></i>등록된 신조어가 없습니다.
         </Heading>
         <Paragraph textAlign="center">새로운 신조어를 등록하시겠습니까?</Paragraph>
         <Button>등록하기</Button>
