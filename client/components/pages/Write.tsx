@@ -8,6 +8,7 @@ import { dialogsState } from '@recoil/modalDialog';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import { wordApi } from 'api/word';
 import setToken from 'modules/setToken';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
@@ -19,6 +20,8 @@ const Write = () => {
 
   const openAlertDialog = useOpenAlertDialog();
   const setDialogs = useSetRecoilState(dialogsState);
+
+  const router = useRouter();
 
   return (
     <MainLayout>
@@ -67,7 +70,7 @@ const Write = () => {
               if (data.errMsg) return openAlertDialog(data.errMsg);
               else if (data.newAccess) await wordApi.post(payload, data.newAccess, refresh);
               else console.log(data.errMsg);
-            } else openAlertDialog('등록되었습니다.');
+            } else openAlertDialog('등록되었습니다.', () => router.replace('/words/' + title));
           }}
           disabled={!title.length && !definition.length}
         >

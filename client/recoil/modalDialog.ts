@@ -21,9 +21,12 @@ const isOpenModalState = selector({
   },
 });
 
-const alertMessageState = atom({
-  key: 'alertMessageState',
-  default: '',
+const alertContentState = atom({
+  key: 'alertContentState',
+  default: {
+    message: '',
+    callback: (() => {}) as () => void,
+  },
 });
 
 const imageState = atom({
@@ -35,4 +38,4 @@ const imageState = atom({
   },
 });
 
-export { dialogsState, isOpenModalState, alertMessageState, imageState };
+export { dialogsState, isOpenModalState, alertContentState, imageState };
