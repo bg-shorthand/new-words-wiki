@@ -32,7 +32,7 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         {images.length ? (
           <Images images={images} setImages={setImages} />
         ) : (
-          <Paragraph>'아직 등록된 이미지가 없습니다.'</Paragraph>
+          <Paragraph>아직 등록된 이미지가 없습니다.</Paragraph>
         )}
       </Content>
     </MainLayout>

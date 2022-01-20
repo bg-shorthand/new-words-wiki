@@ -52,7 +52,7 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
       />
       <LabelInput
         id="checkSignupPassword"
-        label="이메일 확인"
+        label="비밀번호 확인"
         value={samePassword}
         onChange={(e) => {
           setSamePassword(e.currentTarget.value);
