@@ -1,5 +1,6 @@
 import Heading from '@atoms/heading/Heading';
 import Nav from '@molecules/nav/Nav';
+import Search from '@molecules/search/Search';
 import Link from 'next/link';
 import style from './Header.module.scss';
 
@@ -11,6 +12,7 @@ const Header = () => {
           <a>New Words Wiki</a>
         </Link>
       </Heading>
+      <Search />
       <Nav />
     </header>
   );
