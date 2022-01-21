@@ -7,7 +7,7 @@ interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
   textAlign?: 'left' | 'right' | 'center' | 'justify';
 }
 
-const Heading = ({ level = 1, textAlign = 'justify', ...props }: HeadingProps) => {
+const Heading = ({ level = 1, textAlign = 'center', ...props }: HeadingProps) => {
   switch (level) {
     case 1:
       return <h1 className={style.h1 + ' ' + util['text-align-' + textAlign]} {...props} />;
