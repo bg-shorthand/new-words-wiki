@@ -20,7 +20,7 @@ const NotFound = ({ title }: InferGetServerSidePropsType<typeof getServerSidePro
 
   return (
     <MainLayout>
-      <Content>
+      <Content textAlign="center">
         <Heading level={2}>
           {title}
           <i aria-hidden className="far fa-sad-tear"></i>

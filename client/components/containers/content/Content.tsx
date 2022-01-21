@@ -5,10 +5,11 @@ import util from '@styles/util.module.scss';
 
 interface ContentProps extends HTMLAttributes<HTMLDivElement> {
   fitContent?: boolean;
-  alignSelf?: 'flex-left' | 'flex-right' | 'center';
+  alignSelf?: 'flex-start' | 'flex-end' | 'center';
+  textAlign?: 'left' | 'right' | 'center';
 }
 
-const Content = ({ children, fitContent, alignSelf }: ContentProps) => {
+const Content = ({ children, fitContent, alignSelf, textAlign }: ContentProps) => {
   return (
     <div
       className={
@@ -16,7 +17,9 @@ const Content = ({ children, fitContent, alignSelf }: ContentProps) => {
         ' ' +
         (fitContent ? style.fitContent : style.full) +
         ' ' +
-        util['align-self' + alignSelf]
+        util['align-self-' + alignSelf] +
+        ' ' +
+        util['text-align-' + textAlign]
       }
     >
       {children}

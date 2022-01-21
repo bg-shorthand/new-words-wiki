@@ -6,7 +6,7 @@ import MainLayout from '@templates/mainLayout/MainLayout';
 const Main = () => {
   return (
     <MainLayout>
-      <Content>
+      <Content fitContent alignSelf="center">
         <Heading level={2}>Hello! Here is Main</Heading>
       </Content>
       <Content>

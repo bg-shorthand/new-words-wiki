@@ -76,7 +76,7 @@ const Write = () => {
         <ImageUploader images={images} setImages={setImages} />
       </Content>
 
-      <Content fitContent>
+      <Content fitContent alignSelf="flex-end">
         <Button
           onClick={async (e) => {
             const payload = { title, definition, history, images };
