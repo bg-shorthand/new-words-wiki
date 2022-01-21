@@ -42,7 +42,7 @@ const Search = () => {
         icon="fas fa-search"
         onClick={(e) => {
           e.preventDefault();
-          console.log('search');
+          if (!word) return;
           router.push('/words/' + word);
         }}
       />
