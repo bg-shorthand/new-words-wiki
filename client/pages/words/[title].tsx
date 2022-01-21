@@ -15,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   } else {
     return {
       redirect: {
-        destination: '/words/notFound',
+        destination: '/words/notFound/' + title,
         permanent: false,
       },
     };

@@ -5,23 +5,38 @@ import ImageUploader from '@molecules/imageUploader/ImageUploader';
 import LabelInput from '@molecules/labelInput/LabelInput';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
 import { dialogsState } from '@recoil/modalDialog';
+import { wordState } from '@recoil/word';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import { wordApi } from 'api/word';
 import setToken from 'modules/setToken';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 const Write = () => {
-  const [title, setTitle] = useState('');
-  const [definition, setDefinition] = useState('');
-  const [history, setHistory] = useState('');
+  const [isTitle, setIsTitle] = useState(false);
+  const [isModify, setIsModify] = useState(false);
   const [images, setImages] = useState<string[]>([]);
+
+  const resetWord = useResetRecoilState(wordState);
+  const [word, setWrod] = useRecoilState(wordState);
+  const { title, definition, history } = word;
 
   const openAlertDialog = useOpenAlertDialog();
   const setDialogs = useSetRecoilState(dialogsState);
 
   const router = useRouter();
+
+  useEffect(() => {
+    setWrod((pre) => ({ ...pre, images: [...images] }));
+  }, [images]);
+
+  useEffect(() => {
+    setIsTitle(!!title.length);
+    setIsModify(!!definition.length);
+
+    return () => resetWord();
+  }, []);
 
   return (
     <MainLayout>
@@ -30,8 +45,9 @@ const Write = () => {
           id="title"
           label="신조어"
           value={title}
-          onChange={(e) => setTitle(e.currentTarget.value)}
+          onChange={(e) => setWrod((pre) => ({ ...pre, title: e.currentTarget.value }))}
           validations={[{ isAlert: !title.length, alert: '필수 입력란입니다.' }]}
+          disabled={isTitle}
         />
       </Content>
       <Content>
@@ -41,7 +57,7 @@ const Write = () => {
           cols={10000}
           rows={5}
           value={definition}
-          onChange={(e) => setDefinition(e.currentTarget.value)}
+          onChange={(e) => setWrod((pre) => ({ ...pre, definition: e.currentTarget.value }))}
           validations={[{ isAlert: !definition.length, alert: '필수 입력란입니다.' }]}
         />
       </Content>
@@ -52,7 +68,7 @@ const Write = () => {
           cols={10000}
           rows={10}
           value={history}
-          onChange={(e) => setHistory(e.currentTarget.value)}
+          onChange={(e) => setWrod((pre) => ({ ...pre, history: e.currentTarget.value }))}
         />
       </Content>
       <Content>
@@ -60,22 +76,24 @@ const Write = () => {
       </Content>
 
       <Content fitContent>
-        <Button
-          onClick={async (e) => {
-            const payload = { title, definition, history, images };
-            const { access, refresh } = setToken.get();
-            if (!access || !refresh) return setDialogs((pre) => ({ ...pre, needSignin: true }));
-            const { data } = await wordApi.post(payload, access, refresh);
-            if (!data.success) {
-              if (data.errMsg) return openAlertDialog(data.errMsg);
-              else if (data.newAccess) await wordApi.post(payload, data.newAccess, refresh);
-              else console.log(data.errMsg);
-            } else openAlertDialog('등록되었습니다.', () => router.replace('/words/' + title));
-          }}
-          disabled={!title.length && !definition.length}
-        >
-          등록
-        </Button>
+        {isModify ? (
+          <Button>수정</Button>
+        ) : (
+          <Button
+            onClick={async (e) => {
+              const payload = { title, definition, history, images };
+              const { access, refresh } = setToken.get();
+              if (!access || !refresh) return setDialogs((pre) => ({ ...pre, needSignin: true }));
+              const { data } = await wordApi.post(payload, access, refresh);
+              if (!data.success) {
+                if (data.errMsg) return openAlertDialog(data.errMsg);
+              } else openAlertDialog('등록되었습니다.', () => router.replace('/words/' + title));
+            }}
+            disabled={!title.length || !definition.length}
+          >
+            등록
+          </Button>
+        )}
       </Content>
     </MainLayout>
   );
