@@ -57,6 +57,15 @@
       transition: all 300ms;
     }
 
+    &:focus {
+      &::before {
+        transform: scale(1.1);
+      }
+      &::after {
+        transform: scale(1.1);
+      }
+    }
+
     &:checked {
       &::before {
         background-color: gray;

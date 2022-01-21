@@ -5,8 +5,40 @@
   align-items: center;
   padding: 1em 50px;
 
-  & > form {
-    margin: 0 1.5em;
+  @media screen and (max-width: 1000px) {
+    padding: 1em;
+  }
+
+  & > h1 {
     flex-grow: 1;
+  }
+
+  & > form {
+    margin-left: 1.5em;
+    width: 15em;
+  }
+
+  & > button {
+    display: none;
+  }
+
+  @media screen and (max-width: 1000px) {
+    & > h1 span,
+    & > ul {
+      display: none;
+    }
+
+    & > h1 {
+      flex-grow: 0;
+    }
+
+    & > form {
+      flex-grow: 1;
+      margin: 0 1em;
+    }
+
+    & > button {
+      display: block;
+    }
   }
 }
