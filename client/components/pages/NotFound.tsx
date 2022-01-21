@@ -3,13 +3,17 @@ import Heading from '@atoms/heading/Heading';
 import Paragraph from '@atoms/paragraph/Paragraph';
 import Content from '@containers/content/Content';
 import { getServerSideProps } from '@pages/words/notFound/[title]';
+import { isSigninState } from '@recoil/isSignin';
+import { dialogsState } from '@recoil/modalDialog';
 import { wordState } from '@recoil/word';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const NotFound = ({ title }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const isSignin = useRecoilValue(isSigninState);
+  const setDialogs = useSetRecoilState(dialogsState);
   const setWord = useSetRecoilState(wordState);
 
   const router = useRouter();
@@ -17,7 +21,7 @@ const NotFound = ({ title }: InferGetServerSidePropsType<typeof getServerSidePro
   return (
     <MainLayout>
       <Content>
-        <Heading level={2} textAlign="center">
+        <Heading level={2}>
           {title}
           <i aria-hidden className="far fa-sad-tear"></i>
         </Heading>
@@ -27,8 +31,10 @@ const NotFound = ({ title }: InferGetServerSidePropsType<typeof getServerSidePro
         </Paragraph>
         <Button
           onClick={() => {
-            setWord((pre) => ({ ...pre, title }));
-            router.push('/write');
+            if (isSignin) {
+              setWord((pre) => ({ ...pre, title }));
+              router.push('/write');
+            } else setDialogs((pre) => ({ ...pre, needSignin: true }));
           }}
         >
           등록하기
