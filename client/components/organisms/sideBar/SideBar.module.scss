@@ -1,0 +1,41 @@
+.wrap {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: all 300ms;
+}
+
+.container {
+  position: fixed;
+  top: 5px;
+  right: 0;
+  bottom: 5px;
+  padding: 50px 40px;
+  background-color: white;
+  box-shadow: 0 0 20px gray;
+
+  & > h1 {
+    margin-bottom: 20px;
+  }
+
+  & > ul {
+    flex-flow: column nowrap;
+    align-items: flex-start;
+
+    & > li {
+      margin: 0.6em 0;
+    }
+  }
+
+  & > button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.hide {
+  transform: translateX(110%);
+}

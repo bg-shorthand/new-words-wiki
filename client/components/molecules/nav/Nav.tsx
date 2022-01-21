@@ -24,13 +24,6 @@ const Nav = () => {
         </Link>
       </li>
       <li>
-        <Link href="/community">
-          <a>
-            <i className="far fa-comments"></i> 커뮤니티
-          </a>
-        </Link>
-      </li>
-      <li>
         <Link href="/write">
           <a
             onClick={(e) => {
@@ -41,6 +34,13 @@ const Nav = () => {
             }}
           >
             <i aria-hidden className="far fa-edit"></i> 신조어 등록
+          </a>
+        </Link>
+      </li>
+      <li>
+        <Link href="/community">
+          <a>
+            <i aria-hidden className="far fa-comments"></i> 커뮤니티
           </a>
         </Link>
       </li>

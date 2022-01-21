@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import '../styles/globals.css';
 import ModalDialogs from '@components/pages/ModalDialogs';
 import DefaultLayout from '@templates/defaultLayout/DefaultLayout';
+import SideBar from '@organisms/sideBar/SideBar';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -10,6 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <DefaultLayout>
         <Component {...pageProps} />
       </DefaultLayout>
+      <SideBar />
       <ModalDialogs />
     </RecoilRoot>
   );

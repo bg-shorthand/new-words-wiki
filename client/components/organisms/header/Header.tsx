@@ -6,8 +6,12 @@ import Link from 'next/link';
 import style from './Header.module.scss';
 import logo from '../../../public/logo.png';
 import IconButton from '@atoms/iconButton/IconButton';
+import { useSetRecoilState } from 'recoil';
+import { sideBarState } from '@recoil/sideBar';
 
 const Header = () => {
+  const setSidebar = useSetRecoilState(sideBarState);
+
   return (
     <header className={style.container}>
       <Heading level={1}>
@@ -19,7 +23,7 @@ const Header = () => {
       </Heading>
       <Nav />
       <Search />
-      <IconButton icon="fas fa-bars" />
+      <IconButton icon="fas fa-bars" onClick={() => setSidebar((pre) => !pre)} />
     </header>
   );
 };
