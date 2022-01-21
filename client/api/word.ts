@@ -30,6 +30,25 @@ const wordApi = {
       });
     } else return res;
   },
+  async put(newWord: Word, access: string, refresh: string) {
+    const res = await axios.put(url, newWord, {
+      headers: {
+        access,
+        refresh,
+      },
+    });
+
+    if (res.data.newAccess) {
+      const { keepSignin } = setToken.get();
+      setToken.set(res.data.newAccess, refresh, keepSignin);
+      return await axios.put(url, newWord, {
+        headers: {
+          access: res.data.newAccess,
+          refresh,
+        },
+      });
+    } else return res;
+  },
 };
 
 export { wordApi };

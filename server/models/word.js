@@ -25,7 +25,7 @@ schema.statics.create = async function (payload) {
 schema.statics.delete = function (title) {
   return this.remove({ title });
 };
-schema.statics.update = function (title, payload) {
+schema.statics.updateByTitle = function (title, payload) {
   return this.updateOne({ title }, { ...payload });
 };
 

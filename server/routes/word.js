@@ -30,13 +30,25 @@ router.post('/', verifyToken, async (req, res) => {
   try {
     const word = req.body;
     const newWord = await Word.create(word);
-    res.send(generateResponse.success({ success: true, data: newWord }));
+    res.send(generateResponse.success(newWord));
   } catch (e) {
     console.log(e);
     if (e.code === 11000) {
       const errMsg = '이미 등록된 신조어입니다.';
       res.send(generateResponse.fail(errMsg));
     } else res.send(generateResponse.fail(e));
+  }
+});
+
+router.put('/', verifyToken, async (req, res) => {
+  try {
+    const payload = req.body;
+    const { title } = payload;
+    const data = await Word.updateByTitle(title, payload);
+    res.send(generateResponse.success(data));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(e));
   }
 });
 
