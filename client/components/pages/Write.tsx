@@ -19,7 +19,7 @@ const Write = () => {
   const [images, setImages] = useState<string[]>([]);
 
   const resetWord = useResetRecoilState(wordState);
-  const [word, setWrod] = useRecoilState(wordState);
+  const [word, setWord] = useRecoilState(wordState);
   const { title, definition, history } = word;
 
   const openAlertDialog = useOpenAlertDialog();
@@ -28,12 +28,13 @@ const Write = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setWrod((pre) => ({ ...pre, images: [...images] }));
+    setWord((pre) => ({ ...pre, images: [...pre.images, ...images] }));
   }, [images]);
 
   useEffect(() => {
     setIsTitle(!!title.length);
     setIsModify(!!definition.length);
+    setImages((pre) => [...pre, ...word.images]);
 
     return () => resetWord();
   }, []);
@@ -45,7 +46,7 @@ const Write = () => {
           id="title"
           label="신조어"
           value={title}
-          onChange={(e) => setWrod((pre) => ({ ...pre, title: e.currentTarget.value }))}
+          onChange={(e) => setWord((pre) => ({ ...pre, title: e.currentTarget.value }))}
           validations={[{ isAlert: !title.length, alert: '필수 입력란입니다.' }]}
           disabled={isTitle}
         />
@@ -57,7 +58,7 @@ const Write = () => {
           cols={10000}
           rows={5}
           value={definition}
-          onChange={(e) => setWrod((pre) => ({ ...pre, definition: e.currentTarget.value }))}
+          onChange={(e) => setWord((pre) => ({ ...pre, definition: e.currentTarget.value }))}
           validations={[{ isAlert: !definition.length, alert: '필수 입력란입니다.' }]}
         />
       </Content>
@@ -68,7 +69,7 @@ const Write = () => {
           cols={10000}
           rows={10}
           value={history}
-          onChange={(e) => setWrod((pre) => ({ ...pre, history: e.currentTarget.value }))}
+          onChange={(e) => setWord((pre) => ({ ...pre, history: e.currentTarget.value }))}
         />
       </Content>
       <Content>
@@ -76,24 +77,24 @@ const Write = () => {
       </Content>
 
       <Content fitContent>
-        {isModify ? (
-          <Button>수정</Button>
-        ) : (
-          <Button
-            onClick={async (e) => {
-              const payload = { title, definition, history, images };
-              const { access, refresh } = setToken.get();
-              if (!access || !refresh) return setDialogs((pre) => ({ ...pre, needSignin: true }));
-              const { data } = await wordApi.post(payload, access, refresh);
-              if (!data.success) {
-                if (data.errMsg) return openAlertDialog(data.errMsg);
-              } else openAlertDialog('등록되었습니다.', () => router.replace('/words/' + title));
-            }}
-            disabled={!title.length || !definition.length}
-          >
-            등록
-          </Button>
-        )}
+        <Button
+          onClick={async (e) => {
+            const payload = { title, definition, history, images };
+            const { access, refresh } = setToken.get();
+            if (!access || !refresh) return setDialogs((pre) => ({ ...pre, needSignin: true }));
+            const api = isModify ? wordApi.put : wordApi.post;
+            const { data } = await api(payload, access, refresh);
+            if (!data.success) {
+              if (data.errMsg) return openAlertDialog(data.errMsg);
+            } else
+              openAlertDialog(isModify ? '수정되었습니다.' : '등록되었습니다.', () =>
+                router.replace('/words/' + title),
+              );
+          }}
+          disabled={!title.length || !definition.length}
+        >
+          {isModify ? '수정' : '등록'}
+        </Button>
       </Content>
     </MainLayout>
   );
