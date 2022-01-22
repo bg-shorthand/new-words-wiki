@@ -3,6 +3,7 @@ type Dialogs = 'signin' | 'signup';
 interface User {
   email: string;
   nickname: string;
+  admin: boolean;
 }
 
 interface NewUser extends User {

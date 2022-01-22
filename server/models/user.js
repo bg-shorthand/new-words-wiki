@@ -9,6 +9,7 @@ const schema = new mongoose.Schema(
     password: { type: String },
     salt: { type: String },
     refreshToken: { type: String },
+    admin: { type: Boolean },
   },
   {
     versionKey: false,
@@ -33,7 +34,7 @@ schema.statics.create = async function (payload) {
   const key = await crypto
     .pbkdf2Sync(password, salt, constants.cryptoRepeat, 64, 'sha512')
     .toString('base64');
-  const newUser = { ...payload, password: key, salt };
+  const newUser = { ...payload, password: key, salt, admin: false };
   const user = new this(newUser);
   return user.save();
 };
