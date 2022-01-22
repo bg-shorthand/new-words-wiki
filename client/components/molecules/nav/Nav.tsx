@@ -1,15 +1,13 @@
 import Button from '@atoms/button/Button';
-import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
-import { myInfoState } from '@recoil/myInfo';
 import useSignout from '@hooks/useSignout';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Nav.module.scss';
 import Link from 'next/link';
+import { isSigninState } from '@recoil/isSignin';
 
 const Nav = () => {
   const isSignin = useRecoilValue(isSigninState);
-  const myInfo = useRecoilValue(myInfoState);
   const setDialogs = useSetRecoilState(dialogsState);
 
   const { signout } = useSignout();
@@ -47,7 +45,7 @@ const Nav = () => {
       {isSignin ? (
         <>
           <li>
-            <i aria-hidden className="far fa-user"></i> {myInfo.nickname}
+            <i aria-hidden className="far fa-user"></i> {isSignin?.nickname}
           </li>
           <li>
             <Button size="s" onClick={() => signout()}>
