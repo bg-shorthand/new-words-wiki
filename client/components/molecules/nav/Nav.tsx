@@ -19,7 +19,7 @@ const Nav = () => {
       <li>
         <Link href="/guide">
           <a>
-            <i className="far fa-file-alt"></i> 가이드
+            <i aria-hidden className="far fa-file-alt"></i> 가이드
           </a>
         </Link>
       </li>
