@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema(
   {
     title: { type: String },
-    reason: { type: String },
   },
   {
     versionKey: false,
