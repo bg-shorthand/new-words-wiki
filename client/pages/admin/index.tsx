@@ -1,16 +1,19 @@
-import isSignin from 'modules/isSignin';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import Admin from '@components/pages/Admin';
+import reportApi from 'api/report';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-const AdminPage = () => {
-  const router = useRouter();
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await reportApi.get();
 
-  useEffect(() => {
-    const user = isSignin();
-    if (!user || !user.admin) router.replace('/');
-  }, []);
+  return {
+    props: {
+      data: data.data,
+    },
+  };
+};
 
-  return <h1>Here is Admin Page</h1>;
+const AdminPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  return Admin({ data });
 };
 
 export default AdminPage;
