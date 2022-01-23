@@ -37,3 +37,4 @@ app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 app.use('/user', require('./routes/user'));
 app.use('/emailAuth', require('./routes/emailAuth'));
 app.use('/word', require('./routes/word'));
+app.use('/report', require('./routes/report'));
