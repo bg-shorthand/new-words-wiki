@@ -16,8 +16,8 @@ schema.statics.create = async function (payload) {
   const report = new this(payload);
   return report.save();
 };
-schema.statics.deleteById = function (id) {
-  return this.deleteOne({ _id: id });
+schema.statics.deleteByTitle = function (title) {
+  return this.deleteOne({ title });
 };
 
 module.exports = mongoose.model('Report', schema);
