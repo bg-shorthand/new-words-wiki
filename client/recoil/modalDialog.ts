@@ -9,6 +9,7 @@ const dialogsState = atom({
     alert: false,
     image: false,
     needSignin: false,
+    report: false,
   },
 });
 

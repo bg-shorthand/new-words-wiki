@@ -60,7 +60,15 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         >
           수정
         </Button>
-        <Button size="s">신고</Button>
+        <Button
+          size="s"
+          onClick={() => {
+            if (isSignin) setDialogs((pre) => ({ ...pre, report: true }));
+            else setDialogs((pre) => ({ ...pre, needSignin: true }));
+          }}
+        >
+          신고
+        </Button>
       </Content>
     </MainLayout>
   );
