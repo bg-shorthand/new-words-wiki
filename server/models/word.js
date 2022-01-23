@@ -23,7 +23,7 @@ schema.statics.create = async function (payload) {
   return word.save();
 };
 schema.statics.delete = function (title) {
-  return this.remove({ title });
+  return this.deleteOne({ title });
 };
 schema.statics.updateByTitle = function (title, payload) {
   return this.updateOne({ title }, { ...payload });

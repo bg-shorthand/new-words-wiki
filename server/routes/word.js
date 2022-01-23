@@ -52,4 +52,14 @@ router.put('/', verifyToken, async (req, res) => {
   }
 });
 
+router.delete('/', verifyToken, async (req, res) => {
+  try {
+    const { title } = req.query;
+    await Word.delete(title);
+    res.send(generateResponse.success());
+  } catch (e) {
+    res.send(generateResponse.fail(e));
+  }
+});
+
 module.exports = router;
