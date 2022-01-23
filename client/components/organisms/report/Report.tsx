@@ -40,6 +40,7 @@ const Report = () => {
         }}
         validations={[{ isAlert: !isSame, alert: `'${title} 신고'를 입력해주세요` }]}
       />
+      <br />
       <Button
         disabled={!isSame}
         onClick={async () => {

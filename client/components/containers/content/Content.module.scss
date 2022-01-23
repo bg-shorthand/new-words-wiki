@@ -5,6 +5,7 @@
   background-color: white;
   padding: 20px 30px;
   line-height: 1.6em;
+  display: flex;
 }
 
 .full {
@@ -13,4 +14,16 @@
 
 .fitContent {
   width: fit-content;
+}
+
+.column {
+  flex-flow: column nowrap;
+}
+
+.row {
+  flex-flow: row nowrap;
+
+  * + *:not(*:last-child) {
+    margin-left: 1em;
+  }
 }

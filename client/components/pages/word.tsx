@@ -47,7 +47,7 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
           <Paragraph>아직 등록된 이미지가 없습니다.</Paragraph>
         )}
       </Content>
-      <Content fitContent alignSelf="flex-end">
+      <Content fitContent alignSelf="flex-end" flexFlow="row">
         <Button
           size="s"
           onClick={() => {

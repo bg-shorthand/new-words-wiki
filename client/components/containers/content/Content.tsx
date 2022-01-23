@@ -7,9 +7,16 @@ interface ContentProps extends HTMLAttributes<HTMLDivElement> {
   fitContent?: boolean;
   alignSelf?: 'flex-start' | 'flex-end' | 'center';
   textAlign?: 'left' | 'right' | 'center';
+  flexFlow?: 'column' | 'row';
 }
 
-const Content = ({ children, fitContent, alignSelf, textAlign }: ContentProps) => {
+const Content = ({
+  children,
+  fitContent,
+  alignSelf,
+  textAlign,
+  flexFlow = 'column',
+}: ContentProps) => {
   return (
     <div
       className={
@@ -19,7 +26,9 @@ const Content = ({ children, fitContent, alignSelf, textAlign }: ContentProps) =
         ' ' +
         util['align-self-' + alignSelf] +
         ' ' +
-        util['text-align-' + textAlign]
+        util['text-align-' + textAlign] +
+        ' ' +
+        style[flexFlow]
       }
     >
       {children}

@@ -20,15 +20,17 @@ const NotFound = ({ title }: InferGetServerSidePropsType<typeof getServerSidePro
 
   return (
     <MainLayout>
-      <Content textAlign="center">
-        <Heading level={2}>
-          {title}
-          <i aria-hidden className="far fa-sad-tear"></i>
-        </Heading>
+      <Content fitContent>
+        <Heading level={2}>{title}</Heading>
+      </Content>
+      <Content>
         <Paragraph textAlign="center">
-          등록된 신조어가 없습니다. <br />
+          등록된 신조어가 없습니다. <i aria-hidden className="far fa-sad-tear"></i>
+          <br />
           등록하시겠습니까?
         </Paragraph>
+      </Content>
+      <Content fitContent alignSelf="flex-end">
         <Button
           onClick={() => {
             if (isSignin) {
