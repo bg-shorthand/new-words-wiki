@@ -17,7 +17,7 @@ const Report = () => {
   const setAlert = useSetRecoilState(alertContentState);
 
   const router = useRouter();
-  const title = router.asPath.split('/')[2];
+  const title = decodeURI(router.asPath.split('/')[2]);
 
   return (
     <>
