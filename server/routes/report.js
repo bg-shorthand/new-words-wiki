@@ -19,7 +19,8 @@ router.post('/', verifyToken, async (req, res) => {
     res.send(generateResponse.success(newReport));
   } catch (e) {
     console.log(e);
-    res.send(generateResponse.fail(e));
+    if (e.code === 11000) res.send(generateResponse.success());
+    else res.send(generateResponse.fail(e));
   }
 });
 
