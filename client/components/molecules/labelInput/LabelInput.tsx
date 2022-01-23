@@ -10,10 +10,20 @@ interface LabelInputProps extends InputHTMLAttributes<HTMLInputElement> {
   validations?: { isAlert: boolean; alert: string }[];
 }
 
-const LabelInput = ({ id, label, validations, disabled, type, ...props }: LabelInputProps) => {
+const LabelInput = ({
+  id,
+  label,
+  validations,
+  disabled,
+  type,
+  hidden,
+  ...props
+}: LabelInputProps) => {
   return (
     <LabelInputContainer disabled={disabled} type={type}>
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id} hidden={hidden}>
+        {label}
+      </Label>
       <Input id={id} disabled={disabled} type={type} {...props} />
       {validations?.map(({ isAlert, alert }) => {
         return isAlert && <Alert key={alert}>{alert}</Alert>;
