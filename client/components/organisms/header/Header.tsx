@@ -1,10 +1,10 @@
 import Heading from '@atoms/heading/Heading';
 import Nav from '@molecules/nav/Nav';
 import Search from '@molecules/search/Search';
+import logo from '@public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import style from './Header.module.scss';
-import logo from '../../../public/logo.png';
 import IconButton from '@atoms/iconButton/IconButton';
 import { useSetRecoilState } from 'recoil';
 import { sideBarState } from '@recoil/sideBar';

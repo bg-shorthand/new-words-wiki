@@ -2,10 +2,10 @@ import Heading from '@atoms/heading/Heading';
 import IconButton from '@atoms/iconButton/IconButton';
 import Nav from '@molecules/nav/Nav';
 import { sideBarState } from '@recoil/sideBar';
+import logo from '@public/logo.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
-import logo from '../../../public/logo.png';
 import style from './SideBar.module.scss';
 
 const SideBar = () => {
