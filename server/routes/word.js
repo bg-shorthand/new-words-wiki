@@ -1,7 +1,11 @@
 const router = require('express').Router();
 const Word = require('../models/word');
+const User = require('../models/user');
 const generateResponse = require('../module/generateResponse');
 const verifyToken = require('../middleware/verifyToken');
+const jwt = require('jsonwebtoken');
+const filterUserInfo = require('../module/filterUserInfo');
+const constants = require('../const/const');
 
 router.get('/', async (req, res) => {
   try {
@@ -30,7 +34,18 @@ router.post('/', verifyToken, async (req, res) => {
   try {
     const word = req.body;
     const newWord = await Word.create(word);
-    res.send(generateResponse.success(newWord));
+
+    const { access } = req.headers;
+    const userInfo = jwt.decode(access);
+    const { email, score } = userInfo;
+    await User.updateScoreByEmail(email, score + 1);
+    const user = await User.findOneByEmail(email);
+    const userInfoWithoutSecret = filterUserInfo(user._doc);
+    const accessToken = jwt.sign({ ...userInfoWithoutSecret }, process.env.JWT_SECRET, {
+      expiresIn: constants.accessTokenExpiresIn,
+    });
+
+    res.send(generateResponse.success({ newWord, accessToken }));
   } catch (e) {
     console.log(e);
     if (e.code === 11000) {
@@ -44,8 +59,19 @@ router.put('/', verifyToken, async (req, res) => {
   try {
     const payload = req.body;
     const { title } = payload;
-    const data = await Word.updateByTitle(title, payload);
-    res.send(generateResponse.success(data));
+    await Word.updateByTitle(title, payload);
+
+    const { access } = req.headers;
+    const userInfo = jwt.decode(access);
+    const { email, score } = userInfo;
+    await User.updateScoreByEmail(email, score + 1);
+    const user = await User.findOneByEmail(email);
+    const userInfoWithoutSecret = filterUserInfo(user._doc);
+    const accessToken = jwt.sign({ ...userInfoWithoutSecret }, process.env.JWT_SECRET, {
+      expiresIn: constants.accessTokenExpiresIn,
+    });
+
+    res.send(generateResponse.success({ accessToken }));
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));
