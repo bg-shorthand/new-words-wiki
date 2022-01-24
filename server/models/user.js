@@ -10,6 +10,7 @@ const schema = new mongoose.Schema(
     salt: { type: String },
     refreshToken: { type: String },
     admin: { type: Boolean },
+    score: { type: Number },
   },
   {
     versionKey: false,
@@ -34,7 +35,7 @@ schema.statics.create = async function (payload) {
   const key = await crypto
     .pbkdf2Sync(password, salt, constants.cryptoRepeat, 64, 'sha512')
     .toString('base64');
-  const newUser = { ...payload, password: key, salt, admin: false };
+  const newUser = { ...payload, password: key, salt, admin: false, score: 0 };
   const user = new this(newUser);
   return user.save();
 };
@@ -43,6 +44,9 @@ schema.statics.deleteByEmail = function (email) {
 };
 schema.statics.updateTokenById = function (id, refreshToken) {
   return this.updateOne({ _id: id }, { refreshToken });
+};
+schema.statics.updateScoreByEmail = function (email, score) {
+  return this.updateOne({ email }, { score });
 };
 schema.statics.updatePassword = function (email, password) {
   return this.updateOne({ email }, { password });
