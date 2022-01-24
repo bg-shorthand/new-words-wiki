@@ -80,16 +80,18 @@ const Write = () => {
         <Button
           onClick={async (e) => {
             const payload = { title, definition, history, images };
-            const { access, refresh } = setToken.get();
+            const { access, refresh, keepSignin } = setToken.get();
             if (!access || !refresh) return setDialogs((pre) => ({ ...pre, needSignin: true }));
             const api = isModify ? wordApi.put : wordApi.post;
             const { data } = await api(payload, access, refresh);
             if (!data.success) {
               if (data.errMsg) return openAlertDialog(data.errMsg);
-            } else
+            } else {
+              if (data.data.accessToken) setToken.set(data.data.accessToken, refresh, keepSignin);
               openAlertDialog(isModify ? '수정되었습니다.' : '등록되었습니다.', () =>
                 router.replace('/words/' + title),
               );
+            }
           }}
           disabled={!title.length || !definition.length}
         >
