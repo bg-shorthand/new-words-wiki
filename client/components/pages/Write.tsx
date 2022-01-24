@@ -4,10 +4,12 @@ import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
 import ImageUploader from '@molecules/imageUploader/ImageUploader';
 import LabelInput from '@molecules/labelInput/LabelInput';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
+import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
 import { wordState } from '@recoil/word';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import { wordApi } from 'api/word';
+import isSignin from 'modules/isSignin';
 import setToken from 'modules/setToken';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -21,6 +23,7 @@ const Write = () => {
   const resetWord = useResetRecoilState(wordState);
   const [word, setWord] = useRecoilState(wordState);
   const { title, definition, history } = word;
+  const setIsSignin = useSetRecoilState(isSigninState);
 
   const openAlertDialog = useOpenAlertDialog();
   const setDialogs = useSetRecoilState(dialogsState);
@@ -87,7 +90,10 @@ const Write = () => {
             if (!data.success) {
               if (data.errMsg) return openAlertDialog(data.errMsg);
             } else {
-              if (data.data.accessToken) setToken.set(data.data.accessToken, refresh, keepSignin);
+              if (data.data.accessToken) {
+                setToken.set(data.data.accessToken, refresh, keepSignin);
+                setIsSignin(isSignin());
+              }
               openAlertDialog(isModify ? '수정되었습니다.' : '등록되었습니다.', () =>
                 router.replace('/words/' + title),
               );
