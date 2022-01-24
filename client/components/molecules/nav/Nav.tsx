@@ -5,6 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Nav.module.scss';
 import Link from 'next/link';
 import { isSigninState } from '@recoil/isSignin';
+import NickName from '@atoms/nickname/NickName';
 
 const Nav = () => {
   const isSignin = useRecoilValue(isSigninState);
@@ -45,7 +46,7 @@ const Nav = () => {
       {isSignin ? (
         <>
           <li>
-            <i aria-hidden className="far fa-user"></i> {isSignin?.nickname}
+            <i aria-hidden className="far fa-user"></i> <NickName />
           </li>
           <li>
             <Button size="s" onClick={() => signout()}>
