@@ -5,7 +5,8 @@ const schema = new mongoose.Schema(
     title: { type: String, required: true, unique: true },
     definition: { type: String },
     history: { type: String },
-    images: { type: Object },
+    images: { type: Array },
+    paticipant: { type: Array },
   },
   {
     versionKey: false,

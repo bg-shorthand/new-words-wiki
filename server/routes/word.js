@@ -33,11 +33,9 @@ router.get('/all', async (req, res) => {
 router.post('/', verifyToken, async (req, res) => {
   try {
     const word = req.body;
-    const newWord = await Word.create(word);
-
     const { access } = req.headers;
-    const userInfo = jwt.decode(access);
-    const { email, score } = userInfo;
+    const { email, score, nickname } = jwt.decode(access);
+    await Word.create({ ...word, paticipant: [nickname] });
     await User.updateScoreByEmail(email, score + 1);
     const user = await User.findOneByEmail(email);
     const userInfoWithoutSecret = filterUserInfo(user._doc);
@@ -45,7 +43,7 @@ router.post('/', verifyToken, async (req, res) => {
       expiresIn: constants.accessTokenExpiresIn,
     });
 
-    res.send(generateResponse.success({ newWord, accessToken }));
+    res.send(generateResponse.success({ accessToken }));
   } catch (e) {
     console.log(e);
     if (e.code === 11000) {
@@ -57,13 +55,17 @@ router.post('/', verifyToken, async (req, res) => {
 
 router.put('/', verifyToken, async (req, res) => {
   try {
-    const payload = req.body;
-    const { title } = payload;
-    await Word.updateByTitle(title, payload);
-
+    const word = req.body;
+    const { title } = word;
     const { access } = req.headers;
-    const userInfo = jwt.decode(access);
-    const { email, score } = userInfo;
+    const { email, score, nickname } = jwt.decode(access);
+    const { paticipant } = await Word.findOneByTitle(title);
+    await Word.updateByTitle(title, {
+      ...word,
+      paticipant: [nickname, ...paticipant].filter(
+        (nickname, index, array) => array.indexOf(nickname) === index,
+      ),
+    });
     await User.updateScoreByEmail(email, score + 1);
     const user = await User.findOneByEmail(email);
     const userInfoWithoutSecret = filterUserInfo(user._doc);
