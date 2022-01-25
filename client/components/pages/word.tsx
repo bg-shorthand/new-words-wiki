@@ -3,11 +3,13 @@ import Heading from '@atoms/heading/Heading';
 import Paragraph from '@atoms/paragraph/Paragraph';
 import Content from '@containers/content/Content';
 import Images from '@molecules/images/Images';
+import Paticipants from '@molecules/paticipants/Paticipants';
 import { getServerSideProps } from '@pages/words/[title]';
 import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
 import { wordState } from '@recoil/word';
 import MainLayout from '@templates/mainLayout/MainLayout';
+import userApi from 'api/userApi';
 import { InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -15,6 +17,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [images, setImages] = useState<string[]>([]);
+  const [paticipants, setPaticipants] = useState([]);
 
   const isSignin = useRecoilValue(isSigninState);
   const setWord = useSetRecoilState(wordState);
@@ -23,7 +26,14 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
   const router = useRouter();
 
   useEffect(() => {
+    const setPaticipantsAsync = async () => {
+      const { paticipant } = data;
+      const { data: paticipantData } = await userApi.getScores(paticipant);
+      setPaticipants(paticipantData.data);
+    };
+
     setImages(data.images);
+    setPaticipantsAsync();
   }, []);
 
   return (
@@ -70,6 +80,7 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
           신고
         </Button>
       </Content>
+      <Paticipants paticipants={paticipants} />
     </MainLayout>
   );
 };
