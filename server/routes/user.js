@@ -57,6 +57,22 @@ router.get('/nickname/:nickname', async (req, res) => {
   }
 });
 
+router.get('/scores', async (req, res) => {
+  try {
+    const nicknames = req.query.nicknames.split(',');
+    const scores = [];
+    for (let i = 0; i < nicknames.length; i++) {
+      const user = await User.findOneByNickname(nicknames[i]);
+      const { score } = user;
+      scores.push({ nickname: nicknames[i], score });
+    }
+    res.send(generateResponse.success(scores));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(e));
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const newUser = req.body;

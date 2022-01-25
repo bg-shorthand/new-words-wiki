@@ -16,6 +16,9 @@ const userApi = {
   async updatePassword(email: string, newPassword: string) {
     return await axios.put(url + '/updatePassword', { email, newPassword });
   },
+  async getScores(nicknames: string[]) {
+    return await axios.get(url + '/scores/?nicknames=' + nicknames.join(','));
+  },
 };
 
 export default userApi;
