@@ -32,4 +32,10 @@
       display: none;
     }
   }
+
+  & > section {
+    position: absolute;
+    top: 80px;
+    left: 100%;
+  }
 }
