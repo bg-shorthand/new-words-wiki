@@ -7,6 +7,7 @@ const schema = new mongoose.Schema(
     history: { type: String },
     images: { type: Array },
     paticipant: { type: Array },
+    search: { type: Number },
   },
   {
     versionKey: false,

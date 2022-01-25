@@ -12,8 +12,11 @@ router.get('/', async (req, res) => {
     const { title } = req.query;
 
     const word = await Word.findOneByTitle(title);
-    if (word) res.send(generateResponse.success(word));
-    else res.send(generateResponse.fail('검색 결과가 없습니다.'));
+    if (word) {
+      if (word.search) await Word.updateByTitle(title, { search: word.search + 1 });
+      else await Word.updateByTitle(title, { search: 1 });
+      res.send(generateResponse.success(word));
+    } else res.send(generateResponse.fail('검색 결과가 없습니다.'));
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));
@@ -35,7 +38,7 @@ router.post('/', verifyToken, async (req, res) => {
     const word = req.body;
     const { access } = req.headers;
     const { email, score, nickname } = jwt.decode(access);
-    await Word.create({ ...word, paticipant: [nickname] });
+    await Word.create({ ...word, paticipant: [nickname], search: 0 });
     await User.updateScoreByEmail(email, score + 1);
     const user = await User.findOneByEmail(email);
     const userInfoWithoutSecret = filterUserInfo(user._doc);
