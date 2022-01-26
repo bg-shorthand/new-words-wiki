@@ -33,6 +33,30 @@ router.get('/all', async (req, res) => {
   }
 });
 
+router.get('/sideMenuData', async (req, res) => {
+  try {
+    const words = await Word.findAll();
+    const users = await User.findAll();
+
+    let topWords = words.sort((a, b) => b.search - a.search);
+    if (topWords.length > 5) topWords.length = 5;
+    topWords = topWords.map((word) => word.title);
+
+    let recentWords = words.sort((a, b) => b.time - a.time);
+    if (recentWords.length > 5) recentWords.length = 5;
+    recentWords = recentWords.map((word) => word.title);
+
+    let topUsers = users.sort((a, b) => b.score - a.score);
+    if (topUsers.length > 5) topUsers.lenght = 5;
+    topUsers = topUsers.map((user) => user.nickname);
+
+    res.send(generateResponse.success({ topWords, recentWords, topUsers }));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(e));
+  }
+});
+
 router.post('/', verifyToken, async (req, res) => {
   try {
     const word = req.body;
