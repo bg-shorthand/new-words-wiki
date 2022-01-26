@@ -8,6 +8,7 @@ import style from './Header.module.scss';
 import IconButton from '@atoms/iconButton/IconButton';
 import { useSetRecoilState } from 'recoil';
 import { sideBarState } from '@recoil/sideBar';
+import Sign from '@molecules/sign/Sign';
 
 const Header = () => {
   const setSidebar = useSetRecoilState(sideBarState);
@@ -22,6 +23,7 @@ const Header = () => {
         </Link>
       </Heading>
       <Nav />
+      <Sign />
       <Search />
       <IconButton icon="fas fa-bars" onClick={() => setSidebar((pre) => !pre)} />
     </header>
