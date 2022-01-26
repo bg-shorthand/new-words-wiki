@@ -38,7 +38,7 @@ router.post('/', verifyToken, async (req, res) => {
     const word = req.body;
     const { access } = req.headers;
     const { email, score, nickname } = jwt.decode(access);
-    await Word.create({ ...word, paticipant: [nickname], search: 0 });
+    await Word.create({ ...word, paticipant: [nickname], search: 0, time: new Date().getTime() });
     await User.updateScoreByEmail(email, score + 1);
     const user = await User.findOneByEmail(email);
     const userInfoWithoutSecret = filterUserInfo(user._doc);
