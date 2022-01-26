@@ -1,6 +1,10 @@
 @import '@styles/var.scss';
 
 .container {
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+
   @include slideInBox(absolute);
   width: 200px;
 
