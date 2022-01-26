@@ -1,4 +1,4 @@
-import SideMenu from '@containers/sideMenu/SideMenu';
+import SideMenu from '@organisms/sideMenu/SideMenu';
 import { HTMLAttributes } from 'react';
 import style from './MainLayout.module.scss';
 

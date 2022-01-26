@@ -1,0 +1,17 @@
+@import '@styles/var.scss';
+
+.container {
+  @include slideInBox(absolute);
+  width: 200px;
+
+  & > div {
+    margin-bottom: 20px;
+
+    & > article {
+      & > h1 {
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+    }
+  }
+}
