@@ -1,4 +1,5 @@
-import Content from '@containers/content/Content';
+import Heading from '@atoms/heading/Heading';
+import Article from '@containers/article/Article';
 import { wordApi } from 'api/word';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -22,44 +23,38 @@ const SideMenu = () => {
 
   return topWords.length ? (
     <section className={style.container}>
-      <Content>
-        <article>
-          <h1>인기 신조어</h1>
-          <ul>
-            {topWords.map((word, i) => {
-              return (
-                <li>
-                  <Link href={'/words/' + word}>{i + 1 + ': ' + word}</Link>
-                </li>
-              );
-            })}
-          </ul>
-        </article>
-      </Content>
-      <Content>
-        <article>
-          <h1>최근 등록</h1>
-          <ul>
-            {recentWords.map((word) => {
-              return (
-                <li>
-                  <Link href={'/words/' + word}>{word}</Link>
-                </li>
-              );
-            })}
-          </ul>
-        </article>
-      </Content>
-      <Content>
-        <article>
-          <h1>사용자 랭킹</h1>
-          <ul>
-            {topUsers.map((user, i) => {
-              return <li>{i + 1 + ': ' + user}</li>;
-            })}
-          </ul>
-        </article>
-      </Content>
+      <Article>
+        <Heading level={1}>인기 신조어</Heading>
+        <ul>
+          {topWords.map((word, i) => {
+            return (
+              <li>
+                <Link href={'/words/' + word}>{i + 1 + ': ' + word}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      </Article>
+      <Article>
+        <Heading level={1}>최근 등록</Heading>
+        <ul>
+          {recentWords.map((word) => {
+            return (
+              <li>
+                <Link href={'/words/' + word}>{word}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      </Article>
+      <Article>
+        <Heading level={1}>사용자 랭킹</Heading>
+        <ul>
+          {topUsers.map((user, i) => {
+            return <li>{i + 1 + ': ' + user}</li>;
+          })}
+        </ul>
+      </Article>
     </section>
   ) : null;
 };
