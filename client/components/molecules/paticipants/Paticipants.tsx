@@ -10,7 +10,9 @@ interface PaticipantsProps {
 const Paticipants = ({ paticipants }: PaticipantsProps) => {
   return (
     <Article>
-      <Heading level={1}>참여자</Heading>
+      <Heading level={1}>
+        <i aria-hidden className="fas fa-user-tag"></i> 참여자
+      </Heading>
       <ul>
         {paticipants.map(({ nickname, score }) => {
           return (

@@ -24,23 +24,27 @@ const SideMenu = () => {
   return topWords.length ? (
     <section className={style.container}>
       <Article>
-        <Heading level={1}>인기 신조어</Heading>
+        <Heading level={1}>
+          <i aria-hidden className="fas fa-fire-alt"></i> 인기 검색
+        </Heading>
         <ul>
           {topWords.map((word, i) => {
             return (
-              <li>
-                <Link href={'/words/' + word}>{i + 1 + ': ' + word}</Link>
+              <li key={word}>
+                <Link href={'/words/' + word}>{i + 1 + '. ' + word}</Link>
               </li>
             );
           })}
         </ul>
       </Article>
       <Article>
-        <Heading level={1}>최근 등록</Heading>
+        <Heading level={1}>
+          <i aria-hidden className="far fa-star"></i> 최근 등록
+        </Heading>
         <ul>
           {recentWords.map((word) => {
             return (
-              <li>
+              <li key={word}>
                 <Link href={'/words/' + word}>{word}</Link>
               </li>
             );
@@ -48,10 +52,12 @@ const SideMenu = () => {
         </ul>
       </Article>
       <Article>
-        <Heading level={1}>사용자 랭킹</Heading>
+        <Heading level={1}>
+          <i aria-hidden className="fas fa-graduation-cap"></i> 유저 랭킹
+        </Heading>
         <ul>
           {topUsers.map((user, i) => {
-            return <li>{i + 1 + ': ' + user}</li>;
+            return <li key={user}>{i + 1 + '. ' + user}</li>;
           })}
         </ul>
       </Article>
