@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRecoilState } from 'recoil';
 import style from './SideBar.module.scss';
+import Sign from '@molecules/sign/Sign';
 
 const SideBar = () => {
   const [sideBar, setSideBar] = useRecoilState(sideBarState);
@@ -34,6 +35,7 @@ const SideBar = () => {
           </Link>
         </Heading>
         <Nav />
+        <Sign />
         <IconButton icon="fas fa-times" />
       </section>
     </div>
