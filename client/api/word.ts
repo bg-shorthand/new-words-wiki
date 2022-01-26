@@ -11,6 +11,9 @@ const wordApi = {
   async getAll() {
     return await axios.get(url + '/all');
   },
+  async getSideMenuData() {
+    return await axios.get(url + '/sideMenuData');
+  },
   async post(newWord: Word, access: string, refresh: string) {
     const res = await axios.post(url, newWord, {
       headers: {
