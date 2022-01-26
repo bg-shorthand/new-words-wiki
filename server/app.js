@@ -38,3 +38,4 @@ app.use('/user', require('./routes/user'));
 app.use('/emailAuth', require('./routes/emailAuth'));
 app.use('/word', require('./routes/word'));
 app.use('/report', require('./routes/report'));
+app.use('/community', require('./routes/community'));
