@@ -18,4 +18,20 @@ interface Word {
   images?: string[];
 }
 
-export type { Dialogs, User, NewUser, Word };
+interface Comment {
+  author: string;
+  content: string;
+  time: number;
+}
+
+interface Post {
+  title: string;
+  content: string;
+  time: number;
+  author: string;
+  number: number;
+  comment: Comment;
+  _id: string;
+}
+
+export type { Dialogs, User, NewUser, Word, Comment, Post };
