@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
+  & > li {
+    margin: 0 2px;
+
+    & > a {
+      padding: 0.2em;
+
+      &:hover {
+        border-bottom: 1px solid black;
+      }
+    }
+  }
+}
