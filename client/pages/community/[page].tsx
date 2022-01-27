@@ -7,12 +7,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { data } = await communityApi.get(+page);
   const { posts, allLength } = data.data;
 
-  return {
-    props: {
-      posts,
-      allLength,
-    },
-  };
+  if (posts.length) {
+    return {
+      props: {
+        posts,
+        allLength,
+      },
+    };
+  } else
+    return {
+      redirect: {
+        destination: '/community/1',
+        permanent: false,
+      },
+    };
 };
 
 const CommunityPage = ({

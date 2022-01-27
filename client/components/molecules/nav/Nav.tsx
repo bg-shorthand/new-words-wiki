@@ -36,7 +36,7 @@ const Nav = () => {
           </Link>
         </li>
         <li>
-          <Link href="/community">
+          <Link href="/community/1">
             <a>
               <i aria-hidden className="far fa-comments"></i> 커뮤니티
             </a>
