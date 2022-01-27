@@ -32,6 +32,17 @@ interface Post {
   number: number;
   comment: Comment;
   id: string;
+  score: number;
 }
 
-export type { Dialogs, User, NewUser, Word, Comment, Post };
+interface Posts {
+  title: string;
+  time: number;
+  author: string;
+  number: number;
+  commentNum: number;
+  id: string;
+  score: number;
+}
+
+export type { Dialogs, User, NewUser, Word, Comment, Post, Posts };
