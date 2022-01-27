@@ -17,7 +17,7 @@ const Paticipants = ({ paticipants }: PaticipantsProps) => {
         {paticipants.map(({ nickname, score }) => {
           return (
             <li key={nickname}>
-              {nickname} <Image src={generateTierImage(score)} width={14} height={14} />
+              {nickname} <Image src={generateTierImage(score)} width={12} height={12} />
             </li>
           );
         })}
