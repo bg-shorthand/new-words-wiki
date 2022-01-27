@@ -6,6 +6,7 @@ const schema = new mongoose.Schema(
     content: { type: String, required: true },
     time: { type: Number, required: true },
     author: { type: String, required: true },
+    score: { type: Number },
     number: { type: Number },
     comment: { type: Array },
   },
