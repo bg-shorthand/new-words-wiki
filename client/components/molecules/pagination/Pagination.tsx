@@ -24,51 +24,59 @@ const Pagination = ({ curPage, path, allLength }: PaginationProps) => {
 
   return (
     <ul className={style.container}>
-      {!pages.includes(1) && (
-        <>
-          <li>
-            <Link href={path + '/1'}>
-              <a>
-                <i aria-hidden className="fas fa-angle-double-left"></i>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href={path + '/' + (pages[0] - 1)}>
-              <a>
-                <i aria-hidden className="fas fa-chevron-left"></i>
-              </a>
-            </Link>
-          </li>
-        </>
-      )}
+      <li className={pages.includes(1) ? style.disable : ''}>
+        <Link href={path + '/1'}>
+          <a
+            onClick={(e) => {
+              if (pages.includes(1)) e.preventDefault();
+            }}
+          >
+            <i aria-hidden className="fas fa-angle-double-left"></i>
+          </a>
+        </Link>
+      </li>
+      <li className={pages.includes(1) ? style.disable : ''}>
+        <Link href={path + '/' + (pages[0] - 1)}>
+          <a
+            onClick={(e) => {
+              if (pages.includes(1)) e.preventDefault();
+            }}
+          >
+            <i aria-hidden className="fas fa-chevron-left"></i>
+          </a>
+        </Link>
+      </li>
       {pages.map((num) => {
         return (
-          <li key={num}>
+          <li key={num} className={curPage === num ? style.active : ''}>
             <Link href={path + '/' + num}>
               <a>{num}</a>
             </Link>
           </li>
         );
       })}
-      {!pages.includes(Math.ceil(allLength / pagesNum)) && (
-        <>
-          <li>
-            <Link href={path + '/' + (pages[pages.length - 1] + 1)}>
-              <a>
-                <i aria-hidden className="fas fa-chevron-right"></i>
-              </a>
-            </Link>
-          </li>
-          <li>
-            <Link href={path + '/' + Math.ceil(allLength / pagesNum)}>
-              <a>
-                <i aria-hidden className="fas fa-angle-double-right"></i>
-              </a>
-            </Link>
-          </li>
-        </>
-      )}
+      <li className={pages.includes(Math.ceil(allLength / pagesNum)) ? style.disable : ''}>
+        <Link href={path + '/' + (pages[pages.length - 1] + 1)}>
+          <a
+            onClick={(e) => {
+              if (pages.includes(Math.ceil(allLength / pagesNum))) e.preventDefault();
+            }}
+          >
+            <i aria-hidden className="fas fa-chevron-right"></i>
+          </a>
+        </Link>
+      </li>
+      <li className={pages.includes(Math.ceil(allLength / pagesNum)) ? style.disable : ''}>
+        <Link href={path + '/' + Math.ceil(allLength / pagesNum)}>
+          <a
+            onClick={(e) => {
+              if (pages.includes(Math.ceil(allLength / pagesNum))) e.preventDefault();
+            }}
+          >
+            <i aria-hidden className="fas fa-angle-double-right"></i>
+          </a>
+        </Link>
+      </li>
     </ul>
   );
 };

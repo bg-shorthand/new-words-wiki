@@ -15,3 +15,19 @@
     }
   }
 }
+
+.disable {
+  color: lightgray;
+
+  & > a {
+    cursor: not-allowed;
+
+    &:hover {
+      border: none !important;
+    }
+  }
+}
+
+.active {
+  font-weight: 700;
+}
