@@ -9,7 +9,17 @@ router.get('/:page', async (req, res) => {
     const { page } = req.params;
     const start = (page - 1) * 10;
     const end = start + 10;
-    const posts = allPosts.sort((a, b) => b.time - a.time).slice(start, end);
+    const posts = allPosts
+      .sort((a, b) => b.time - a.time)
+      .slice(start, end)
+      .map(({ title, time, author, number, comment, _id }) => ({
+        title,
+        time,
+        author,
+        number,
+        id: _id,
+        commentNum: comment.length,
+      }));
     res.send(generateResponse.success({ posts, allLength: allPosts.length }));
   } catch (e) {
     res.send(generateResponse.fail(e));

@@ -31,7 +31,7 @@ interface Post {
   author: string;
   number: number;
   comment: Comment;
-  _id: string;
+  id: string;
 }
 
 export type { Dialogs, User, NewUser, Word, Comment, Post };
