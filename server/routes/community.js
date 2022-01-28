@@ -29,8 +29,9 @@ router.get('/:page', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const allPosts = await Community.findAll();
+    const number = Math.max(...allPosts.map((post) => +post.number)) + 1;
     const post = req.body;
-    const newPost = await Community.create({ ...post, number: allPosts.length + 1 });
+    const newPost = await Community.create({ ...post, number });
     res.send(generateResponse.success(newPost));
   } catch (e) {
     console.log(e);
