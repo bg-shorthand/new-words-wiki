@@ -36,7 +36,7 @@ const Board = ({ posts }: BoardProps) => {
             <div className={style.summary}>
               <span className={style.author}>
                 {post.author}
-                <Image src={generateTierImage(post.commentNum)} width={12} height={12} />
+                <Image src={generateTierImage(post.score)} width={12} height={12} />
               </span>
               <span>{`${year}.${month}.${day}. ${hour}:${minute}`}</span>
             </div>
