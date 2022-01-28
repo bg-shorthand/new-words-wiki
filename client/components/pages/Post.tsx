@@ -7,17 +7,21 @@ import Content from '@containers/content/Content';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
 import { getServerSideProps } from '@pages/community/post/[id]';
 import MainLayout from '@templates/mainLayout/MainLayout';
+import communityApi from 'api/community';
 import addPrefix0 from 'modules/addPrefix0';
 import generateTierImage from 'modules/generateTierImage';
 import isSignin from 'modules/isSignin';
 import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { title, content, author, score, time, comment } = post;
+  const { title, content, author, score, time, comment, _id } = post;
 
   const [isAuthor, setIsAuthor] = useState(false);
+
+  const router = useRouter();
 
   const date = new Date(time);
   const year = date.getFullYear().toString().slice(2);
@@ -43,7 +47,13 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
           {isAuthor ? (
             <>
               <IconButton icon="fas fa-highlighter" />
-              <IconButton icon="far fa-trash-alt" />
+              <IconButton
+                icon="far fa-trash-alt"
+                onClick={async () => {
+                  const { data } = await communityApi.deletePost(_id);
+                  if (data.success) router.replace('/community/1');
+                }}
+              />
             </>
           ) : null}{' '}
           | {`${year}.${month}.${day}. ${hour}:${minute}`}

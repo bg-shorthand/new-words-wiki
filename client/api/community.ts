@@ -13,6 +13,9 @@ const communityApi = {
   async getPost(id: string) {
     return await axios.get(url + '/post/' + id);
   },
+  async deletePost(id: string) {
+    return await axios.delete(url + '/post/' + id);
+  },
 };
 
 export default communityApi;
