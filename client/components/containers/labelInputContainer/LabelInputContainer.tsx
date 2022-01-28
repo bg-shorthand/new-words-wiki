@@ -14,12 +14,12 @@ const LabelInputContainer = ({ disabled, type, ...props }: LabelInputContainerPr
   useEffect(() => {
     const $container = ref.current;
     const $input = $container?.querySelector('input');
-    setHasValue(!!$input?.value);
+    $input && setHasValue(!!$input?.value);
     $input?.addEventListener('focus', () => setIsFocus(true));
     $input?.addEventListener('blur', () => setIsFocus(false));
     $input?.addEventListener('change', () => setHasValue(!!$input?.value));
     const $textArea = $container?.querySelector('textarea');
-    setHasValue(!!$textArea?.value);
+    $textArea && setHasValue(!!$textArea?.value);
     $textArea?.addEventListener('focus', () => setIsFocus(true));
     $textArea?.addEventListener('blur', () => setIsFocus(false));
     $textArea?.addEventListener('change', () => setHasValue(!!$textArea?.value));
