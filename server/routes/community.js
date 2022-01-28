@@ -61,4 +61,16 @@ router.delete('/post/:id', async (req, res) => {
   }
 });
 
+router.put('/post/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = req.body;
+    const data = await Community.updateById(id, payload);
+    res.send(generateResponse.success(data));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(e));
+  }
+});
+
 module.exports = router;

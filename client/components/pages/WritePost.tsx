@@ -3,6 +3,7 @@ import Content from '@containers/content/Content';
 import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
 import LabelInput from '@molecules/labelInput/LabelInput';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
+import { postState } from '@recoil/post';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import communityApi from 'api/community';
 import generateTierImage from 'modules/generateTierImage';
@@ -10,24 +11,35 @@ import isSignin from 'modules/isSignin';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 const WritePost = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [author, setAuthor] = useState('???');
   const [score, setScore] = useState(0);
   const [isTitle, setIsTitle] = useState(false);
   const [isContent, setIsContent] = useState(false);
+  const [isModify, setIsModify] = useState(false);
+
+  const [{ title, content, id }, setPostState] = useRecoilState(postState);
+  const resetPostState = useResetRecoilState(postState);
 
   const openAlertDialog = useOpenAlertDialog();
 
   const router = useRouter();
 
   useEffect(() => {
+    setIsTitle(!!title.length);
+    setIsContent(!!content.length);
+
     if (!!isSignin()) {
       setAuthor(isSignin()!.nickname);
       setScore(isSignin()!.score);
     }
+    if (title.length && content.length) setIsModify(true);
+
+    return () => {
+      resetPostState();
+    };
   }, []);
 
   return (
@@ -38,8 +50,8 @@ const WritePost = () => {
           label="제목"
           value={title}
           onChange={(e) => {
-            setIsTitle(!!e.currentTarget.value.length);
-            setTitle(e.currentTarget.value);
+            setPostState((pre) => ({ ...pre, title: e.currentTarget.value }));
+            setIsTitle(!!title.length);
           }}
           validations={[{ isAlert: !isTitle, alert: '필수 입력란입니다.' }]}
         />
@@ -51,8 +63,8 @@ const WritePost = () => {
           rows={10}
           value={content}
           onChange={(e) => {
-            setIsContent(!!e.currentTarget.value.length);
-            setContent(e.currentTarget.value);
+            setPostState((pre) => ({ ...pre, content: e.currentTarget.value }));
+            setIsContent(!!content.length);
           }}
           validations={[{ isAlert: !isContent, alert: '필수 입력란입니다.' }]}
         />
@@ -66,22 +78,28 @@ const WritePost = () => {
         <Button
           disabled={!isTitle || !isContent}
           onClick={async () => {
-            const time = new Date().valueOf();
-            const { data } = await communityApi.post({
-              title,
-              content,
-              time,
-              author,
-              score,
-              number: 0,
-              comment: [],
-              id: '',
-            });
-            if (data.success) router.push('/community/post/' + data.data._id);
-            else openAlertDialog('등록에 실패했습니다.');
+            if (isModify) {
+              const { data } = await communityApi.updatePost(id, { title, content });
+              if (data.success) router.push('/community/post/' + id);
+              else openAlertDialog('수정에 실패했습니다.');
+            } else {
+              const time = new Date().valueOf();
+              const { data } = await communityApi.post({
+                title,
+                content,
+                time,
+                author,
+                score,
+                number: 0,
+                comment: [],
+                id: '',
+              });
+              if (data.success) router.push('/community/post/' + data.data._id);
+              else openAlertDialog('등록에 실패했습니다.');
+            }
           }}
         >
-          등록
+          {isModify ? '수정' : '등록'}
         </Button>
       </Content>
     </MainLayout>

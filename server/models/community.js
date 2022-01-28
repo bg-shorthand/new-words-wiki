@@ -28,5 +28,8 @@ schema.statics.create = async function (payload) {
 schema.statics.deleteById = function (id) {
   return this.deleteOne({ _id: id });
 };
+schema.statics.updateById = function (id, payload) {
+  return this.updateOne({ _id: id }, { ...payload });
+};
 
 module.exports = mongoose.model('Community', schema);

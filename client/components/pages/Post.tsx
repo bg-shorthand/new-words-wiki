@@ -6,6 +6,7 @@ import Paragraph from '@atoms/paragraph/Paragraph';
 import Content from '@containers/content/Content';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
 import { getServerSideProps } from '@pages/community/post/[id]';
+import { postState } from '@recoil/post';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import communityApi from 'api/community';
 import addPrefix0 from 'modules/addPrefix0';
@@ -15,11 +16,14 @@ import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { title, content, author, score, time, comment, _id } = post;
 
   const [isAuthor, setIsAuthor] = useState(false);
+
+  const setPostState = useSetRecoilState(postState);
 
   const router = useRouter();
 
@@ -46,7 +50,13 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
           {author} <Image src={generateTierImage(score)} width={12} height={12}></Image>
           {isAuthor ? (
             <>
-              <IconButton icon="fas fa-highlighter" />
+              <IconButton
+                icon="fas fa-highlighter"
+                onClick={() => {
+                  setPostState({ title, content, id: _id });
+                  router.push('/community/writePost');
+                }}
+              />
               <IconButton
                 icon="far fa-trash-alt"
                 onClick={async () => {

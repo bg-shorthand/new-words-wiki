@@ -16,6 +16,9 @@ const communityApi = {
   async deletePost(id: string) {
     return await axios.delete(url + '/post/' + id);
   },
+  async updatePost(id: string, payload: { title: string; content: string }) {
+    return await axios.put(url + '/post/' + id, payload);
+  },
 };
 
 export default communityApi;
