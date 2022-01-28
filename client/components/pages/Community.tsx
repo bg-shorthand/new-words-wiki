@@ -1,3 +1,4 @@
+import Button from '@atoms/button/Button';
 import Heading from '@atoms/heading/Heading';
 import Content from '@containers/content/Content';
 import Board from '@molecules/board/Board';
@@ -22,6 +23,11 @@ const Community = ({ posts, allLength }: CommunityProps) => {
       </Content>
       <Content>
         <Board posts={posts} />
+      </Content>
+      <Content fitContent alignSelf="flex-end">
+        <Button size="s" onClick={() => router.push('/community/writePost')}>
+          쓰기
+        </Button>
       </Content>
       <Content>
         <Pagination path="/community" curPage={+page} allLength={allLength} />
