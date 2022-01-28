@@ -30,7 +30,7 @@ interface Post {
   time: number;
   author: string;
   number: number;
-  comment: Comment;
+  comment: Comment[] | [];
   id: string;
   score: number;
 }
