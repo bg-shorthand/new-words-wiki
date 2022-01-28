@@ -18,6 +18,9 @@ const schema = new mongoose.Schema(
 schema.statics.findAll = function () {
   return this.find({});
 };
+schema.statics.findPostById = function (id) {
+  return this.findOne({ _id: id });
+};
 schema.statics.create = async function (payload) {
   const report = new this(payload);
   return report.save();

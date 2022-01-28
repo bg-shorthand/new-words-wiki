@@ -26,6 +26,16 @@ router.get('/:page', async (req, res) => {
   }
 });
 
+router.get('/post/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Community.findPostById(id);
+    res.send(generateResponse.success(post));
+  } catch (e) {
+    res.send(generateResponse.fail('게시글이 없습니다.'));
+  }
+});
+
 router.post('/', async (req, res) => {
   try {
     const allPosts = await Community.findAll();

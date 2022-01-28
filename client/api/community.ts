@@ -5,10 +5,13 @@ const url = process.env.NEXT_PUBLIC_DB_URL + '/community';
 
 const communityApi = {
   async get(page: number) {
-    return axios.get(url + '/' + page);
+    return await axios.get(url + '/' + page);
   },
   async post(post: Post) {
-    return axios.post(url, post);
+    return await axios.post(url, post);
+  },
+  async getPost(id: string) {
+    return await axios.get(url + '/post/' + id);
   },
 };
 
