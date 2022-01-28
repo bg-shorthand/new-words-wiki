@@ -1,5 +1,6 @@
 import Heading from '@atoms/heading/Heading';
 import { Posts } from 'const/types';
+import addPrefix0 from 'modules/addPrefix0';
 import generateTierImage from 'modules/generateTierImage';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,9 +14,12 @@ const Board = ({ posts }: BoardProps) => {
   return (
     <ul className={style.container}>
       {posts.map((post) => {
-        const year = new Date(post.time).getFullYear();
-        const month = new Date(post.time).getMonth();
-        const date = new Date(post.time).getDate();
+        const date = new Date(post.time);
+        const year = date.getFullYear().toString().slice(2);
+        const month = addPrefix0(date.getMonth() + 1);
+        const day = addPrefix0(date.getDate());
+        const hour = addPrefix0(date.getHours());
+        const minute = addPrefix0(date.getMinutes());
 
         return (
           <li key={post.id}>
@@ -34,7 +38,7 @@ const Board = ({ posts }: BoardProps) => {
                 {post.author}
                 <Image src={generateTierImage(post.commentNum)} width={12} height={12} />
               </span>
-              <span>{`${year}.${month}.${date}.`}</span>
+              <span>{`${year}.${month}.${day}. ${hour}:${minute}`}</span>
             </div>
           </li>
         );

@@ -77,7 +77,6 @@ const WritePost = () => {
               comment: [],
               id: '',
             });
-            console.log(data);
             if (data.success) router.push('/community/post/' + data.data._id);
             else openAlertDialog('등록에 실패했습니다.');
           }}

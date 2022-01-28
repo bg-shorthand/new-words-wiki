@@ -20,7 +20,7 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
   const [isAuthor, setIsAuthor] = useState(false);
 
   const date = new Date(time);
-  const year = date.getFullYear();
+  const year = date.getFullYear().toString().slice(2);
   const month = addPrefix0(date.getMonth() + 1);
   const day = addPrefix0(date.getDate());
   const hour = addPrefix0(date.getHours());
