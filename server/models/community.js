@@ -31,8 +31,8 @@ schema.statics.deleteById = function (id) {
 schema.statics.updateById = function (id, payload) {
   return this.updateOne({ _id: id }, { ...payload });
 };
-schema.statics.updatePostById = function (id, comment) {
-  return this.updateOne({ _id: id }, { comment });
+schema.statics.updatePostById = function (id, comments) {
+  return this.updateOne({ _id: id }, { comments });
 };
 
 module.exports = mongoose.model('Community', schema);
