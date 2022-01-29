@@ -20,7 +20,7 @@ const Comments = ({ comments }: { comments: Comment[] }) => {
 
           return (
             <li>
-              <Paragraph>{item.content}</Paragraph>
+              <Paragraph>{item.number + '. ' + item.content}</Paragraph>
               <div>
                 <span>
                   {item.author.nickname}{' '}

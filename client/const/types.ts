@@ -22,6 +22,7 @@ interface Comment {
   author: { nickname: string; score: number };
   content: string;
   time: number;
+  number: number;
 }
 
 interface Post {

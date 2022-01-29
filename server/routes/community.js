@@ -78,7 +78,10 @@ router.post('/comment/:id', async (req, res) => {
     const { id } = req.params;
     const payload = req.body;
     const post = await Community.findPostById(id);
-    const newComment = [...post.comments, payload];
+    const number = post.comments.length
+      ? Math.max(...post.comments.map((comment) => comment.number)) + 1
+      : 1;
+    const newComment = [...post.comments, { ...payload, number }];
     const data = await Community.updateCommentsById(id, newComment);
     res.send(generateResponse.success(data));
   } catch (e) {
