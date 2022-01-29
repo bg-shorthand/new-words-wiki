@@ -98,6 +98,7 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                 },
                 content: commentContent,
                 time,
+                number: 0,
               });
               if (data.success) router.reload();
             }}
