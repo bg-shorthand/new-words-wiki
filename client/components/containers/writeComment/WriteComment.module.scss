@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+
+  & > button {
+    margin-top: 5px;
+    align-self: flex-end;
+  }
+}

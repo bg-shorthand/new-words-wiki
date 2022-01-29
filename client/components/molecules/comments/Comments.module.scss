@@ -1,0 +1,12 @@
+.container {
+  & > li {
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    margin: 5px 0;
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

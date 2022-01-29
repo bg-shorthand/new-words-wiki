@@ -1,15 +1,15 @@
-import Alert from '@atoms/alert/Alert';
 import Button from '@atoms/button/Button';
 import Heading from '@atoms/heading/Heading';
 import IconButton from '@atoms/iconButton/IconButton';
 import Paragraph from '@atoms/paragraph/Paragraph';
 import Content from '@containers/content/Content';
+import WriteComment from '@containers/writeComment/WriteComment';
+import Comments from '@molecules/comments/Comments';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
 import { getServerSideProps } from '@pages/community/post/[id]';
 import { postState } from '@recoil/post';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import communityApi from 'api/community';
-import { Comment } from 'const/types';
 import addPrefix0 from 'modules/addPrefix0';
 import generateTierImage from 'modules/generateTierImage';
 import isSignin from 'modules/isSignin';
@@ -75,56 +75,36 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         <Paragraph>{content}</Paragraph>
       </Content>
       <Content>
-        <ul>
-          {comments.length ? (
-            comments.map((item: Comment) => {
-              const date = new Date(item.time);
-              const year = date.getFullYear().toString().slice(2);
-              const month = addPrefix0(date.getMonth() + 1);
-              const day = addPrefix0(date.getDate());
-              const hour = addPrefix0(date.getHours());
-              const minute = addPrefix0(date.getMinutes());
-
-              return (
-                <li>
-                  <Paragraph>{item.content}</Paragraph>
-                  <span>
-                    {item.author.nickname}
-                    <Image src={generateTierImage(item.author.score)} width={12} height={12} />
-                  </span>
-                  <span>{`${year}.${month}.${day}. ${hour}:${minute}`}</span>
-                </li>
-              );
-            })
-          ) : (
-            <Alert>댓글이 없습니다.</Alert>
-          )}
-        </ul>
+        <Comments comments={comments} />
       </Content>
       <Content>
-        <LabelTextArea
-          id="comment"
-          label="댓글"
-          value={commentContent}
-          onChange={(e) => setCommentContent(e.currentTarget.value)}
-        />
-        <Button
-          disabled={!commentContent.length}
-          onClick={async () => {
-            const time = new Date().valueOf();
-            const { data } = await communityApi.postComment(_id, {
-              author: {
-                nickname: isSignin()?.nickname || '???',
-                score: isSignin()?.score || 0,
-              },
-              content: commentContent,
-              time,
-            });
-            if (data.success) router.reload();
-          }}
-        >
-          등록
-        </Button>
+        <WriteComment>
+          <LabelTextArea
+            id="comment"
+            label="댓글"
+            value={commentContent}
+            onChange={(e) => setCommentContent(e.currentTarget.value)}
+          />
+          <Button
+            type="submit"
+            disabled={!commentContent.length}
+            onClick={async (e) => {
+              e.preventDefault();
+              const time = new Date().valueOf();
+              const { data } = await communityApi.postComment(_id, {
+                author: {
+                  nickname: isSignin()?.nickname || '???',
+                  score: isSignin()?.score || 0,
+                },
+                content: commentContent,
+                time,
+              });
+              if (data.success) router.reload();
+            }}
+          >
+            등록
+          </Button>
+        </WriteComment>
       </Content>
     </MainLayout>
   );
