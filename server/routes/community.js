@@ -79,7 +79,7 @@ router.post('/comment/:id', async (req, res) => {
     const payload = req.body;
     const post = await Community.findPostById(id);
     const newComment = [...post.comments, payload];
-    const data = await Community.updatePostById(id, newComment);
+    const data = await Community.updateCommentsById(id, newComment);
     res.send(generateResponse.success(data));
   } catch (e) {
     console.log(e);
