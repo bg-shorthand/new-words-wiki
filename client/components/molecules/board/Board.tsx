@@ -38,7 +38,9 @@ const Board = ({ posts }: BoardProps) => {
                 {post.author}
                 <Image src={generateTierImage(post.score)} width={12} height={12} />
               </span>
-              <span>{`${year}.${month}.${day}. ${hour}:${minute}`}</span>
+              <span>
+                <i aria-hidden className="far fa-calendar-alt"></i> {`${year}.${month}.${day}. ${hour}:${minute}`}
+              </span>
             </div>
           </li>
         );

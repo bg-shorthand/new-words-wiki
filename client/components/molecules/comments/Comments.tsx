@@ -66,7 +66,10 @@ const Comments = ({ comments }: { comments: Comment[] }) => {
                   {item.author.nickname}{' '}
                   <Image src={generateTierImage(item.author.score)} width={12} height={12} />
                 </span>
-                <span>{`${year}.${month}.${day}. ${hour}:${minute}`}</span>
+                <span>
+                  <i aria-hidden className="far fa-calendar-alt"></i>{' '}
+                  {`${year}.${month}.${day}. ${hour}:${minute}`}
+                </span>
               </div>
               {item.author.nickname === isSignin?.nickname ? (
                 <div className={style.buttons}>

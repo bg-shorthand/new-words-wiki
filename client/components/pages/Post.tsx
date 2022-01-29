@@ -68,7 +68,8 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
               />
             </>
           ) : null}{' '}
-          | {`${year}.${month}.${day}. ${hour}:${minute}`}
+          | <i aria-hidden className="far fa-calendar-alt"></i>{' '}
+          {`${year}.${month}.${day}. ${hour}:${minute}`}
         </span>
       </Content>
       <Content>
