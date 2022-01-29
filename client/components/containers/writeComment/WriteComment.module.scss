@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-flow: column nowrap;
+  padding: 10px 0;
 
   & > button {
     margin-top: 5px;

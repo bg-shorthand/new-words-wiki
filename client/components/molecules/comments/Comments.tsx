@@ -1,12 +1,29 @@
 import Alert from '@atoms/alert/Alert';
+import Button from '@atoms/button/Button';
+import IconButton from '@atoms/iconButton/IconButton';
 import Paragraph from '@atoms/paragraph/Paragraph';
+import WriteComment from '@containers/writeComment/WriteComment';
+import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
+import { isSigninState } from '@recoil/isSignin';
+import communityApi from 'api/community';
 import { Comment } from 'const/types';
 import addPrefix0 from 'modules/addPrefix0';
 import generateTierImage from 'modules/generateTierImage';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import style from './Comments.module.scss';
 
 const Comments = ({ comments }: { comments: Comment[] }) => {
+  const [modifyNumber, setModifyNumber] = useState(0);
+  const [newComment, setNewComment] = useState('');
+
+  const isSignin = useRecoilValue(isSigninState);
+
+  const router = useRouter();
+  const { id } = router.query as { id: string };
+
   return (
     <ul className={style.container}>
       {comments.length ? (
@@ -19,8 +36,31 @@ const Comments = ({ comments }: { comments: Comment[] }) => {
           const minute = addPrefix0(date.getMinutes());
 
           return (
-            <li>
-              <Paragraph>{item.number + '. ' + item.content}</Paragraph>
+            <li key={item.number}>
+              {modifyNumber === item.number ? (
+                <WriteComment>
+                  <LabelTextArea
+                    id="modifyComment"
+                    label="댓글 수정"
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.currentTarget.value)}
+                  />
+                  <Button
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      const { data } = await communityApi.updateComment(id, {
+                        ...item,
+                        content: newComment,
+                      });
+                      if (data.success) router.reload();
+                    }}
+                  >
+                    수정
+                  </Button>
+                </WriteComment>
+              ) : (
+                <Paragraph>{item.number + '. ' + item.content}</Paragraph>
+              )}
               <div>
                 <span>
                   {item.author.nickname}{' '}
@@ -28,6 +68,28 @@ const Comments = ({ comments }: { comments: Comment[] }) => {
                 </span>
                 <span>{`${year}.${month}.${day}. ${hour}:${minute}`}</span>
               </div>
+              {item.author.nickname === isSignin?.nickname ? (
+                <div className={style.buttons}>
+                  {modifyNumber === item.number ? (
+                    <IconButton icon="fab fa-readme" onClick={() => setModifyNumber(0)} />
+                  ) : (
+                    <IconButton
+                      icon="fas fa-highlighter"
+                      onClick={() => {
+                        setNewComment(item.content);
+                        setModifyNumber(item.number);
+                      }}
+                    />
+                  )}
+                  <IconButton
+                    icon="far fa-trash-alt"
+                    onClick={async () => {
+                      const { data } = await communityApi.deleteComment(id, item.number);
+                      if (data.success) router.reload();
+                    }}
+                  />
+                </div>
+              ) : null}
             </li>
           );
         })
