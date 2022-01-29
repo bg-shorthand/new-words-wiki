@@ -22,6 +22,12 @@ const communityApi = {
   async postComment(id: string, payload: Comment) {
     return await axios.post(url + '/comment/' + id, payload);
   },
+  async deleteComment(id: string, commentNumber: number) {
+    return await axios.delete(url + '/comment/' + id + '?commentNumber=' + commentNumber);
+  },
+  async updateComment(id: string, payload: Comment) {
+    return await axios.put(url + '/comment/' + id, payload);
+  },
 };
 
 export default communityApi;

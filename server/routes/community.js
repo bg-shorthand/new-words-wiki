@@ -86,7 +86,37 @@ router.post('/comment/:id', async (req, res) => {
     res.send(generateResponse.success(data));
   } catch (e) {
     console.log(e);
-    res.send(generateResponse.fail(data));
+    res.send(generateResponse.fail(e));
+  }
+});
+
+router.delete('/comment/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { commentNumber } = req.query;
+    const { comments } = await Community.findPostById(id);
+    const newComments = comments.filter((comment) => comment.number !== +commentNumber);
+    const data = await Community.updateCommentsById(id, newComments);
+    res.send(generateResponse.success(data));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(e));
+  }
+});
+
+router.put('/comment/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = req.body;
+    const { comments } = await Community.findPostById(id);
+    const newComments = comments.map((comment) =>
+      comment.number === payload.number ? payload : comment,
+    );
+    const data = await Community.updateCommentsById(id, newComments);
+    res.send(generateResponse.success(data));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(e));
   }
 });
 
