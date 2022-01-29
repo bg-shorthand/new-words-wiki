@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Post } from 'const/types';
+import { Comment, Post } from 'const/types';
 
 const url = process.env.NEXT_PUBLIC_DB_URL + '/community';
 
@@ -18,6 +18,9 @@ const communityApi = {
   },
   async updatePost(id: string, payload: { title: string; content: string }) {
     return await axios.put(url + '/post/' + id, payload);
+  },
+  async postComment(id: string, payload: Comment) {
+    return await axios.post(url + '/comment/' + id, payload);
   },
 };
 

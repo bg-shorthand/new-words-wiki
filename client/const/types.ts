@@ -19,7 +19,7 @@ interface Word {
 }
 
 interface Comment {
-  author: string;
+  author: { nickname: string; score: number };
   content: string;
   time: number;
 }
@@ -30,7 +30,7 @@ interface Post {
   time: number;
   author: string;
   number: number;
-  comment: Comment[] | [];
+  comments: Comment[] | [];
   id: string;
   score: number;
 }

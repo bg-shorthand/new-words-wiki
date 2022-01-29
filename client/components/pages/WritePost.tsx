@@ -91,7 +91,7 @@ const WritePost = () => {
                 author,
                 score,
                 number: 0,
-                comment: [],
+                comments: [],
                 id: '',
               });
               if (data.success) router.push('/community/post/' + data.data._id);

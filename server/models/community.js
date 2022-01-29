@@ -8,7 +8,7 @@ const schema = new mongoose.Schema(
     author: { type: String, required: true },
     score: { type: Number },
     number: { type: Number },
-    comment: { type: Array },
+    comments: { type: Array },
   },
   {
     versionKey: false,
@@ -30,6 +30,9 @@ schema.statics.deleteById = function (id) {
 };
 schema.statics.updateById = function (id, payload) {
   return this.updateOne({ _id: id }, { ...payload });
+};
+schema.statics.updatePostById = function (id, comment) {
+  return this.updateOne({ _id: id }, { comment });
 };
 
 module.exports = mongoose.model('Community', schema);

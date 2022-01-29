@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const Community = require('../models/community');
 const generateResponse = require('../module/generateResponse');
-const verifyToken = require('../middleware/verifyToken');
 
 router.get('/:page', async (req, res) => {
   try {
@@ -12,13 +11,14 @@ router.get('/:page', async (req, res) => {
     const posts = allPosts
       .sort((a, b) => b.time - a.time)
       .slice(start, end)
-      .map(({ title, time, author, number, comment, _id }) => ({
+      .map(({ title, time, author, number, comments, _id, score }) => ({
         title,
         time,
         author,
         number,
         id: _id,
-        commentNum: comment.length,
+        commentNum: comments.length,
+        score,
       }));
     res.send(generateResponse.success({ posts, allLength: allPosts.length }));
   } catch (e) {
@@ -39,7 +39,7 @@ router.get('/post/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const allPosts = await Community.findAll();
-    const number = Math.max(...allPosts.map((post) => +post.number)) + 1;
+    const number = allPosts.length ? Math.max(...allPosts.map((post) => +post.number)) + 1 : 1;
     const post = req.body;
     const newPost = await Community.create({ ...post, number });
     res.send(generateResponse.success(newPost));
@@ -70,6 +70,20 @@ router.put('/post/:id', async (req, res) => {
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));
+  }
+});
+
+router.post('/comment/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = req.body;
+    const post = await Community.findPostById(id);
+    const newComment = [...post.comments, payload];
+    const data = await Community.updatePostById(id, newComment);
+    res.send(generateResponse.success(data));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(data));
   }
 });
 
