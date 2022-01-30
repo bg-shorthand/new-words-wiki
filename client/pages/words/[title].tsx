@@ -1,4 +1,4 @@
-import Word from '@components/pages/word';
+import Word from '@components/pages/Word';
 import { wordApi } from 'api/word';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
