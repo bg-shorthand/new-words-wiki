@@ -3,6 +3,7 @@ import NickName from '@atoms/nickname/NickName';
 import useSignout from '@hooks/useSignout';
 import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
+import Link from 'next/link';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import style from './Sign.module.scss';
 
@@ -15,7 +16,11 @@ const Sign = () => {
     <div className={style.container}>
       {isSignin ? (
         <>
-          <i aria-hidden className="far fa-user"></i> <NickName />
+          <Link href={'/myPage'}>
+            <a>
+              <i aria-hidden className="far fa-user"></i> <NickName />
+            </a>
+          </Link>
           <Button size="s" onClick={() => signout()}>
             로그아웃
           </Button>

@@ -1,4 +1,24 @@
 .container {
+  a {
+    padding: 0.5em 0;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 0;
+      border-top: 1px solid black;
+      position: absolute;
+      bottom: 0;
+      transition: all 100ms;
+    }
+
+    &:focus::after,
+    &:hover::after {
+      width: 100%;
+    }
+  }
+  
   & > button {
     margin-left: 1em;
   }
