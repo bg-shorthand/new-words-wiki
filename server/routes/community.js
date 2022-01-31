@@ -82,8 +82,8 @@ router.post('/comment/:id', async (req, res) => {
       ? Math.max(...post.comments.map((comment) => comment.number)) + 1
       : 1;
     const newComment = [...post.comments, { ...payload, number }];
-    const data = await Community.updateCommentsById(id, newComment);
-    res.send(generateResponse.success(data));
+    await Community.updateCommentsById(id, newComment);
+    res.send(generateResponse.success(newComment));
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));
@@ -96,8 +96,8 @@ router.delete('/comment/:id', async (req, res) => {
     const { commentNumber } = req.query;
     const { comments } = await Community.findPostById(id);
     const newComments = comments.filter((comment) => comment.number !== +commentNumber);
-    const data = await Community.updateCommentsById(id, newComments);
-    res.send(generateResponse.success(data));
+    await Community.updateCommentsById(id, newComments);
+    res.send(generateResponse.success(newComments));
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));
@@ -112,8 +112,8 @@ router.put('/comment/:id', async (req, res) => {
     const newComments = comments.map((comment) =>
       comment.number === payload.number ? payload : comment,
     );
-    const data = await Community.updateCommentsById(id, newComments);
-    res.send(generateResponse.success(data));
+    await Community.updateCommentsById(id, newComments);
+    res.send(generateResponse.success(newComments));
   } catch (e) {
     console.log(e);
     res.send(generateResponse.fail(e));
