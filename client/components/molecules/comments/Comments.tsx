@@ -49,15 +49,20 @@ const Comments = ({ comments, setComments }: CommentsProps) => {
                     label="댓글 수정"
                     value={newComment}
                     onChange={(e) => setNewComment(e.currentTarget.value)}
+                    validations={[{ isAlert: !newComment.length, alert: '필수 입력란입니다.' }]}
                   />
                   <Button
+                    disabled={!newComment.length}
                     onClick={async (e) => {
                       e.preventDefault();
                       const { data } = await communityApi.updateComment(id, {
                         ...item,
                         content: newComment,
                       });
-                      if (data.success) setComments(data.data);
+                      if (data.success) {
+                        setComments(data.data);
+                        setModifyNumber(0);
+                      }
                     }}
                   >
                     수정
