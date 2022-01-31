@@ -2,16 +2,19 @@ import Button from '@atoms/button/Button';
 import Heading from '@atoms/heading/Heading';
 import Content from '@containers/content/Content';
 import { isSigninState } from '@recoil/isSignin';
+import { dialogsState } from '@recoil/modalDialog';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import calcNextTier from 'modules/calcNextTier';
 import generateTierImage from 'modules/generateTierImage';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const MyPage = () => {
   const [nextScore, setNextScore] = useState(0);
+
   const userInfo = useRecoilValue(isSigninState);
+  const setDialogs = useSetRecoilState(dialogsState);
 
   useEffect(() => {
     setNextScore(calcNextTier(userInfo?.score || 0));
@@ -21,7 +24,12 @@ const MyPage = () => {
     <MainLayout>
       <Content fitContent flexFlow="row">
         <Heading level={1}>내 정보</Heading>
-        <Button size="content">비밀번호 변경</Button>
+        <Button
+          size="content"
+          onClick={() => setDialogs((pre) => ({ ...pre, findPassword: true }))}
+        >
+          비밀번호 변경
+        </Button>
       </Content>
       <Content flexFlow="row">
         <Heading level={2}>닉네임</Heading>

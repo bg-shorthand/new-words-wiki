@@ -10,7 +10,7 @@ import style from './EmailAuthForm.module.scss';
 
 interface EmailAuthFormProps {
   email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
+  setEmail?: Dispatch<SetStateAction<string>>;
   setStage: Dispatch<SetStateAction<number>>;
   mustRegist: boolean;
 }
@@ -36,8 +36,8 @@ const EmailAuthForm = ({ email, setEmail, setStage, mustRegist }: EmailAuthFormP
           id="email"
           label="이메일"
           value={email}
-          onChange={(e) => setEmail(e.currentTarget.value)}
-          disabled={isAfterSetAuthKeyBeforeTimeout}
+          onChange={(e) => setEmail && setEmail(e.currentTarget.value)}
+          disabled={!setEmail || isAfterSetAuthKeyBeforeTimeout}
           validations={[
             {
               isAlert: mustRegist ? isUnique : !isUnique,
