@@ -19,6 +19,9 @@ const userApi = {
   async getScores(nicknames: string[]) {
     return await axios.get(url + '/scores/?nicknames=' + nicknames.join(','));
   },
+  async updateNickname(email: string, nickname: string) {
+    return await axios.put(url + '/updateNickname', { email, nickname });
+  },
 };
 
 export default userApi;

@@ -103,4 +103,27 @@ router.put('/updatePassword', async (req, res) => {
   }
 });
 
+router.put('/updateNickname', async (req, res) => {
+  try {
+    const { email, nickname } = req.body;
+    await User.updateNickname(email, nickname);
+
+    const user = await User.findOneByEmail(email);
+    const payload = filterUserInfo(user._doc);
+
+    const accessToken = jwt.sign({ ...payload }, process.env.JWT_SECRET, {
+      expiresIn: constants.accessTokenExpiresIn,
+    });
+    const refreshToken = jwt.sign({}, process.env.JWT_SECRET);
+
+    await User.updateTokenById(user._id, refreshToken);
+
+    res.send(generateResponse.success({ accessToken, refreshToken }));
+  } catch (e) {
+    if (e.code === 11000) {
+      res.send(generateResponse.fail('이미 등록된 닉네임입니다.'));
+    } else res.send(generateResponse.fail(e));
+  }
+});
+
 module.exports = router;

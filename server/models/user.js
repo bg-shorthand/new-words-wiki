@@ -51,5 +51,8 @@ schema.statics.updateScoreByEmail = function (email, score) {
 schema.statics.updatePassword = function (email, password) {
   return this.updateOne({ email }, { password });
 };
+schema.statics.updateNickname = function (email, nickname) {
+  return this.updateOne({ email }, { nickname, score: 0 });
+};
 
 module.exports = mongoose.model('User', schema);
