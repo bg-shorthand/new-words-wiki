@@ -1,4 +1,5 @@
 import AlertDialog from '@organisms/alertDialog/AlertDialog';
+import ChangeNickname from '@organisms/changeNickname/ChangeNickname';
 import FindPassword from '@organisms/findPassword/FindPassword';
 import NeedSignin from '@organisms/needSignin/NeedSignin';
 import Report from '@organisms/report/Report';
@@ -48,6 +49,11 @@ const ModalDialogs = () => {
       {dialogs.report && (
         <ModalDialog>
           <Report />
+        </ModalDialog>
+      )}
+      {dialogs.changeNickname && (
+        <ModalDialog>
+          <ChangeNickname />
         </ModalDialog>
       )}
     </>

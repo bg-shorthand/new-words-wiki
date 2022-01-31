@@ -34,7 +34,12 @@ const MyPage = () => {
       <Content flexFlow="row">
         <Heading level={2}>닉네임</Heading>
         <span>{userInfo?.nickname}</span>
-        <Button size="content">수정</Button>
+        <Button
+          size="content"
+          onClick={() => setDialogs((pre) => ({ ...pre, changeNickname: true }))}
+        >
+          수정
+        </Button>
       </Content>
       <Content flexFlow="row">
         <Heading level={2}>등급</Heading>
