@@ -7,25 +7,28 @@ import WriteComment from '@containers/writeComment/WriteComment';
 import Comments from '@molecules/comments/Comments';
 import LabelTextArea from '@molecules/labelTextArea/LabelTextArea';
 import { getServerSideProps } from '@pages/community/post/[id]';
+import { isSigninState } from '@recoil/isSignin';
 import { postState } from '@recoil/post';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import communityApi from 'api/community';
+import { Comment } from 'const/types';
 import addPrefix0 from 'modules/addPrefix0';
 import generateTierImage from 'modules/generateTierImage';
-import isSignin from 'modules/isSignin';
 import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { title, content, author, score, time, comments, _id } = post;
 
   const [isAuthor, setIsAuthor] = useState(false);
   const [commentContent, setCommentContent] = useState('');
+  const [renderComments, setRenderComments] = useState<Comment[]>([]);
 
   const setPostState = useSetRecoilState(postState);
+  const isSignin = useRecoilValue(isSigninState);
 
   const router = useRouter();
 
@@ -37,10 +40,14 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
   const minute = addPrefix0(date.getMinutes());
 
   useEffect(() => {
-    if (isSignin()) {
-      setIsAuthor(author === isSignin()?.nickname);
+    if (isSignin) {
+      setIsAuthor(author === isSignin.nickname);
     }
-  });
+  }, [isSignin]);
+
+  useEffect(() => {
+    setRenderComments(comments);
+  }, []);
 
   return (
     <MainLayout>
@@ -76,7 +83,7 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         <Paragraph>{content}</Paragraph>
       </Content>
       <Content>
-        <Comments comments={comments} />
+        <Comments comments={renderComments} setComments={setRenderComments} />
       </Content>
       <Content>
         <WriteComment>
@@ -94,14 +101,14 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
               const time = new Date().valueOf();
               const { data } = await communityApi.postComment(_id, {
                 author: {
-                  nickname: isSignin()?.nickname || '???',
-                  score: isSignin()?.score || 0,
+                  nickname: isSignin?.nickname || '???',
+                  score: isSignin?.score || 0,
                 },
                 content: commentContent,
                 time,
                 number: 0,
               });
-              if (data.success) router.reload();
+              if (data.success) setRenderComments(data.data);
             }}
           >
             등록

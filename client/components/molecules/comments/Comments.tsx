@@ -11,11 +11,16 @@ import addPrefix0 from 'modules/addPrefix0';
 import generateTierImage from 'modules/generateTierImage';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import style from './Comments.module.scss';
 
-const Comments = ({ comments }: { comments: Comment[] }) => {
+interface CommentsProps {
+  comments: Comment[];
+  setComments: Dispatch<SetStateAction<Comment[]>>;
+}
+
+const Comments = ({ comments, setComments }: CommentsProps) => {
   const [modifyNumber, setModifyNumber] = useState(0);
   const [newComment, setNewComment] = useState('');
 
@@ -52,7 +57,7 @@ const Comments = ({ comments }: { comments: Comment[] }) => {
                         ...item,
                         content: newComment,
                       });
-                      if (data.success) router.reload();
+                      if (data.success) setComments(data.data);
                     }}
                   >
                     수정
@@ -88,7 +93,7 @@ const Comments = ({ comments }: { comments: Comment[] }) => {
                     icon="far fa-trash-alt"
                     onClick={async () => {
                       const { data } = await communityApi.deleteComment(id, item.number);
-                      if (data.success) router.reload();
+                      if (data.success) setComments(data.data);
                     }}
                   />
                 </div>
