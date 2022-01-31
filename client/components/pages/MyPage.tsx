@@ -43,7 +43,13 @@ const MyPage = () => {
         </div>
         <span>
           ({userInfo?.score}점 / 다음 등급(
-          {<Image src={generateTierImage((userInfo?.score || 0) * 2)} width={18} height={18} />}
+          {
+            <Image
+              src={generateTierImage((userInfo?.score || 0) * 2 ? (userInfo?.score || 0) * 2 : 2)}
+              width={18}
+              height={18}
+            />
+          }
           )까지 {nextScore}점 필요)
         </span>
       </Content>
