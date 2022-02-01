@@ -34,7 +34,7 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
     setImages(data.images);
     setPaticipantsAsync();
-  }, []);
+  }, [data]);
 
   return (
     <MainLayout>
