@@ -4,6 +4,7 @@ import useSignup from '@hooks/useSignup';
 import useValidString from '@hooks/useValidString';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './SignupForm.module.scss';
+import countStringSize from 'modules/countStringSize';
 
 interface SignupFormProps {
   email: string;
@@ -21,7 +22,16 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
   const { isUniqueNickname, signup } = useSignup({ email, nickname, password });
 
   useEffect(() => {
-    setCanSignup(!!nickname && !!password && !!samePassword && isCorrect && isSamePassword);
+    setCanSignup(
+      !!nickname &&
+        !!password &&
+        !!samePassword &&
+        isCorrect &&
+        isSamePassword &&
+        countStringSize(nickname) <= 15 &&
+        !/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g.test(nickname) &&
+        !/ /.test(nickname),
+    );
   }, [nickname, password, samePassword, isCorrect, isSamePassword]);
 
   return (
@@ -32,7 +42,15 @@ const SignupForm = ({ email, setStage }: SignupFormProps) => {
         label="닉네임"
         value={nickname}
         onChange={(e) => setNickname(e.currentTarget.value)}
-        validations={[{ isAlert: !isUniqueNickname, alert: '이미 등록된 닉네임입니다.' }]}
+        validations={[
+          { isAlert: !isUniqueNickname, alert: '이미 등록된 닉네임입니다.' },
+          { isAlert: countStringSize(nickname) > 15, alert: '닉네임이 너무 깁니다.' },
+          {
+            isAlert: /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g.test(nickname),
+            alert: '특수문자는 사용할 수 없습니다.',
+          },
+          { isAlert: / /.test(nickname), alert: '공백은 사용할 수 없습니다.' },
+        ]}
       />
       <LabelInput
         id="signupPassword"

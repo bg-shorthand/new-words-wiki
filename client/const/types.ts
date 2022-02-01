@@ -7,7 +7,9 @@ interface User {
   score: number;
 }
 
-interface NewUser extends User {
+interface NewUser {
+  email: string;
+  nickname: string;
   password: string;
 }
 
