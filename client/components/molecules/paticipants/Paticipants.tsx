@@ -14,13 +14,15 @@ const Paticipants = ({ paticipants }: PaticipantsProps) => {
         <i aria-hidden className="fas fa-user-tag"></i> 참여자
       </Heading>
       <ul>
-        {paticipants.map(({ nickname, score }) => {
-          return (
-            <li key={nickname}>
-              {nickname} <Image src={generateTierImage(score)} width={12} height={12} />
-            </li>
-          );
-        })}
+        {paticipants
+          ? paticipants.map(({ nickname, score }) => {
+              return (
+                <li key={nickname}>
+                  {nickname} <Image src={generateTierImage(score)} width={12} height={12} />
+                </li>
+              );
+            })
+          : null}
       </ul>
     </Article>
   );
