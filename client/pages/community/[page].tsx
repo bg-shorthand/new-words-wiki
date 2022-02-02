@@ -5,6 +5,7 @@ import Content from '@containers/content/Content';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import communityApi from 'api/community';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -26,19 +27,26 @@ const CommunityPage = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
 
-  return posts.length ? (
-    <Community posts={posts} allLength={allLength} />
-  ) : (
-    <MainLayout>
-      <Content fitContent alignSelf="center">
-        <Heading level={1}>게시물이 없습니다.</Heading>
-      </Content>
-      <Content fitContent alignSelf="center">
-        <Button size="s" onClick={() => router.push('/community/writePost')}>
-          쓰기
-        </Button>
-      </Content>
-    </MainLayout>
+  return (
+    <>
+      <Head>
+        <title>커뮤니티 | 신조어 위키</title>
+      </Head>
+      {posts.length ? (
+        <Community posts={posts} allLength={allLength} />
+      ) : (
+        <MainLayout>
+          <Content fitContent alignSelf="center">
+            <Heading level={1}>게시물이 없습니다.</Heading>
+          </Content>
+          <Content fitContent alignSelf="center">
+            <Button size="s" onClick={() => router.push('/community/writePost')}>
+              쓰기
+            </Button>
+          </Content>
+        </MainLayout>
+      )}
+    </>
   );
 };
 

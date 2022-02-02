@@ -5,6 +5,7 @@ import Content from '@containers/content/Content';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import communityApi from 'api/community';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -29,17 +30,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const PostPage = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
 
-  return post ? (
-    <Post post={post} />
-  ) : (
-    <MainLayout>
-      <Content fitContent alignSelf="center">
-        <Heading level={1}>존재하지 않는 게시물입니다</Heading>
-      </Content>
-      <Content fitContent alignSelf="center">
-        <Button onClick={() => router.back()}>돌아가기</Button>
-      </Content>
-    </MainLayout>
+  return (
+    <>
+      <Head>
+        <title>{post.title} | 신조어 위키</title>
+      </Head>
+      {post ? (
+        <Post post={post} />
+      ) : (
+        <MainLayout>
+          <Content fitContent alignSelf="center">
+            <Heading level={1}>존재하지 않는 게시물입니다</Heading>
+          </Content>
+          <Content fitContent alignSelf="center">
+            <Button onClick={() => router.back()}>돌아가기</Button>
+          </Content>
+        </MainLayout>
+      )}
+    </>
   );
 };
 
