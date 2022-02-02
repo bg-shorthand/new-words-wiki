@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin
+Disallow: /myPage
+
+User-agent: *
+Allow: /
