@@ -1,5 +1,7 @@
+import Guide from '@components/pages/Guide';
+
 const GuidePage = () => {
-  return <h1>Here is Guide Page</h1>;
+  return <Guide />;
 };
 
 export default GuidePage;
