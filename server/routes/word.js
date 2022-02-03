@@ -33,7 +33,6 @@ router.get('/relatedTitles', async (req, res) => {
 
     const related = await Word.findAllRelated(title);
     const relatedTitles = related.map((word) => word.title);
-    console.log(relatedTitles);
     if (relatedTitles.length) {
       res.send(generateResponse.success(relatedTitles));
     } else res.send(generateResponse.fail('검색 결과가 없습니다.'));
