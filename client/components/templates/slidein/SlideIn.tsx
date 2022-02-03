@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import style from './SlideIn.module.scss';
 
 const SlideIn = () => {
-  const [is, setIs] = useState(true);
   const [isSlide, setIsSlide] = useState(true);
 
   useEffect(() => {
