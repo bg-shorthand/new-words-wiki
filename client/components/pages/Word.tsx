@@ -50,6 +50,10 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         <Paragraph>{data.history ? data.history : '아직 등록된 유례가 없습니다.'}</Paragraph>
       </Content>
       <Content>
+        <Heading level={3}>예시</Heading>
+        <Paragraph>{data.example ? data.example : '아직 등록된 예시가 없습니다.'}</Paragraph>
+      </Content>
+      <Content>
         <Heading level={3}>관련 이미지</Heading>
         {images.length ? (
           <Images images={images} setImages={setImages} />
@@ -62,8 +66,8 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
           size="s"
           onClick={() => {
             if (isSignin) {
-              const { title, definition, history, images } = data;
-              setWord({ title, definition, history, images });
+              const { title, definition, history, images, example } = data;
+              setWord({ title, definition, history, example, images });
               router.push('/write');
             } else setDialogs((pre) => ({ ...pre, needSignin: true }));
           }}
