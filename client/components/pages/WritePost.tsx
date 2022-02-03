@@ -42,6 +42,11 @@ const WritePost = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setIsTitle(!!title.length);
+    setIsContent(!!content.length);
+  }, [title, content]);
+
   return (
     <MainLayout>
       <Content fitContent>
@@ -51,7 +56,6 @@ const WritePost = () => {
           value={title}
           onChange={(e) => {
             setPostState((pre) => ({ ...pre, title: e.currentTarget.value }));
-            setIsTitle(!!title.length);
           }}
           validations={[{ isAlert: !isTitle, alert: '필수 입력란입니다.' }]}
         />
@@ -64,7 +68,6 @@ const WritePost = () => {
           value={content}
           onChange={(e) => {
             setPostState((pre) => ({ ...pre, content: e.currentTarget.value }));
-            setIsContent(!!content.length);
           }}
           validations={[{ isAlert: !isContent, alert: '필수 입력란입니다.' }]}
         />
