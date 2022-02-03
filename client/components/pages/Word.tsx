@@ -4,6 +4,7 @@ import Paragraph from '@atoms/paragraph/Paragraph';
 import Content from '@containers/content/Content';
 import Images from '@molecules/images/Images';
 import Paticipants from '@molecules/paticipants/Paticipants';
+import RelatedTitles from '@molecules/relatedTitles/RelatedTitles';
 import { getServerSideProps } from '@pages/words/[title]';
 import { isSigninState } from '@recoil/isSignin';
 import { dialogsState } from '@recoil/modalDialog';
@@ -15,8 +16,9 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Word = ({ word, relatedTitles }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [images, setImages] = useState<string[]>([]);
+  const [RenderRelatedTitles, setRenderRelatedTitles] = useState<string[]>([]);
   const [paticipants, setPaticipants] = useState([]);
 
   const isSignin = useRecoilValue(isSigninState);
@@ -27,31 +29,36 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
   useEffect(() => {
     const setPaticipantsAsync = async () => {
-      const { paticipant } = data;
+      const { paticipant } = word;
       const { data: paticipantData } = await userApi.getScores(paticipant);
       setPaticipants(paticipantData.data);
     };
 
-    setImages(data.images);
+    setImages(word.images);
     setPaticipantsAsync();
-  }, [data]);
+  }, [word]);
+
+  useEffect(() => {
+    if (relatedTitles)
+      setRenderRelatedTitles(relatedTitles.filter((title: string) => title !== word.title));
+  }, [relatedTitles]);
 
   return (
     <MainLayout>
       <Content fitContent>
-        <Heading level={2}>{data.title}</Heading>
+        <Heading level={2}>{word.title}</Heading>
       </Content>
       <Content>
         <Heading level={3}>정의</Heading>
-        <Paragraph>{data.definition}</Paragraph>
+        <Paragraph>{word.definition}</Paragraph>
       </Content>
       <Content>
         <Heading level={3}>유례</Heading>
-        <Paragraph>{data.history ? data.history : '아직 등록된 유례가 없습니다.'}</Paragraph>
+        <Paragraph>{word.history ? word.history : '아직 등록된 유례가 없습니다.'}</Paragraph>
       </Content>
       <Content>
         <Heading level={3}>예시</Heading>
-        <Paragraph>{data.example ? data.example : '아직 등록된 예시가 없습니다.'}</Paragraph>
+        <Paragraph>{word.example ? word.example : '아직 등록된 예시가 없습니다.'}</Paragraph>
       </Content>
       <Content>
         <Heading level={3}>관련 이미지</Heading>
@@ -61,12 +68,18 @@ const Word = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
           <Paragraph>아직 등록된 이미지가 없습니다.</Paragraph>
         )}
       </Content>
+      {RenderRelatedTitles.length ? (
+        <Content>
+          <Heading level={3}>연관 검색어</Heading>
+          {RelatedTitles(RenderRelatedTitles)}
+        </Content>
+      ) : null}
       <Content fitContent alignSelf="flex-end" flexFlow="row">
         <Button
           size="s"
           onClick={() => {
             if (isSignin) {
-              const { title, definition, history, images, example } = data;
+              const { title, definition, history, images, example } = word;
               setWord({ title, definition, history, example, images });
               router.push('/write');
             } else setDialogs((pre) => ({ ...pre, needSignin: true }));

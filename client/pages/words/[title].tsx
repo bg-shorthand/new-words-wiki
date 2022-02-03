@@ -10,27 +10,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (data.success) {
     return {
       props: {
-        data: data.data,
+        word: data.data.word,
+        relatedTitles: data.data.relatedTitles,
       },
     };
   } else {
     return {
       redirect: {
-        destination: '/words/notFound/' + title,
+        destination: '/words/notFound/' + encodeURI(title),
         permanent: false,
       },
     };
   }
 };
 
-const WordPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const WordPage = ({
+  word,
+  relatedTitles,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
     <>
       <Head>
-        <title>{data.title} | 신조어 위키</title>
-        <meta name="description" content={data.definition} />
+        <title>{word.title} | 신조어 위키</title>
+        <meta name="description" content={word.definition} />
       </Head>
-      <Word data={data} />
+      <Word word={word} relatedTitles={relatedTitles} />
     </>
   );
 };

@@ -8,6 +8,9 @@ const wordApi = {
   async get(title: string) {
     return await axios.get(encodeURI(url + '?title=' + title));
   },
+  async getRelatedTitles(title: string) {
+    return await axios.get(encodeURI(url + '/relatedTitles' + '?title=' + title));
+  },
   async getAll() {
     return await axios.get(url + '/all');
   },

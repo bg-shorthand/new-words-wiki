@@ -12,10 +12,30 @@ router.get('/', async (req, res) => {
     const { title } = req.query;
 
     const word = await Word.findOneByTitle(title);
+    const related = await Word.findAllRelated(title);
+    const relatedTitles = related.map((word) => word.title);
     if (word) {
       if (word.search) await Word.updateByTitle(title, { search: word.search + 1 });
       else await Word.updateByTitle(title, { search: 1 });
-      res.send(generateResponse.success(word));
+      res.send(generateResponse.success({ word, relatedTitles }));
+    } else if (related) {
+      res.send(generateResponse.fail({ word: null, relatedTitles }));
+    } else res.send(generateResponse.fail('검색 결과가 없습니다.'));
+  } catch (e) {
+    console.log(e);
+    res.send(generateResponse.fail(e));
+  }
+});
+
+router.get('/relatedTitles', async (req, res) => {
+  try {
+    const { title } = req.query;
+
+    const related = await Word.findAllRelated(title);
+    const relatedTitles = related.map((word) => word.title);
+    console.log(relatedTitles);
+    if (relatedTitles.length) {
+      res.send(generateResponse.success(relatedTitles));
     } else res.send(generateResponse.fail('검색 결과가 없습니다.'));
   } catch (e) {
     console.log(e);

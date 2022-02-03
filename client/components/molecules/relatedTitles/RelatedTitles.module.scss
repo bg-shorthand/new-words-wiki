@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+
+  & > li {
+    margin: 0.5em;
+
+    &:hover {
+      font-weight: 700;
+    }
+  }
+}

@@ -19,6 +19,9 @@ const schema = new mongoose.Schema(
 schema.statics.findAll = function () {
   return this.find({});
 };
+schema.statics.findAllRelated = function (title) {
+  return this.find({ title: new RegExp(title) });
+};
 schema.statics.findOneByTitle = function (title) {
   return this.findOne({ title });
 };
