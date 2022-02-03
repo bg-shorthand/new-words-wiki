@@ -58,29 +58,32 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
         <span>
           {author}{' '}
           <Image src={generateTierImage(score)} width={12} height={12} alt="회원 등급"></Image>
-          {isAuthor ? (
-            <>
-              <IconButton
-                icon="fas fa-highlighter"
-                aria-label="수정"
-                title="수정"
-                onClick={() => {
-                  setPostState({ title, content, id: _id });
-                  router.push('/community/writePost');
-                }}
-              />
-              <IconButton
-                icon="far fa-trash-alt"
-                aria-label="삭제"
-                title="삭제"
-                onClick={async () => {
-                  const { data } = await communityApi.deletePost(_id);
-                  if (data.success) router.replace('/community/1');
-                }}
-              />
-            </>
-          ) : null}{' '}
-          | <i aria-hidden className="far fa-calendar-alt"></i>{' '}
+        </span>
+        {isAuthor ? (
+          <span>
+            <IconButton
+              icon="fas fa-highlighter"
+              aria-label="수정"
+              title="수정"
+              onClick={() => {
+                setPostState({ title, content, id: _id });
+                router.push('/community/writePost');
+              }}
+            />
+            <IconButton
+              icon="far fa-trash-alt"
+              aria-label="삭제"
+              title="삭제"
+              onClick={async () => {
+                const { data } = await communityApi.deletePost(_id);
+                if (data.success) router.replace('/community/1');
+              }}
+            />
+          </span>
+        ) : null}{' '}
+        <span>|</span>
+        <span>
+          <i aria-hidden className="far fa-calendar-alt"></i>{' '}
           {`${year}.${month}.${day}. ${hour}:${minute}`}
         </span>
       </Content>

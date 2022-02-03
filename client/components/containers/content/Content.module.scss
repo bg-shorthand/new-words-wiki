@@ -37,4 +37,8 @@
   * + *:not(*:last-child) {
     margin-left: 1em;
   }
+
+  & > * {
+    width: fit-content;
+  }
 }
