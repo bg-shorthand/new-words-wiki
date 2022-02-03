@@ -1,10 +1,6 @@
 @import '@styles/var.scss';
 
 .container {
-  @media screen and (max-width: 1000px) {
-    display: none;
-  }
-
   & > article {
     margin-bottom: 20px;
   }
