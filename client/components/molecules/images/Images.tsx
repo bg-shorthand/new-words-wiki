@@ -32,6 +32,8 @@ const Images = ({ images, setImages, canDelete = false }: ImageUploaderProps) =>
           {canDelete && (
             <IconButton
               icon="fas fa-minus-circle"
+              aria-label="이미지 삭제"
+              title="이미지 삭제"
               onClick={(e) => {
                 const $li = e.currentTarget.parentNode as HTMLLIElement;
                 setImages((pre) => pre.filter((image) => image !== $li.id));

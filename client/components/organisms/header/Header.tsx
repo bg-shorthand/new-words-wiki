@@ -18,14 +18,20 @@ const Header = () => {
       <Heading level={1}>
         <Link href="/">
           <a>
-            <Image src={logo} width={20} height={20} /> <span>신조어 위키</span>
+            <Image src={logo} width={20} height={20} alt="신조어 위키 로고" />{' '}
+            <span>신조어 위키</span>
           </a>
         </Link>
       </Heading>
       <Nav />
       <Sign />
       <Search />
-      <IconButton icon="fas fa-bars" onClick={() => setSidebar((pre) => !pre)} />
+      <IconButton
+        icon="fas fa-bars"
+        aria-label="메뉴"
+        title="메뉴"
+        onClick={() => setSidebar((pre) => !pre)}
+      />
     </header>
   );
 };

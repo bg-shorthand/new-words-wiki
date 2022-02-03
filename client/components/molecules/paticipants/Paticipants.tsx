@@ -18,7 +18,8 @@ const Paticipants = ({ paticipants }: PaticipantsProps) => {
           ? paticipants.map(({ nickname, score }) => {
               return (
                 <li key={nickname}>
-                  {nickname} <Image src={generateTierImage(score)} width={12} height={12} />
+                  {nickname}{' '}
+                  <Image src={generateTierImage(score)} width={12} height={12} alt="회원 등급" />
                 </li>
               );
             })

@@ -37,7 +37,8 @@ const Search = () => {
         </datalist>
       ) : null}
       <IconButton
-        aria-hidden
+        aria-label="검색"
+        title="검색"
         type="submit"
         icon="fas fa-search"
         onClick={(e) => {

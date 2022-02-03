@@ -30,13 +30,14 @@ const SideBar = () => {
         <Heading level={1}>
           <Link href="/">
             <a>
-              <Image src={logo} width={20} height={20} /> <span>신조어 위키</span>
+              <Image src={logo} width={20} height={20} alt="신조어 위키 로고" />{' '}
+              <span>신조어 위키</span>
             </a>
           </Link>
         </Heading>
         <Nav />
         <Sign />
-        <IconButton icon="fas fa-times" />
+        <IconButton icon="fas fa-times" aria-label="닫기" title="닫기" />
       </section>
     </div>
   );

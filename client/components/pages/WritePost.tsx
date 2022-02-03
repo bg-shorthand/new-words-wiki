@@ -71,7 +71,8 @@ const WritePost = () => {
       </Content>
       <Content fitContent alignSelf="flex-end">
         <span>
-          작성: {author} <Image src={generateTierImage(score)} width={12} height={12}></Image>
+          작성: {author}{' '}
+          <Image src={generateTierImage(score)} width={12} height={12} alt="회원 등급"></Image>
         </span>
       </Content>
       <Content fitContent alignSelf="flex-end">

@@ -3,8 +3,8 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html>
-        <Head lang="ko">
+      <Html lang="ko">
+        <Head>
           <meta name="description" content="누구나 함께 만드는 신조어 사전" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="신조어 위키" />

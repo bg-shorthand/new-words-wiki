@@ -9,7 +9,7 @@ const NickName = () => {
   return isSignin ? (
     <>
       <span>{isSignin.nickname}</span>{' '}
-      <Image src={generateTierImage(isSignin.score)} width={12} height={12} />
+      <Image src={generateTierImage(isSignin.score)} width={12} height={12} alt="회원 등급" />
     </>
   ) : null;
 };

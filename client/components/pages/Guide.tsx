@@ -33,7 +33,7 @@ const Guide = () => {
             <li>4. 등급 아이콘은 아래와 같습니다.</li>
           </ol>
           <br />
-          <Image src={tierIcons}></Image>
+          <Image src={tierIcons} alt="회원 등급 아이콘 모음"></Image>
         </Paragraph>
       </Content>
       <Content>

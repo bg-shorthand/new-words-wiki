@@ -44,7 +44,12 @@ const MyPage = () => {
       <Content flexFlow="row">
         <Heading level={2}>등급</Heading>
         <div>
-          <Image src={generateTierImage(userInfo?.score || 0)} width={18} height={18} />
+          <Image
+            src={generateTierImage(userInfo?.score || 0)}
+            width={18}
+            height={18}
+            alt="회원 등급"
+          />
         </div>
         <span>
           ({userInfo?.score}점 / 다음 등급(
@@ -53,6 +58,7 @@ const MyPage = () => {
               src={generateTierImage((userInfo?.score || 0) * 2 ? (userInfo?.score || 0) * 2 : 2)}
               width={18}
               height={18}
+              alt="회원 등급"
             />
           }
           )까지 {nextScore}점 필요)

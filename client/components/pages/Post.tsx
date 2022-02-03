@@ -56,11 +56,14 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
       </Content>
       <Content fitContent alignSelf="flex-end" flexFlow="row">
         <span>
-          {author} <Image src={generateTierImage(score)} width={12} height={12}></Image>
+          {author}{' '}
+          <Image src={generateTierImage(score)} width={12} height={12} alt="회원 등급"></Image>
           {isAuthor ? (
             <>
               <IconButton
                 icon="fas fa-highlighter"
+                aria-label="수정"
+                title="수정"
                 onClick={() => {
                   setPostState({ title, content, id: _id });
                   router.push('/community/writePost');
@@ -68,6 +71,8 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
               />
               <IconButton
                 icon="far fa-trash-alt"
+                aria-label="삭제"
+                title="삭제"
                 onClick={async () => {
                   const { data } = await communityApi.deletePost(_id);
                   if (data.success) router.replace('/community/1');

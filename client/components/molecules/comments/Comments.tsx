@@ -74,7 +74,12 @@ const Comments = ({ comments, setComments }: CommentsProps) => {
               <div>
                 <span>
                   {item.author.nickname}{' '}
-                  <Image src={generateTierImage(item.author.score)} width={12} height={12} />
+                  <Image
+                    src={generateTierImage(item.author.score)}
+                    width={12}
+                    height={12}
+                    alt="회원 등급"
+                  />
                 </span>
                 <span>
                   <i aria-hidden className="far fa-calendar-alt"></i>{' '}
@@ -84,10 +89,17 @@ const Comments = ({ comments, setComments }: CommentsProps) => {
               {item.author.nickname === isSignin?.nickname ? (
                 <div className={style.buttons}>
                   {modifyNumber === item.number ? (
-                    <IconButton icon="fab fa-readme" onClick={() => setModifyNumber(0)} />
+                    <IconButton
+                      icon="fab fa-readme"
+                      aria-label="댓글 읽기 모드"
+                      title="댓글 읽기 모드"
+                      onClick={() => setModifyNumber(0)}
+                    />
                   ) : (
                     <IconButton
                       icon="fas fa-highlighter"
+                      aria-label="댓글 수정 모드"
+                      title="댓글 수정 모드"
                       onClick={() => {
                         setNewComment(item.content);
                         setModifyNumber(item.number);
@@ -96,6 +108,8 @@ const Comments = ({ comments, setComments }: CommentsProps) => {
                   )}
                   <IconButton
                     icon="far fa-trash-alt"
+                    aria-label="댓글 삭제"
+                    title="댓글 삭제"
                     onClick={async () => {
                       const { data } = await communityApi.deleteComment(id, item.number);
                       if (data.success) setComments(data.data);

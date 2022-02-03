@@ -13,7 +13,13 @@ const Dialog = ({ children }: HTMLAttributes<HTMLElement>) => {
   return (
     <section className={style.container} ref={dialogRef}>
       {children}
-      <IconButton onClick={resetDialog} onKeyDown={focusFirstWhenKeyUpTab} icon="fas fa-times" />
+      <IconButton
+        onClick={resetDialog}
+        onKeyDown={focusFirstWhenKeyUpTab}
+        icon="fas fa-times"
+        aria-label="닫기"
+        title="닫기"
+      />
       <SlideIn />
     </section>
   );

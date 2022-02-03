@@ -27,6 +27,7 @@ const Pagination = ({ curPage, path, allLength }: PaginationProps) => {
       <li className={pages.includes(1) ? style.disable : ''}>
         <Link href={path + '/1'}>
           <a
+            aria-label="맨 처음으로"
             onClick={(e) => {
               if (pages.includes(1)) e.preventDefault();
             }}
@@ -38,6 +39,7 @@ const Pagination = ({ curPage, path, allLength }: PaginationProps) => {
       <li className={pages.includes(1) ? style.disable : ''}>
         <Link href={path + '/' + (pages[0] - 1)}>
           <a
+            aria-label="이전 페이지"
             onClick={(e) => {
               if (pages.includes(1)) e.preventDefault();
             }}
@@ -58,6 +60,7 @@ const Pagination = ({ curPage, path, allLength }: PaginationProps) => {
       <li className={pages.includes(Math.ceil(allLength / pagesNum)) ? style.disable : ''}>
         <Link href={path + '/' + (pages[pages.length - 1] + 1)}>
           <a
+            aria-label="다음 페이지"
             onClick={(e) => {
               if (pages.includes(Math.ceil(allLength / pagesNum))) e.preventDefault();
             }}
@@ -69,6 +72,7 @@ const Pagination = ({ curPage, path, allLength }: PaginationProps) => {
       <li className={pages.includes(Math.ceil(allLength / pagesNum)) ? style.disable : ''}>
         <Link href={path + '/' + Math.ceil(allLength / pagesNum)}>
           <a
+            aria-label="맨 뒤로"
             onClick={(e) => {
               if (pages.includes(Math.ceil(allLength / pagesNum))) e.preventDefault();
             }}

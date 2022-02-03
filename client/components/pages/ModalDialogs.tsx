@@ -38,7 +38,7 @@ const ModalDialogs = () => {
       )}
       {dialogs.image && (
         <ModalDialog>
-          <Image src={imageSrc} />
+          <Image src={imageSrc} alt="관련 이미지" />
         </ModalDialog>
       )}
       {dialogs.needSignin && (

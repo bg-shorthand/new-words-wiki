@@ -14,6 +14,7 @@ const Input = ({ autoComplete = 'off', type, ...props }: InputHTMLAttributes<HTM
             setTextType((pre) => (pre === 'password' ? 'text' : 'password'));
           }}
           title="비밀번호 보기"
+          aria-label="비밀번호 보기"
           icon={textType === 'password' ? 'far fa-eye' : 'far fa-eye-slash'}
           tabIndex={-1}
         />

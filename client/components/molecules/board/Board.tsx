@@ -36,10 +36,11 @@ const Board = ({ posts }: BoardProps) => {
             <div className={style.summary}>
               <span className={style.author}>
                 {post.author}
-                <Image src={generateTierImage(post.score)} width={12} height={12} />
+                <Image src={generateTierImage(post.score)} width={12} height={12} alt="회원 등급" />
               </span>
               <span>
-                <i aria-hidden className="far fa-calendar-alt"></i> {`${year}.${month}.${day}. ${hour}:${minute}`}
+                <i aria-hidden className="far fa-calendar-alt"></i>{' '}
+                {`${year}.${month}.${day}. ${hour}:${minute}`}
               </span>
             </div>
           </li>
