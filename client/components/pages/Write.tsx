@@ -22,7 +22,7 @@ const Write = () => {
 
   const resetWord = useResetRecoilState(wordState);
   const [word, setWord] = useRecoilState(wordState);
-  const { title, definition, history } = word;
+  const { title, definition, history, example } = word;
   const setIsSignin = useSetRecoilState(isSigninState);
 
   const openAlertDialog = useOpenAlertDialog();
@@ -70,9 +70,19 @@ const Write = () => {
           id="history"
           label="유례"
           cols={10000}
-          rows={10}
+          rows={5}
           value={history}
           onChange={(e) => setWord((pre) => ({ ...pre, history: e.currentTarget.value }))}
+        />
+      </Content>
+      <Content>
+        <LabelTextArea
+          id="example"
+          label="예시"
+          cols={10000}
+          rows={5}
+          value={example}
+          onChange={(e) => setWord((pre) => ({ ...pre, example: e.currentTarget.value }))}
         />
       </Content>
       <Content>
@@ -82,7 +92,7 @@ const Write = () => {
       <Content fitContent alignSelf="flex-end">
         <Button
           onClick={async (e) => {
-            const payload = { title, definition, history, images };
+            const payload = { title, definition, history, example, images };
             const { access, refresh, keepSignin } = setToken.get();
             if (!access || !refresh) return setDialogs((pre) => ({ ...pre, needSignin: true }));
             const api = isModify ? wordApi.put : wordApi.post;

@@ -5,6 +5,7 @@ const schema = new mongoose.Schema(
     title: { type: String, required: true, unique: true },
     definition: { type: String },
     history: { type: String },
+    example: { type: String },
     images: { type: Array },
     paticipant: { type: Array },
     search: { type: Number },

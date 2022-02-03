@@ -17,6 +17,7 @@ interface Word {
   title: string;
   definition: string;
   history: string;
+  example: string;
   images?: string[];
 }
 

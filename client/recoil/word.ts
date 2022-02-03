@@ -6,6 +6,7 @@ const wordState = atom({
     title: '',
     definition: '',
     history: '',
+    example: '',
     images: [] as string[],
   },
 });
