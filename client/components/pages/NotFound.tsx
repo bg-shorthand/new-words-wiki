@@ -9,9 +9,7 @@ import { dialogsState } from '@recoil/modalDialog';
 import { wordState } from '@recoil/word';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import { InferGetServerSidePropsType } from 'next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 const NotFound = ({

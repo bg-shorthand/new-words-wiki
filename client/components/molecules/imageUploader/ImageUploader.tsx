@@ -1,4 +1,3 @@
-import IconButton from '@atoms/iconButton/IconButton';
 import InputFile from '@atoms/inputFile/InputFile';
 import useOpenAlertDialog from '@hooks/useOpenAlertDialog';
 import Images from '@molecules/images/Images';
