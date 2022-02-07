@@ -1,5 +1,7 @@
-import Write from '@components/pages/Write';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
+
+const Write = dynamic(() => import('@components/pages/Write'));
 
 const WritePage = () => {
   return (

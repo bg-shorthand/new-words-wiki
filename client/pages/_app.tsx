@@ -1,9 +1,11 @@
 import { RecoilRoot } from 'recoil';
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
-import ModalDialogs from '@components/pages/ModalDialogs';
-import DefaultLayout from '@templates/defaultLayout/DefaultLayout';
-import SideBar from '@organisms/sideBar/SideBar';
+import dynamic from 'next/dynamic';
+
+const DefaultLayout = dynamic(() => import('@templates/defaultLayout/DefaultLayout'));
+const SideBar = dynamic(() => import('@organisms/sideBar/SideBar'));
+const ModalDialogs = dynamic(() => import('@components/pages/ModalDialogs'));
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

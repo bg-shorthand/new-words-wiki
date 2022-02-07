@@ -1,5 +1,7 @@
-import WritePost from '@components/pages/WritePost';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
+
+const WritePost = dynamic(() => import('@components/pages/WritePost'));
 
 const WritePostPage = () => {
   return (
