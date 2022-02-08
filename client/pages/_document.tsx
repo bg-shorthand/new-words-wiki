@@ -11,6 +11,11 @@ export default class MyDocument extends Document {
           <meta property="og:description" content="누구나 함께 만드는 신조어 사전" />
           <meta property="twitter:title" content="신조어 위키" />
           <meta property="twitter:description" content="누구나 함께 만드는 신조어 사전" />
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6551563436050338"
+            crossOrigin="anonymous"
+          ></script>
         </Head>
         <body>
           <Main />
