@@ -116,7 +116,10 @@ const Post = ({ post }: InferGetServerSidePropsType<typeof getServerSideProps>) 
                 time,
                 number: 0,
               });
-              if (data.success) setRenderComments(data.data);
+              if (data.success) {
+                setCommentContent('');
+                setRenderComments(data.data);
+              }
             }}
           >
             등록
