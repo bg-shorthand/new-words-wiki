@@ -1,27 +1,24 @@
-const nodemailer = require("nodemailer");
-const dotenv = require("dotenv");
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
-const { USER, CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
+const { EMAIL, PASS } = process.env;
 
 async function sendMail(receiverEmail, subject, content) {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.google.com",
+    service: 'gmail',
+    host: 'smtp.google.com',
     port: 587,
     secure: true,
     auth: {
-      type: "OAuth2",
-      user: USER,
-      clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      refreshToken: REFRESH_TOKEN,
+      user: EMAIL,
+      pass: PASS,
     },
   });
 
   const message = {
-    from: USER,
+    from: { name: '신조어 위키', address: EMAIL },
     to: receiverEmail,
     subject,
     html: content,
@@ -29,7 +26,7 @@ async function sendMail(receiverEmail, subject, content) {
 
   try {
     await transporter.sendMail(message);
-    console.log("Send mail");
+    console.log('Send mail');
   } catch (e) {
     console.log(e);
   }
