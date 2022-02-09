@@ -5,6 +5,18 @@ export default class MyDocument extends Document {
     return (
       <Html lang="ko">
         <Head>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=G-7NXNZT6GQX`} />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+            
+              gtag('config', 'G-7NXNZT6GQX');
+          `,
+            }}
+          />
           <meta name="description" content="누구나 함께 만드는 신조어 사전" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="신조어 위키" />
