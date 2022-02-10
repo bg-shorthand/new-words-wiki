@@ -9,6 +9,7 @@ import { dialogsState } from '@recoil/modalDialog';
 import { wordState } from '@recoil/word';
 import MainLayout from '@templates/mainLayout/MainLayout';
 import { wordApi } from 'api/word';
+import countStringSize from 'modules/countStringSize';
 import isSignin from 'modules/isSignin';
 import setToken from 'modules/setToken';
 import { useRouter } from 'next/router';
@@ -19,6 +20,7 @@ const Write = () => {
   const [isTitle, setIsTitle] = useState(false);
   const [isModify, setIsModify] = useState(false);
   const [images, setImages] = useState<string[]>([]);
+  const [isTooLong, setIsTooLong] = useState(false);
 
   const resetWord = useResetRecoilState(wordState);
   const [word, setWord] = useRecoilState(wordState);
@@ -49,8 +51,14 @@ const Write = () => {
           id="title"
           label="신조어"
           value={title}
-          onChange={(e) => setWord((pre) => ({ ...pre, title: e.currentTarget.value }))}
-          validations={[{ isAlert: !title.length, alert: '필수 입력란입니다.' }]}
+          onChange={(e) => {
+            setWord((pre) => ({ ...pre, title: e.currentTarget.value }));
+            setIsTooLong(countStringSize(title) > 60);
+          }}
+          validations={[
+            { isAlert: !title.length, alert: '필수 입력란입니다.' },
+            { isAlert: isTooLong, alert: '신조어가 너무 깁니다.' },
+          ]}
           disabled={isTitle}
         />
       </Content>
@@ -109,7 +117,7 @@ const Write = () => {
               );
             }
           }}
-          disabled={!title.length || !definition.length}
+          disabled={!title.length || !definition.length || isTooLong}
         >
           {isModify ? '수정' : '등록'}
         </Button>
