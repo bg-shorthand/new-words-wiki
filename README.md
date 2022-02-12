@@ -15,7 +15,7 @@
   * 2022.01.01 ~ 현재
 
 ## STACK
-# FRONT-END
+### FRONT-END
   * HTML5
   * CSS3(Module scss)
   * Javascript
@@ -23,20 +23,20 @@
   * Recoil
   * Axios
 
-# BACK-END
+### BACK-END
   * Node Js
   * Express
   * MongoDB(Mongoose)
   
-# DEPLOY
+### DEPLOY
   * AWS(EC2 ubuntu)
   * NginX
   * pm2
 
-# VCS
+### VCS
   * Git/Github
 
-# PROJECT STRUCTURE
+### PROJECT STRUCTURE
   * FRONT-END
 ```
   src
@@ -68,7 +68,7 @@
     ┗ sendMail.js // Nodemailer
 ```
 
-# EXPERIENCE
+### EXPERIENCE
 
 1. NextJS
   * 신조어 위키는 배포 및 서비스까지 고려한 웹 어플리케이션으로, SEO에 강한 NextJS를 학습하여 제작했습니다.
@@ -110,7 +110,7 @@
   * 여러 암호화 방법 중, node의 crypto를 사용해 hash와 salt를 적용하였습니다.
 
 5. Light House
-![라이트하우스 결과](/asset/화면 캡처 2022-02-11 155309.jpg)
+![라이트하우스 결과](https://user-images.githubusercontent.com/72680186/153713290-5d4d1a73-0f9e-45fa-8ab8-53422081d69d.jpg)
   * Dynamic import를 활용하여 Perfomance 점수를 높였습니다.
   * 시멘틱 마크업을 고려하여 Accessibility 점수를 높였습니다.
   * 메타 데이터를 입력하여 SEO 점수를 높였습니다.
