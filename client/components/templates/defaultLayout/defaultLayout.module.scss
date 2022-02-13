@@ -8,31 +8,8 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    //   background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
-    //     url('../../../public/from-opened-books.jpg');
-    //   background-attachment: fixed;
-    //   background-size: cover;
-    // }
-
-    background-image: linear-gradient(
-      109.6deg,
-      rgba(253, 199, 141, 0.5) 11.3%,
-      rgba(249, 143, 253, 0.5) 100.2%
-    );
-
-    background-size: 400% 400%;
-    animation: gradient 10000ms ease infinite;
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+    background-image: url('../../../public/23284.png'), url('../../../public/45degreee_fabric.png');
+    background-repeat: no-repeat, repeat;
+    background-position: 100% 100%, 0 0;
   }
 }
