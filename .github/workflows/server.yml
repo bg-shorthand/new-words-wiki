@@ -15,8 +15,7 @@ jobs:
         run: npm i
         working-directory: server
       - name: create server zip
-        run: zip -qq -r ./server.zip .
-        working-directory: server
+        run: zip -qq -r ./server.zip ./server
         shell: bash
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
