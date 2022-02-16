@@ -5,8 +5,8 @@ files:
     destination: /home/ubuntu
 hooks:
   BeforeInstall:
-    - location: sh-for-codedeploy/before.sh
+    - location: ./before.sh
       runas: root
   AfterInstall:
-    - location: sh-for-codedeploy/after.sh
+    - location: ./after.sh
       runas: root
