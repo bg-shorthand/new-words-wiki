@@ -9,13 +9,11 @@ jobs:
     steps:
       - name: Checkout source code.
         uses: actions/checkout@v2
-      - name: Check Node v
-        run: node -v
       - name: Install client Dependencies
-        run: npm i
+        run: yarn install
         working-directory: src/client
       - name: Install server Dependencies
-        run: npm i
+        run: yarn install
         working-directory: src/server
       - name: Build
         run: npm run build
