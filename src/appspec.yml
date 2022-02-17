@@ -2,13 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu
+    destination: /home/ubuntu/src
 permissions:
-  - object: /home/ubuntu/client
-    owner: root
-    group: root
-    mode: 755
-  - object: /home/ubuntu/server
+  - object: /home/ubuntu/src
     owner: root
     group: root
     mode: 755
