@@ -15,6 +15,34 @@ jobs:
       - name: Install server Dependencies
         run: yarn install
         working-directory: src/server
+      - name: Create SERVER env file
+        run: |
+          touch .env
+
+          echo LOCALHOST=${{ secrets.SERVER_DOT_ENV_LOCALHOST }} >> .env
+          echo PORT=${{ secrets.SERVER_DOT_ENV_PORT }} >> .env
+          echo MONGO_URI=${{ secrets.SERVER_DOT_ENV_MONGO_URI }} >> .env
+          echo DEV_MONGO_URI=${{ secrets.SERVER_DOT_ENV_DEV_MONGO_URI }} >> .env
+
+          echo EMAIL=${{ secrets.SERVER_DOT_ENV_MAIL_ADDRESS }} >> .env
+          echo PASS=${{ secrets.SERVER_DOT_ENV_MAIL_PASS }} >> .env
+
+          echo CLIENT_ID=${{ secrets.SERVER_DOT_ENV_GAPI_CLIENT_ID }} >> .env
+          echo CLIENT_SECRET=${{ secrets.SERVER_DOT_ENV_GAPI_CLIENT_SECRET }} >> .env
+          echo REFRESH_TOKEN=${{ secrets.SERVER_DOT_ENV_GAPI_REFRESH_TOKEN }} >> .env
+
+          echo JWT_SECRET=${{ secrets.SERVER_DOT_ENV_JWT_SECRET }} >> .env
+
+          cat .env
+        working-directory: src/server
+      - name: Create CLIENT env file
+        run: |
+          touch .env
+
+          echo NEXT_PUBLIC_DB_URL=${{ secrets.CLIENT_DOT_ENV_DB_URL }} >> .env
+
+          cat .env
+        working-directory: src/client
       - name: Build
         run: npm run build
         working-directory: src/client
